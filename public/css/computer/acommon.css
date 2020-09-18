@@ -1,0 +1,139 @@
+.switch_botton {
+    width: 64px;
+    height: 21px;
+    cursor: pointer;
+    overflow: hidden;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px #ddd solid;
+    overflow: hidden;
+}
+
+.switch_status {
+    background-image: url(/image/computer/switch.png);
+    background-repeat: no-repeat;
+    margin: 0px 2px 0px 2px;
+    position: relative;
+    line-height: 18px;
+    top: -1px;
+    width: 100px;
+    height: 22px;
+}
+
+.switch_status.on {
+    left: -3px;
+}
+
+.switch_status.off {
+    left: -36px;
+}
+#content{
+    height: 100vh;
+    overflow: hidden;
+}
+#header-nav .nav {
+    border-left-width: 2px;
+    border-left-style: solid;
+    border-left-color: #e7502b;
+    line-height: 20px;
+    padding-left: 5px;
+}
+
+#header-nav .nav a.extralink {
+    color: #ccc;
+    margin-left: 15px;
+    width: 16px;
+    height: 16px;
+    float: left;
+    display: none;
+}
+
+#header-nav .nav:hover a.extralink {
+    margin-left: 15px;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+
+.centerShow {
+    box-sizing: border-box;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    width: 400px;
+    height: auto;
+    padding: 20px;
+    background-color: #f1f1F1;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: left;
+    position: fixed;
+    display: none;
+    z-index: 99;
+}
+
+#rightTips {
+    position: fixed;
+    top:40px;
+    right: 40px;
+    width: 200px;
+    z-index: 999;
+}
+
+#rightTips .info {
+    position: relative;
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    background-color: #333336;
+    margin-bottom: 8px;
+    color: white;
+    word-break:break-all;
+}
+#rightTips .success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border: 1px solid #d6e9c6;
+}
+#rightTips .error {
+    color: #a94442;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+}
+
+#rightTips .info .circle{
+    position: absolute;
+    top:4px;
+    left: 4px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #e7502b;
+    animation: scaleout 0.5s infinite ease-in-out;
+}
+
+#rightTips .info .fa-times-circle{
+    cursor: pointer;
+    position: absolute;
+    top:4px;
+    right: 4px;
+    transition: 1s;
+}
+#rightTips .info .fa-times-circle:hover{
+    transform:rotate(180deg);
+}
+
+.to-left, .to-right {
+    width: 16px;
+    position: absolute;
+    top: calc(50% - 8px);
+    display: none;
+}
+
+.to-left {
+    left: 0;
+}
+
+.to-right {
+    right: 0;
+}

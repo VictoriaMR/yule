@@ -1,0 +1,65 @@
+*{margin:0;outline:0 none;padding:0;-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+body,button,input,select,textarea{line-height:1.4;color:#333; font-family: 'Open Sans', sans-serif, 'SimSun';font-size:13px}
+ul,ol{list-style:none}
+h1,h2,h3,h4,h5,h6{font-weight: normal;}
+a{text-decoration:none;color:#3c3c3c}
+a:hover{text-decoration:none}
+img{max-width:100%;max-height:100%}
+table{border-collapse:collapse;border-spacing:0;}
+th{font-weight: normal}
+body {
+    SCROLLBAR-ARROW-COLOR: #2c5784;
+    SCROLLBAR-FACE-COLOR: #D1E2EF;
+    SCROLLBAR-DARKSHADOW-COLOR: #A8C7DD;
+    SCROLLBAR-BASE-COLOR: #000000;
+    SCROLLBAR-HIGHLIGHT-COLOR: #ffffff;
+    SCROLLBAR-SHADOW-COLOR: #ffffff;
+    SCROLLBAR-TRACK-COLOR: #e9f1f7;
+    SCROLLBAR-3DLIGHT-COLOR: #bcd4e5;
+    color: #5f5f5f;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar{width:7px;height:10px;}
+::-webkit-scrollbar-button:vertical{display:none}
+::-webkit-scrollbar-track:vertical{background-color:black}
+::-webkit-scrollbar-track-piece{background:#EBEFF8}
+::-webkit-scrollbar-thumb:vertical{background-color:#8E8E8E;border-radius:3px}
+::-webkit-scrollbar-thumb:vertical:hover{background-color:#3B3B3B}
+::-webkit-scrollbar-corner:vertical{background-color:#535353}
+::-webkit-scrollbar-resizer:vertical{background-color:#FF6E00}
+::-webkit-scrollbar-button:horizontal{display:none}
+::-webkit-scrollbar-track:horizontal{background-color:black}
+::-webkit-scrollbar-thumb:horizontal{background-color:#8E8E8E;border-radius:3px}
+::-webkit-scrollbar-thumb:horizontal:hover{background-color:#3B3B3B}
+::-webkit-scrollbar-corner:horizontal{background-color:#535353}
+::-webkit-scrollbar-resizer:horizontal{background-color:#FF6E00}
+.ellipsis-1 {
+    overflow: hidden;
+    white-space: normal;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical
+}
+.table-border-bottom {border-bottom: solid 1px #dedede;}
+.input{height:40px;width:100%;border:1px solid #f1eeee;padding:0 10px;font-size:14px;border-radius:4px}
+.relative{position:relative}
+.input:focus{outline:0}
+.input:placeholder{color:#999}
+.left{float:left}
+.right{float:right}
+.pointer{cursor:pointer}
+.text-center{text-align:center}
+.text-right{text-align:right}
+.width-50{width:50%}
+.width-100{width:100%}
+.color-f{color:#fff}
+.color-6 {color: #666}
+.color-9 {color: #999}
+.color-green{color: #20a53a}
+.bgf{background:#fff}
+.bgf2{background:#f2f2f2}
+.clear{clear: both}
+.flex{display: flex}
+.flex-1{flex: 1}
