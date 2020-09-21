@@ -43,4 +43,9 @@ class WalletService extends BaseService
     {
     	return $this->baseModel->existKey($key);
     }
+
+    public function getInfo($memId)
+    {
+        return $this->baseModel->getInfo($this->getKey($memId));
+    }
 }

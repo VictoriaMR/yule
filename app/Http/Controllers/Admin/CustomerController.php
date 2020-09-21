@@ -151,4 +151,24 @@ class CustomerController extends Controller
 			return $this->result(10000, $result, ['message' => '删除失败']);
 		}
 	}
+
+	public function view()
+	{
+		$this->baseService = make('App/Services/Admin/CustomerService');
+		Html::addCss();
+		$id = iget('id');
+		$info = $this->baseService->getInfoCache($id);
+
+		//钱包信息
+		$walletService = make('App/Services/WalletService');
+		$walletInfo = $walletService->getInfo($id);
+		
+		$recommenderList = $this->baseService->getRecommenderList($id);
+
+		$this->assign('info', $info);
+		$this->assign('walletInfo', $walletInfo);
+		$this->assign('recommenderList', $recommenderList);
+
+		return view();
+	}
 }

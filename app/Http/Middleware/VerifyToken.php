@@ -21,15 +21,15 @@ class VerifyToken
         //检查登录状态
         switch ($request['class']) {
             case 'Home':
-                if (empty(\frame\Session::get('home_member_id')))
+                if (empty(\frame\Session::get('home_mem_id')))
                     redirect(url('login'));
                 break;
             case 'Customer':
-                if (empty(\frame\Session::get('customer_member_id')))
+                if (empty(\frame\Session::get('customer_mem_id')))
                     redirect(url('login'));
                 break;
             case 'Admin':
-                if (empty(\frame\Session::get('admin_member_id')))
+                if (empty(\frame\Session::get('admin_mem_id')))
                     redirect(url('login'));
                 break;
         }

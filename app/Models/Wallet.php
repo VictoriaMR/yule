@@ -51,4 +51,9 @@ class Wallet extends BaseModel
     	if (empty($key)) return false;
     	return $this->where('wallet_key', $key)->count() > 0;
     }
+
+    public function getInfo($key)
+    {
+        return $this->where('wallet_key', $key)->find();
+    }
 }

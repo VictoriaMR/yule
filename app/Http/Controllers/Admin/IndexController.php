@@ -13,7 +13,7 @@ class IndexController extends Controller
 
 		//用户信息
 		$memberService = make('App/Services/Admin/MemberService');
-		$info = $memberService->getInfoCache(\frame\Session::get('admin_member_id'));
+		$info = $memberService->getInfoCache(\frame\Session::get('admin_mem_id'));
 
 		//功能列表
 		$controllerService = make('App/Services/Admin/ControllerService');

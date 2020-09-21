@@ -46,7 +46,7 @@ var LOGIN = {
 			tempobj.button('loading');
 			API.post(URI+'login/login', tempobj.parent('form').serializeArray(), function(res) {
 				if (res.code == 200) {
-					window.location.href = URI;
+					// window.location.href = URI;
 				} else {
 					$('#login-error-msg').text(res.message);
 					$('#login-error').show();

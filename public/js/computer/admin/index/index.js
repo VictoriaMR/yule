@@ -34,6 +34,7 @@ var INDEX = {
 			$(this).addClass('selected').siblings().removeClass('selected');
 			var url = $(this).data('url');
 			var id = $(this).data('feature-id');
+			if (!id) return false;
 			localStorage.setItem('controller', id);
 			var html = '<iframe src="'+url+'" frameborder="0" width="100%" height="100%"></iframe>';
 			$('#iframe-content').html(html);

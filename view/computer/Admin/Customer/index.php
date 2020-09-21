@@ -75,6 +75,7 @@
                 <td class="col-md-1"><?php echo $value['create_at'];?></td>
                 <td class="col-md-1"><?php echo $value['remark'];?></td>
                 <td class="col-md-2">
+                    <a href="<?php echo url('customer/view', ['id'=>$value['mem_id']]);?>" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-eye-open"></i> 查看</a>
                     <button class="btn btn-primary btn-sm modify-btn" type="button" ><i class="glyphicon glyphicon-edit"></i> 修改</button>
                     <button class="btn btn-danger btn-sm delete-btn" type="button" ><i class="glyphicon glyphicon-trash"></i>  删除</button>
                 </td>

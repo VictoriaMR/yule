@@ -10,4 +10,9 @@ class CustomerService extends BaseService
     {
         $this->baseModel = $model;
     }
+
+    public function getRecommenderList($id)
+    {
+    	if (empty($id)) return [];
+    }
 }
