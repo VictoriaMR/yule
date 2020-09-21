@@ -29,6 +29,7 @@ var FEATURE = {
 	    });
 	    //状态
 	    $('table .switch_botton.status .switch_status').on('click', function(event) {
+    		event.stopPropagation();
 	    	var _thisobj = $(this);
 	    	var con_id = _thisobj.parents('tr').data('con_id');
 	    	var status = _thisobj.hasClass('on') ? 0 : 1;
@@ -44,7 +45,6 @@ var FEATURE = {
     				errorTips(res.message);
     			}
     		});
-    		event.stopPropagation();
 	    });
 	    //编辑框开关切换
 	    $('#dealbox .switch_status').on('click', function(){

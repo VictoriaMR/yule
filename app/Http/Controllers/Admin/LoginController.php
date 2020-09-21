@@ -28,8 +28,8 @@ class LoginController extends Controller
 		if (empty($password))
 			$this->result(10000, false, '密码不能为空');
 
-		if ($loginCode != Session::set('admin_login_code'))
-			$this->result(10000, false, '验证不通过');
+		// if ($loginCode != Session::set('admin_login_code'))
+		// 	$this->result(10000, false, '验证不通过');
 
 		$memberService = make('App/Services/Admin/MemberService');
 		$result = $memberService->loginByPassword($phone, $password);

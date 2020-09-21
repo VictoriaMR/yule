@@ -1,0 +1,15 @@
+.info-box{
+	padding: 30px 50px 0 50px;
+}
+.info-box table td {
+	padding:  8px;
+}
+
+.info-box .avatar {
+	height: 80px;
+	width: 80px;
+	border: 1px solid #ddd;
+}
+.info-box  .input-box {
+	max-width: 380px;
+}

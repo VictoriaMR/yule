@@ -20,7 +20,7 @@ class FileService extends BaseService
         if (!in_array($extension, self::constant('FILE_ACCEPT')))
             return false;
 
-        $imageService = \App::make('App/Services/ImageService');
+        $imageService = make('App/Services/ImageService');
 
         if ($cate == 'file') {
             if (!empty($ext))
@@ -69,7 +69,7 @@ class FileService extends BaseService
 
                 $saveUrl .= '/'.$hash.'.'.$extension;
 
-                $saveUrl = ROOT_PATH.'public/file_center/'.$saveUrl;
+                $saveUrl = ROOT_PATH.'public/upload/'.$saveUrl;
 
                 $savePath = pathinfo($saveUrl, PATHINFO_DIRNAME);
 
@@ -82,14 +82,8 @@ class FileService extends BaseService
 
                 if ($result) {
                     //压缩文件
-                    if (in_array($cate, ['banner'])) {
+                    if (in_array($extension, self::FILE_COMPERSS)) {
                         $imageService->compressImg($saveUrl, $this->pathUrl($saveUrl, '_thumb'));
-                        $saveUrl = $this->pathUrl($saveUrl, '_thumb');
-                    } elseif (in_array($cate, ['avatar', 'product', 'article'])) {
-                        $imageService->thumbImage($saveUrl, $this->pathUrl($saveUrl, '800x800'), 800, 800);
-                        $imageService->thumbImage($saveUrl, $this->pathUrl($saveUrl, '600x600'), 600, 600);
-                        $imageService->thumbImage($saveUrl, $this->pathUrl($saveUrl, '300x300'), 300, 300);
-                        $saveUrl = $this->pathUrl($saveUrl, '800x800');
                     }
                     //新增文件记录
                     $attachmentId = $attachmentService->addAttactment($insert);
@@ -122,7 +116,7 @@ class FileService extends BaseService
         if (empty($url) || empty($cate)) return false;
         $data = \frame\Http::get($url);
         if (!$data) return false;
-        $tempfile = ROOT_PATH.'upload'.DS.'temp'.DS;
+        $tempfile = ROOT_PATH.'public/upload'.DS.'temp'.DS;
         if (!is_dir($tempfile)) 
             mkdir($tempfile, 0755, true);
         $tempfile .= $this->getName().'.jpg';

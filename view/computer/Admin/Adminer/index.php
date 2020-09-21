@@ -36,7 +36,12 @@
             </tr>
             <?php if (!empty($list)) { ?>
             <?php foreach ($list as $key=>$value) { ?>
-            <tr>
+            <tr data-mem_id="<?php echo $value['mem_id'];?>"
+                data-name="<?php echo $value['name'];?>"
+                data-nickname="<?php echo $value['nickname'];?>"
+                data-status="<?php echo $value['status'];?>"
+                data-mobile="<?php echo $value['mobile'];?>"
+            >
                 <td class="col-md-1"><?php echo $value['mem_id'];?></td>
                 <td class="col-md-1 userAvatarInfo">
                     <span class="avatar"><img src="<?php echo $value['avatar'];?>"></span>
@@ -53,7 +58,7 @@
                 <td class="col-md-2"><?php echo $value['rule_text'] ?? '';?></td>
                 <td class="col-md-1"><?php echo $value['create_at'];?></td>
                 <td class="col-md-2">
-                    <button class="btn btn-primary btn-sm modify" type="button" ><i class="glyphicon glyphicon-edit"></i> 修改</button>
+                    <a class="btn btn-primary btn-sm modify" href="<?php echo url('adminer/edit', ['id'=>$value['mem_id']]);?>" ><i class="glyphicon glyphicon-edit"></i> 修改</a>
                     <button class="btn btn-danger btn-sm delete" type="button" ><i class="glyphicon glyphicon-trash"></i>  删除</button>
                 </td>
             </tr>
@@ -67,62 +72,39 @@
     </div>
     <?php echo $paginator;?>
 </div>
-<style type="text/css">
-.avatar {
-    width: 36px;
-}
-.userAvatarInfo {
-    height: 36px;
-    vertical-align: top;
-    margin: 0px;
-    padding: 0px;
-}
-.userAvatarInfo span {
-    display: inline-block;
-    height: 36px;
-    position: relative;
-    margin-right: 5px;
-    padding: 0px;
-    box-sizing: border-box;
-    vertical-align: middle;
-}
-.avatar img {
-    margin: 0px;
-    padding: 0px;
-    vertical-align: top;
-    height: 36px;
-    width: 36px;
-    border-radius: 50%;
-    box-sizing: border-box;
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    transition: 700ms;
-}
-.avatar:hover img {
-    width: 120px;
-    height: 120px;
-    max-width: 120px;
-    max-height: 120px;
-    transition: 700ms;
-}
-</style>
-
 <div id="dealbox" style="display: none;">
     <form class="form-horizontal" method="post" action="<?php echo url('Admin.UserGroup');?>">
         <button type="button" class="close" aria-hidden="true">&times;</button>
-        <h3 style="margin-top: 0px;">用户管理</h3>
-        <input type="hidden" id="user_id" name="user_id" value="0">
-        <input type="hidden" id="user_operation" name="opn" value="0">
-        <div class="input-group">
-            <div class="input-group-addon"><span>用户ID：</span></div>
-            <input type="text" class="form-control" id="in_user_id" name="uid">
+        <h3 class="margin-bottom-14 font-600 font-16">管理员设置</h3>
+        <input type="hidden" name="mem_id" value="0">
+        <input type="hidden" name="opt" value="add">
+        <div class="input-group margin-bottom-14">
+            <div class="input-group-addon"><span>名称：</span></div>
+            <input type="text" class="form-control" name="name" required="required" maxlength="30" value="" autocomplete="off">
         </div>
-        <div class="input-group">
-            <div class="input-group-addon"><span>姓名：</span></div>
-            <input type="text" class="form-control" id="user_name" name="name">
+        <div class="input-group margin-bottom-14">
+            <div class="input-group-addon"><span>昵称：</span></div>
+            <input type="text" class="form-control" name="nickname" maxlength="30" value="" autocomplete="off">
         </div>
-        <button type="submit" class="btn btn-primary btn-lg btn-block" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Processing">确认</button>
+        <div class="input-group margin-bottom-14">
+            <div class="input-group-addon"><span>手机号码：</span></div>
+            <input type="text" class="form-control" name="mobile" required="required" maxlength="30" value="" autocomplete="off">
+        </div>
+        <div class="input-group margin-bottom-14">
+            <div class="input-group-addon"><span>状态：</span></div>
+            <div class="form-control">
+                <div class="switch_botton status" data-status="1">
+                    <div class="switch_status on"></div>
+                </div>
+                <input type="hidden" name="status" value="1">
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary btn-lg btn-block save" data-loading-text="loading..">确认</button>
     </form>
 </div>
+<script type="text/javascript">
+$(function(){
+    ADMINER.init();
+})
+</script>
 <?php $this->load('Common.baseFooter');?>

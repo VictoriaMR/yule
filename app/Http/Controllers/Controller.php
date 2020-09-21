@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 class Controller 
 {
-    protected $tabs = [];
+    protected $tabs = '';
 
     protected function result($code, $data=[], $options=[])
     {
@@ -24,6 +24,16 @@ class Controller
         header('Content-Type:application/json; charset=utf-8');
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         exit();
+    }
+
+    protected function error($msg, $data = false)
+    {
+        return $this->result(10000, $data, $msg);
+    }
+
+    protected function success($msg, $data = true)
+    {
+        return $this->result(200, $data, $msg);
     }
 
     protected function assign($name = '', $value = '')

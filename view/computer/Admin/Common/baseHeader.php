@@ -16,6 +16,7 @@
 </head>
 <body>
 <script type="text/javascript">
+var API_URI = "<?php echo env('APP_DOMAIN');?>";
 var URI = "<?php echo url();?>";
 </script>
 <?php if (!empty($navArr)) { ?>
