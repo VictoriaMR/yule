@@ -22,7 +22,7 @@ class App
 		return self::instance();
 	}
 
-    public function send() 
+    public function send()
     {
         //路由解析
         $info = \frame\Router::$_route;
@@ -33,11 +33,11 @@ class App
 
         //公共样式
         if (!isAjax()) {
-            \frame\Html::addJs(['jquery.min', 'common'], true);
+            \frame\Html::addJs(['jquery.min', 'common', 'button'], true);
             \frame\Html::addCss(['common', 'font', 'space'], true);
             if ($info['class'] == 'Admin') {
                 \frame\Html::addCss(['acommon', 'bootstrap', 'plugin'], true);
-                \frame\Html::addJs(['acommon', 'bootstrap', 'button', 'modal', 'plugin'], true);
+                \frame\Html::addJs(['acommon', 'bootstrap', 'modal', 'plugin'], true);
             }
         }
         if (is_callable([self::autoload($class), $info['func']])) {

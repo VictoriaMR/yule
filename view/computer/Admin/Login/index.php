@@ -7,6 +7,7 @@
     </div>
     <div class="clear"></div>
     <form class="relative margin-top-40">
+        <input type="hidden" name="login_code" value="<?php echo $login_code;?>">
         <div id="login-error" style="display: none;">
             <div id="login-error-msg" class="left margin-left-4"></div>
         </div>

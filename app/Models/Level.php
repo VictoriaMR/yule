@@ -3,12 +3,12 @@
 namespace App\Models;
 use App\Models\Base as BaseModel;
 
-class Secret extends BaseModel
+class Level extends BaseModel
 {
     //表名
-    public $table = 'secret_key';
+    public $table = 'level';
     //主键
-    protected $primaryKey = 'sec_id';
+    protected $primaryKey = 'lev_id';
 
     public function getList()
     {

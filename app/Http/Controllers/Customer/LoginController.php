@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use frame\Html;
 use frame\Session;
@@ -13,7 +13,7 @@ class LoginController extends Controller
 		Html::addCss(['login']);
 		Html::addJs(['login']);
 		$loginCode = Str::random(6);
-		Session::set('admin_login_code', $loginCode);
+		Session::set('customer_login_code', $loginCode);
 		$this->assign('login_code', $loginCode);
 		return view();
 	}
@@ -28,10 +28,10 @@ class LoginController extends Controller
 		if (empty($password))
 			$this->result(10000, false, '密码不能为空');
 
-		// if ($loginCode != Session::set('admin_login_code'))
-		// 	$this->result(10000, false, '验证不通过');
+		if ($loginCode != Session::set('customer_login_code'))
+			$this->result(10000, false, '验证不通过');
 
-		$memberService = make('App/Services/Admin/MemberService');
+		$memberService = make('App/Services/Customer/MemberService');
 		$result = $memberService->loginByPassword($phone, $password);
 		if ($result)
 			$this->result(200, $result, '登录成功');
@@ -42,6 +42,6 @@ class LoginController extends Controller
 	public function logout()
 	{
 		Session::set('admin');
-		redirect('admin');
+		redirect('customer');
 	}
 }

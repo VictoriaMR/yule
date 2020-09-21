@@ -73,11 +73,9 @@
                 </td>
                 <td class="col-md-1 col-1"><?php echo $v['name_en'];?></td>
                 <td class="col-md-1 col-1">
-                    <?php if($v['status']){?>
-                    <div class="switch_botton status" data-status="1"><div class="switch_status on"></div></div>
-                    <?php }else{?>
-                    <div class="switch_botton status" data-status="0"><div class="switch_status off"></div></div>
-                    <?php }?>
+                    <div class="switch_botton status" data-status="<?php echo $value['status'];?>">
+                        <div class="switch_status <?php echo $value['status'] ? 'on' : 'off';?>"></div>
+                    </div>
                 </td>
                 <td class="col-md-2 col-2">
                     <div class="btn-group btn-group-sm sort-btn">
@@ -88,8 +86,8 @@
                     </div>
                 </td>
                 <td class="col-md-3 col-3">
-                    <button class="btn btn-primary btn-sm modify" type="button" ><span class="glyphicon glyphicon-edit"></span>&nbsp;修改</button>
-                    <button class="btn btn-danger btn-sm delete-btn" type="button" ><span class="glyphicon glyphicon-trash"></span>&nbsp;删除</button>
+                    <button class="btn btn-primary btn-sm modify-btn" type="button"><i class="glyphicon glyphicon-edit"></i>&nbsp;修改</button>
+                    <button class="btn btn-danger btn-sm delete-btn" type="button"><span class="glyphicon glyphicon-trash"></span>&nbsp;删除</button>
                 </td>
             </tr>
             <?php } ?>
