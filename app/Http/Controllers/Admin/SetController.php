@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-use App\Services\Admin\ControllerService;
 use frame\Html;
 
 class SetController extends Controller
 {
-	public function __construct(ControllerService $service)
+	public function __construct()
 	{
-		$this->baseService = $service;
 		parent::_initialize();
 	}
 
 	public function index()
 	{
+		$this->baseService = make('App/Services/Admin/ControllerService');
 		$opt = ipost('opt');
 		switch ($opt) {
 			case 'edit':
@@ -122,90 +121,119 @@ class SetController extends Controller
 			return $this->result(10000, $result, ['message' => '保存失败']);
 	}
 
-	public function site()
+	public function level()
 	{
 		$opt = ipost('opt');
-		if ($opt == 'compress')
-			$this->compress();
+		switch ($opt) {
+			case 'edit':
+				$this->editLevel();
+				break;
+		}
+		Html::addJs();
+		$levelService = make('App/Services/LevelService');
+		$list = $levelService->getList();
 
-		Html::addJs(['site']);
+		$this->assign('list', $list);
 
 		return view();
 	}
 
-	protected function compress()
+	protected function editLevel()
 	{
-		$type = ipost('type');
+		$id = ipost('lev_id');
+		$name = ipost('name', '');
+		$value = ipost('value', '');
 
-		if (!in_array($type, ['css', 'js']))
-			$this->result(10000, false, '参数不正确');
+		if (empty($name) || empty($value))
+			$this->error('参数不正确');
 
-		$data = ['admin', 'home'];
-		foreach ($data as $value) {
-			$path = ROOT_PATH.$value.'/'.$type;
-			if (!is_dir($path)) continue;
-			$data = $this->getFile($path);
-			if (empty($data)) continue;
-			foreach ($data as $v) {
-				if (strpos($v, 'jquery') !== false || strpos($v, 'bootstrap') !== false) continue;
-				$len = strrpos($v, '.');
-				$functionName = 'compress'.$type;
-				$this->$functionName($v, substr($v, 0, $len).'.min'.substr($v, $len));
-			}
+		$levelService = make('App/Services/LevelService');
+		if (!empty($id))
+			$res = $levelService->updateDataById($id, ['name'=>$name, 'value'=>$value]);
+		else
+			$res = $levelService->insertGetId(['name'=>$name, 'value'=>$value]);
+
+		if ($res) {
+			$levelService->deleteCache();
+			$this->success('设置成功');
 		}
-		$this->result(200, true, '压缩完成');
+		else
+			$this->error('设置失败');
 	}
 
-	protected function compressjs($jsFile, $newFile)
+	public function secretKey()
 	{
-		$file = fopen($jsFile, 'r');
-		
-		$js = '';
-		$kuai = false;
-		while(! feof($file)) {
-			$temp = trim(fgets($file));
-			if ($kuai && substr($temp, 0, 1) != '*') $kuai = false;
-			if ($kuai) continue;
-			if (substr($temp, 0, 2) == '/*' && substr($temp, -2, 2) == '*/') continue;
-			if (substr($temp, 0, 2) == '/*') $kuai = true;
-			if ($kuai) continue;
-			if (substr($temp, 0, 2) == '//') continue;
-			if (empty($temp)) continue;
-			$temp = preg_replace("/\s(?=\s)/", "\\1", $temp);
-			$temp = explode('//', $temp)[0];
-			$js .= $temp.PHP_EOL;
+		$opt = ipost('opt');
+		switch ($opt) {
+			case 'edit':
+				$this->editSecret();
+				break;
+			case 'delete':
+				$this->deleteSecret();
+				break;
+			case 'modify':
+				$this->modifySecret();
+				break;
 		}
-		//关闭被打开的文件
-		fclose($file);
-	  	return file_put_contents($newFile, trim($js));
+		Html::addJs();
+		$levelService = make('App/Services/SecretService');
+		$list = $levelService->getList();
+
+		$this->assign('list', $list);
+
+		return view();
 	}
 
-	protected function compresscss($cssFile, $newFile)
+	protected function editSecret()
 	{
-		$css = file_get_contents($cssFile);
-		//去除注释
-	  	$css = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css);
-	  	//去除多个空格
-	  	$css = preg_replace("/\s(?=\s)/", "\\1", $css);
-	  	//去除换行
-	  	$css = str_replace(["\r", "\n", "\t", ';}',': ', ' {', '{ ', '; '], ['', '', '', '}', ':', '{', '{', ';'], $css);
-	  	return file_put_contents($newFile, $css);
+		$id = ipost('sec_id');
+		$appid = ipost('appid', '');
+		$secret = ipost('secret', '');
+		$status = ipost('status', null);
+		$remark = ipost('remark', '');
+
+		$data = [];
+		if (!empty($appid))
+			$data['appid'] = $appid;
+		if (!empty($secret))
+			$data['secret'] = $secret;
+		if (!empty($remark))
+			$data['remark'] = $remark;
+		if (!is_null($status))
+			$data['status'] = $status;
+
+		if (empty($data))
+			$this->error('参数不正确');
+
+		$secretService = make('App/Services/SecretService');
+		if (!empty($id)) {
+			$res = $secretService->updateDataById($id, $data);
+		} else {
+			$data['create_at'] = $secretService->getTime();
+			$res = $secretService->insertGetId($data);
+		}
+
+		if ($res) {
+			$secretService->deleteCache();
+			$this->success('设置成功');
+		}
+		else
+			$this->error('设置失败');
 	}
 
-	protected function getFile($dir)
+	protected function deleteSecret()
 	{
-		$returnData = [];
-		if (is_dir($dir)) {
-			foreach (scandir($dir) as $value) {
-				if ($value == '.' || $value == '..') continue;
-				if (is_dir($dir.'/'.$value)) {
-					$returnData = array_merge($returnData, $this->getFile($dir.'/'.$value));
-				} else {
-					if (strpos($value, '.min.') !== false) continue;
-					$returnData[] = $dir.'/'.$value;
-				}
-			}
+		$id = (int) ipost('id');
+		if (empty($id))
+			return $this->result(10000, false, ['message'=>'缺失参数']);
+
+		$secretService = make('App/Services/SecretService');
+		$result = $secretService->deleteById($id);
+		if ($result) {
+			$secretService->deleteCache();
+			return $this->result(200, $result, ['message' => '删除成功']);
+		} else {
+			return $this->result(10000, $result, ['message' => '删除失败']);
 		}
-		return $returnData;
 	}
 }

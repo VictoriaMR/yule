@@ -26,10 +26,17 @@
 							</div>
 							<?php if (!empty($list)) {?>
 							<?php foreach ($list as $value) { ?>
+							<?php if (!empty($value['son'])) { ?>
 							<div class="feature item" data-feature-id="<?php echo $value['con_id'];?>" data-title="<?php echo $value['name'];?>" data-url="<?php echo $value['url'];?>">
 					            <img src="<?php echo $value['icon_url'];?>">
 					            <p class="open" style="display: none;"><?php echo $value['name'];?></p>
 					        </div>
+					    	<?php } else { ?>
+					    	<a class="feature item block" href="<?php echo $value['url'];?>">
+					            <img src="<?php echo $value['icon_url'];?>">
+					            <p class="open" style="display: none;"><?php echo $value['name'];?></p>
+					        </a>
+					        <?php } ?>
 					        <?php } ?>
 					    	<?php } ?>
 						</div>

@@ -1,0 +1,38 @@
+<?php $this->load('Common.baseHeader');?>
+<div id="login-bg"></div>
+<div class="container-10">
+    <div class="login-box login-password">
+        <div class="title text-center">
+            <a class="font-24 font-600" href="javascript:void(0);">代理登录</a>
+        </div>
+        <div class="clear"></div>
+        <form class="relative margin-top-40">
+            <input type="hidden" name="login_code" value="<?php echo $login_code;?>">
+            <div id="login-error" style="display: none;">
+                <div id="login-error-msg" class="left margin-left-4"></div>
+            </div>
+            <div class="margin-bottom-20">
+                <input type="input" class="input" name="phone" placeholder="账号" autocomplete="off">
+            </div>
+            <div class="margin-bottom-20">
+                <input type="password" class="input" name="password" placeholder="密码" autocomplete="off">
+            </div>
+            <div class="margin-bottom-20">
+                <div class="verify-wrap" id="verify-wrap">
+                    <div class="drag-progress dragProgress"></div>
+                    <span class="drag-btn"></span>
+                    <span class="fix-tips fixTips">拖动滑块验证</span>
+                    <span class="verify-msg sucMsg">验证通过</span>
+                </div>
+            </div>
+            <button id="login-btn" type="button" class="btn primary" data-loading-text="Loading...">登录</button>
+        </form>
+    </div>
+    
+</div>
+<script type="text/javascript">
+$(function(){
+    LOGIN.init();
+});
+</script>
+<?php $this->load('Common.baseFooter');?>

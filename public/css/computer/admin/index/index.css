@@ -54,6 +54,7 @@
 
 #left-one .feature {
     width: 100%;
+    display: block;
     text-align: left;
     height: 40px;
     line-height: 40px;

@@ -11,6 +11,7 @@ class MemberService extends BaseService
     const TOKEN_EXPIRED = 60*60*8;
     const REFRESH_TOKEN_EXPIRED = 60*60*24*15;
     const SPECIAL_MEMBER = [1000000000];
+    const PASSWORD_SALT = 'baiwangyule';
 
 	public function __construct(Member $model)
     {
@@ -55,7 +56,7 @@ class MemberService extends BaseService
     public function getInfo($memberId)
     {
         if (empty($memberId)) return [];
-        $info = $this->loadData($memberId, ['mem_id', 'name', 'nickname', 'mobile', 'avatar', 'sex']);
+        $info = $this->loadData($memberId);
         $info['avatar'] = !empty($info['avatar']) ? mediaUrl('upload'.DS.$info['avatar']) : $this->getDefaultAvatar($memberId, $info['sex']);
         return $info;
     }
@@ -108,22 +109,22 @@ class MemberService extends BaseService
         return $this->baseModel->isExistCode($code);
     }
 
+    public function isExistMobile($mobile, $noIn = '')
+    {
+        if (empty($mobile)) return false;
+        $this->baseModel->where('mobile', $mobile);
+        if (!empty($noIn))
+            $this->baseModel->where('mem_id', '<>', (int)$noIn);
+        return $this->baseModel->count() > 0;
+    }
+
     public function login($memberId, $type=1)
     {
         if (empty($memberId)) return false;
-
-        $info = $this->loadData($memberId);
+        $info = $this->getInfoCache($memberId);
         if (empty($info)) return false;
         $key = $this->getTypeText($type);
-        $data = [
-            'member_id' => $info['mem_id'],
-            'name' => $info['name'],
-            'nickname' => $info['nickname'],
-            'sex' => $info['sex'] ?? 0,
-            'avatar' => $info['avatar'],
-            'mobile' => $info['mobile'],
-        ];
-        \frame\Session::set($key, $data);
+        \frame\Session::set($key, $info);
         return true;
     }
 
@@ -157,6 +158,11 @@ class MemberService extends BaseService
     public function getInfoByPhone($phone)
     {
         return $this->baseModel->where('mobile', $phone)->find();
+    }
+
+    public function getCode($len = 32)
+    {
+        return $this->baseModel->getCode($len);
     }
 
     public function checkPassword($inPassword, $sourcePassword)
@@ -264,6 +270,7 @@ class MemberService extends BaseService
         if (!empty($list)) {
             foreach ($list as $key => $value) {
                 $value['avatar'] = !empty($value['avatar']) ? url('upload'.DS.$value['avatar']) : $this->getDefaultAvatar($value['mem_id'], $value['sex']);
+                unset($value['password']);
                 $list[$key] = $value;
             }
         }

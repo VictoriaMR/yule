@@ -13,6 +13,7 @@ class AdminerController extends Controller
 
 	public function index()
 	{
+		Html::addCss();
 		$page = iget('page', 1);
 		$size = iget('size', 20);
 		$keyword = iget('keyword', '');

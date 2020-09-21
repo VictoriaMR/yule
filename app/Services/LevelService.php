@@ -2,13 +2,13 @@
 
 namespace App\Services;
 use App\Services\Base as BaseService;
-use App\Models\Secret;
+use App\Models\Level;
 
-class SecretService extends BaseService
+class LevelService extends BaseService
 {	
-    const LIST_CACHE_KEY = 'SECRET_LIST_CACHE';
+    const LIST_CACHE_KEY = 'lEVEL_LIST_CACHE';
 
-    public function __construct(Secret $model)
+    public function __construct(Level $model)
     {
         $this->baseModel = $model;
     }
@@ -26,13 +26,6 @@ class SecretService extends BaseService
     public function getList()
     {
         return $this->baseModel->getList();
-    }
-
-    public function getOne()
-    {
-        $list = $this->getListCache();
-        if (empty($list)) return [];
-        return array_column($list, null, 'status')[1] ?? [];
     }
 
     public function deleteCache()

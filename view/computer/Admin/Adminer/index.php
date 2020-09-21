@@ -67,47 +67,6 @@
     </div>
     <?php echo $paginator;?>
 </div>
-<style type="text/css">
-.avatar {
-    width: 36px;
-}
-.userAvatarInfo {
-    height: 36px;
-    vertical-align: top;
-    margin: 0px;
-    padding: 0px;
-}
-.userAvatarInfo span {
-    display: inline-block;
-    height: 36px;
-    position: relative;
-    margin-right: 5px;
-    padding: 0px;
-    box-sizing: border-box;
-    vertical-align: middle;
-}
-.avatar img {
-    margin: 0px;
-    padding: 0px;
-    vertical-align: top;
-    height: 36px;
-    width: 36px;
-    border-radius: 50%;
-    box-sizing: border-box;
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    transition: 700ms;
-}
-.avatar:hover img {
-    width: 120px;
-    height: 120px;
-    max-width: 120px;
-    max-height: 120px;
-    transition: 700ms;
-}
-</style>
-
 <div id="dealbox" style="display: none;">
     <form class="form-horizontal" method="post" action="<?php echo url('Admin.UserGroup');?>">
         <button type="button" class="close" aria-hidden="true">&times;</button>

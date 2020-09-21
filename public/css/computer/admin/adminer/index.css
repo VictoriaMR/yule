@@ -1,0 +1,38 @@
+.avatar {
+    width: 36px;
+}
+.userAvatarInfo {
+    height: 36px;
+    vertical-align: top;
+    margin: 0px;
+    padding: 0px;
+}
+.userAvatarInfo span {
+    display: inline-block;
+    height: 36px;
+    position: relative;
+    margin-right: 5px;
+    padding: 0px;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+.avatar img {
+    margin: 0px;
+    padding: 0px;
+    vertical-align: top;
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    transition: 700ms;
+}
+.avatar:hover img {
+    width: 120px;
+    height: 120px;
+    max-width: 120px;
+    max-height: 120px;
+    transition: 700ms;
+}

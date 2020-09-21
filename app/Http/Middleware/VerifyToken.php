@@ -21,7 +21,6 @@ class VerifyToken
         //检查登录状态
         switch ($request['class']) {
             case 'Home':
-            // dd(\frame\Session::get('home_member_id'));
                 if (empty(\frame\Session::get('home_member_id')))
                     redirect(url('login'));
                 break;
