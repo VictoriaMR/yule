@@ -7,6 +7,7 @@ class VerifyToken
     protected static $except = [
         'Home/Login/index',
         'Home/Login/login',
+        'Home/Bjl/index',
         'Customer/Login/index',
         'Customer/Login/login',
         'Admin/Login/index',
