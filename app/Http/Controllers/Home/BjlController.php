@@ -10,6 +10,8 @@ class BjlController extends Controller
 	{
 		Html::addCss();
 		Html::addJs();
+
+		$this->assign('_title', '百家乐');
 		
 		return view();
 	}

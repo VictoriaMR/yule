@@ -16,6 +16,9 @@ input {-webkit-appearance: none; -moz-appearance: none; outline: 0; border: none
 .bg-f5 {background: #f5f5f5;}
 .bg-f8 {background: #f8f8f8;}
 .flex {display: flex;}
+.flex1{flex: 1;}
+.right{float: right;}
+.left{float: left;}
 .container {width:100%;padding: 0 0.05rem;}
 .container-10 {width:100%;padding: 0 0.10rem;}
 .btn {display: inline-block; border-radius: 0.04rem; padding: 0 0.10rem; height: 0.40rem; line-height: 0.38rem; font-size: 0.14rem;width: 100%; border: 0.01rem solid transparent;cursor: pointer;}

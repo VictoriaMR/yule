@@ -1,0 +1,154 @@
+.bigground {
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+}
+.loadingbox {
+	position: absolute;
+	bottom: 18%;
+	width: 80%;
+	left: 10%;
+	height: 0.22rem;
+	overflow: hidden;
+}
+.loadingbox img {
+	width: 80vw;
+}
+.loading-text {
+	position: absolute;
+	color: #f4ff00;
+	font-size: 0.14rem;
+	font-weight: 600;
+	width: 100%;
+	text-align: center;
+	bottom: 23%;
+}
+.loadingbox .progress {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0;
+	border-top-right-radius: 0.11rem;
+	border-bottom-right-radius: 0.11rem;
+	overflow: hidden;
+	height: 0.22rem;
+}
+.loadingbox .progress img {
+	max-width: none;
+}
+#loading-page {
+	background: url('/image/common/loading.png') no-repeat; 
+	background-size: 100% 100%; 
+	background-attachment: fixed;
+}
+#main-page {
+	background: url('/image/common/bg_bj.png') no-repeat; 
+	background-size: 100% 100%; 
+	background-attachment: fixed;
+}
+
+#main-page .top {
+	height: 0.28rem;
+	width: 76%;
+	margin: 0 auto;
+	background: url('/image/common/img_1.png') no-repeat; 
+	background-size: 100% 100%;
+}
+#main-page .number-box {
+	margin: 0.06rem 0 0.15rem 0;
+	text-align: center;
+}
+#main-page .number-box span {
+	color: #fff;
+	font-size: 0.13rem;
+	font-weight: 600;
+	text-align: center;
+	display: inline-block;
+	height: 0.2rem;
+	width: 0.2rem;
+	border-radius: 50%;
+	line-height: 0.19rem;
+	margin-right: 0.1rem;
+}
+#number-1 {background: #0051ff;}
+#number-2 {background: #ff9900;}
+#number-3 {background: #31a32c;}
+#number-4 {background: #c87d7d;}
+#number-5 {background: #7d974f;}
+#main-page .gongao {
+	height: 0.25rem;
+	width: 68%;
+	margin: 0 auto;
+	background: url(/image/common/gg.png) no-repeat; 
+	background-size: 100% 100%;
+}
+#main-page .footer {
+	height: 0.66rem;
+	width: 100%;
+	background: url(/image/common/img_bjk.png) no-repeat; 
+	background-size: 100% 100%;
+	position: fixed;
+	bottom: 0;
+}
+.icon48 {
+	display: block;
+    background: url(/image/common/bjl.png) no-repeat;
+    cursor: pointer;
+    background-size: 200px 170px;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+}
+.icon-cancel {
+	background-position: -152px 0;
+	right: 0.10rem;
+}
+#main-page .footer .chip {
+	padding-top: 0.15rem;
+	text-align: right;
+	font-size: 0;
+	justify-content: flex-end;
+}
+#main-page .footer .chip .icon36 {
+	margin-right: 0.08rem;
+}
+.icon36 {
+	display: block;
+    background: url(/image/common/icon.png) no-repeat;
+    cursor: pointer;
+    background-size: 450px 450px;
+    border: 1px solid #5a0b14;
+    height: 38px;
+    width: 38px;
+}
+.icon-chip5000 {
+	background-position: -280.5px -357px;
+}
+.icon-chip1000 {
+	background-position: -311px -402px;
+}
+.icon-chip100 {
+	background-position: -385.1px -268px;
+}
+.icon-chip50 {
+	background-position: -316.8px -329.3px;
+}
+.icon-chip10 {
+	background-position: -278px -284.5px;
+}
+.icon36.select{
+	border-color: #f6d54e;
+	box-shadow: 0px 0px 8px rgba(246, 213, 78, 1);
+    border-radius: 50%;
+}
+#main-page .footer .icon-cancel {
+	margin-top: 0.1rem;
+}
+
+#main-page .footer .id {
+	width: 100%;
+	height: 0.23rem;
+	background-color: #3a060b;
+}
+
+
