@@ -28,7 +28,7 @@ class FfcService extends BaseService
             $time = (string)$content->row['opentime'];
             $time = strtotime($time);
             if (strtotime(date('Y-m-d H:i', time())) != $time) {
-                usleep(300);
+                usleep(300000);
                 continue;
             }
             $qishu = date('Ymd', $time).(str_pad(date('H', $time)*60 + date('i', $time), 4, '0', STR_PAD_LEFT));
