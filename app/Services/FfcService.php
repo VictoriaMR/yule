@@ -21,9 +21,22 @@ class FfcService extends BaseService
     {
         //当前期数
         $status = true;
+        $count = 0;
         while ($status) {
             $content = Http::post($this->_url);
-            if (!empty($content['errno'])) continue;
+            if (!empty($content['errno'])) {
+                if ($count > 30) {
+                    $arr = [];
+                    $qishu = date('Ymd', time()).(str_pad(date('H', time())*60 + date('i', time()), 4, '0', STR_PAD_LEFT));
+                    $arr['ffc_key'] = $qishu;
+                    $arr['status'] = 0;
+                    $this->addIfNotExist($qishu, $arr, false);
+                    exit();
+                }
+                $count ++;
+                usleep(300000);
+                continue;
+            }
             $content = simplexml_load_string($content);
             $time = (string)$content->row['opentime'];
             $time = strtotime($time);
@@ -40,6 +53,7 @@ class FfcService extends BaseService
             $arr .= substr($number, -4);
             $arr = array_combine($this->_fields, str_split($arr));
             $arr['ffc_key'] = $qishu;
+            $arr['status'] = 1;
             $arr['number'] = $number;
             $arr['difference'] = $diff;
             $this->addIfNotExist($qishu, $arr);
@@ -48,8 +62,12 @@ class FfcService extends BaseService
         return true;
     }
 
-    protected function addIfNotExist($qishu, array $data)
+    protected function addIfNotExist($qishu, array $data, $checkout = true)
     {
-        return $this->baseModel->addIfNotExist($qishu, $data);
+        $res = $this->baseModel->addIfNotExist($qishu, $data);
+        if ($res && $checkout) {
+
+        }
+        return $res;
     }
 }
