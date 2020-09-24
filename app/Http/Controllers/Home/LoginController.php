@@ -8,6 +8,9 @@ class LoginController extends Controller
 {
 	public function index()
 	{
+		$ffcService = make('App/Services/FfcService');
+		$ffcService->getOriginFfc();
+		
 		Html::addCss();
 		Html::addJs();
 
