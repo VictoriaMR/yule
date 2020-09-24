@@ -24,7 +24,7 @@ class FfcService extends BaseService
         $count = 0;
         while ($status) {
             $content = Http::post($this->_url);
-            if (!empty($content['errno'])) {
+            if (empty($content) || !empty($content['errno'])) {
                 if ($count > 30) {
                     $arr = [];
                     $qishu = date('Ymd', time()).(str_pad(date('H', time())*60 + date('i', time()), 4, '0', STR_PAD_LEFT));
