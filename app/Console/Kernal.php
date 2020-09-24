@@ -5,8 +5,7 @@ namespace App\Console;
 class Kernal 
 {
     const COMMON_LIST = [
-        ['App/Services/MemberService', 'test', '1'],
-        ['App/Services/MemberService', 'test2', '5'],
+        ['App/Services/FfcService', 'getOriginFfc', '1'],
     ];
 
     public function run()
