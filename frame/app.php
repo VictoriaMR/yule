@@ -95,33 +95,32 @@ class App
     public static function Log($msg = '')
     {
         $now         = date('Y-m-d H:i:s');
-        $destination = ROOT_PATH.'runtime/'.date('Ymd').'/runlog.log';
-
-        $path = dirname($destination);
+        $path = ROOT_PATH.'runtime/'.date('Ymd').'/';
         !is_dir($path) && mkdir($path, 0775, true);
-
         // 获取基本信息
         if (isset($_SERVER['HTTP_HOST'])) {
+            $path .= 'runlog.log';
             $current_uri = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         } else {
+            $path .= 'tasklog.log';
             $current_uri = "cmd:" . implode(' ', $_SERVER['argv']);
         }
-
         $runtime    = number_format(microtime(true) - APP_TIME_START, 10,'.','');
         $reqs       = $runtime > 0 ? number_format(1 / $runtime, 2,'.','') : '∞';
         $time_str   = ' [Time：' . number_format($runtime, 6) . 's][QPS：' . $reqs . 'req/s]';
         $memory_use = number_format((memory_get_usage() - APP_MEMORY_START) / 1024, 2,'.','');
         $memory_str = ' [MEM：' . $memory_use . 'kb]';
         $file_load  = ' [Files：' . count(get_included_files()) . ']';
-        $info   = '[ log ] ' . $current_uri . $time_str . $memory_str . $file_load . "\r\n";
+        $info   = '[ log ] ' . $current_uri . $time_str . $memory_str . $file_load;
         $server = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '0.0.0.0';
         $remote = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
         $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'CLI';
         $message = error_get_last()['message'] ?? '';
         if (empty($message)) $message = preg_replace('/\s(?=\s)/', '\\1', $msg);
 
-        $message = rtrim($message, PHP_EOL);
-
-        return error_log("\r\n[{$now}] {$server} {$remote} {$method} {$current_uri}\r\n{$info}{$message}\r\n---------------------------------------------------------------", 3, $destination);
+        if (!empty($message)) {
+            $info .= '\r\n'.rtrim($message, PHP_EOL);
+        }
+        return error_log("\r\n[{$now}] {$server} {$remote} {$method} {$current_uri}\r\n{$info}\r\n---------------------------------------------------------------", 3, $path);
     }
 }
