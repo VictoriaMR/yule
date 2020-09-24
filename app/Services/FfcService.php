@@ -7,8 +7,8 @@ use frame\Http;
 
 class FfcService extends BaseService
 {	
-    protected $_url = 'http://www.qq-online.com/openline';
-    protected $_fields = ['fcc_num1', 'fcc_num2', 'fcc_num3', 'fcc_num4', 'fcc_num5'];
+    protected $_url = 'http://api.tenenct.com/api/tencent.php?key=test8888&type=xml';
+    protected $_fields = ['ffc_num1', 'ffc_num2', 'ffc_num3', 'ffc_num4', 'ffc_num5'];
 
     const FFC_CACHE_KEY = 'FFC_NOW_QISHU_CACHE';
 
@@ -19,15 +19,30 @@ class FfcService extends BaseService
 
     public function getOriginFfc()
     {
-        $qishu = date('Ymd').(str_pad(date('H')*60 + date('i'), 4, '0', STR_PAD_LEFT));
+        //当前期数
         $status = true;
         while ($status) {
-            $content = Http::get($this->_url);
+            $content = Http::post($this->_url);
             if (!empty($content['errno'])) continue;
-            $content = json_decode($content, true);
-            $content = array_column($content['listData'], 'opennum', 'issue');
-            if (empty($content[$qishu])) continue;
-            $this->addIfNotExist($qishu, array_combine($this->_fields, explode(',', $content[$qishu])));
+            $content = simplexml_load_string($content);
+            $time = (string)$content->row['opentime'];
+            $time = strtotime($time);
+            if (strtotime(date('Y-m-d H:i', time())) != $time) {
+                usleep(300);
+                continue;
+            }
+            $qishu = date('Ymd', $time).(str_pad(date('H', $time)*60 + date('i', $time), 4, '0', STR_PAD_LEFT));
+            $number = (int)$content->row['number'];
+            $diff = (int)$content->row['difference'];
+            if (empty($number) || empty($time)) continue;
+            $count = array_sum(str_split($number)); 
+            $arr = substr($count, -1);
+            $arr .= substr($number, -4);
+            $arr = array_combine($this->_fields, str_split($arr));
+            $arr['ffc_key'] = $qishu;
+            $arr['number'] = $number;
+            $arr['difference'] = $diff;
+            $this->addIfNotExist($qishu, $arr);
             $status = false;
         }
         return true;
