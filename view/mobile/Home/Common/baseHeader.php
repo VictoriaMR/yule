@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-cmn-Hans">
 <head>
     <title><?php echo $_title ?? '众诚娱乐';?></title>
      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

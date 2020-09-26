@@ -1,6 +1,6 @@
 *{margin:0;outline:0 none;padding:0;-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
 html {font-size: 100px;}
-body,button,input,select,textarea{line-height:1.4;color:#333; font-family: 'Open Sans', sans-serif, 'SimSun';font-size:0.13rem;}
+body,button,input,select,textarea{line-height:1.4;color:#333; font-family: -apple-system-font, sans-serif;font-size:0.13rem;}
 ul,ol{list-style:none}
 h1,h2,h3,h4,h5,h6{font-weight: normal;}
 a{text-decoration:none;color:#3c3c3c}
@@ -19,6 +19,7 @@ input {-webkit-appearance: none; -moz-appearance: none; outline: 0; border: none
 .flex1{flex: 1;}
 .right{float: right;}
 .left{float: left;}
+.main {width: 100vw; height: 100vh; position: relative; margin: 0 auto; font-size: 0; text-align: center}
 .container {width:100%;padding: 0 0.05rem;}
 .container-10 {width:100%;padding: 0 0.10rem;}
 .btn {display: inline-block; border-radius: 0.04rem; padding: 0 0.10rem; height: 0.40rem; line-height: 0.38rem; font-size: 0.14rem;width: 100%; border: 0.01rem solid transparent;cursor: pointer;}
@@ -26,9 +27,13 @@ input {-webkit-appearance: none; -moz-appearance: none; outline: 0; border: none
 .btn-green {background: #08bf62; color: #fff; border-color: #08bf62; }
 .font-30 {font-size: 0.30rem;}
 .table {display: table;}
-.table-cell{display: table-cell;vertical-align: middle;text-align: center;line-height: 0;}
 .loading {animation: loading 2s linear infinite;}
 .input{height:0.40rem;width:100%;border:0.01rem solid #f1eeee;padding:0 0.10rem;font-size:0.14rem;border-radius:0.04rem}
+.relative{position: relative;}
+.absolute{position: absolute;}
+.clear{clear: both;}
+.table {display: table;font-size: 0;height: 100%;width: 100%;}
+.table-cell {display: table-cell;vertical-align: middle;text-align: center;height: 100%;line-height: 0;}
 @keyframes loading{
 	0%{-webkit-transform:rotate(0deg);}
 	25%{-webkit-transform:rotate(90deg);}
