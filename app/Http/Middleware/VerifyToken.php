@@ -16,6 +16,7 @@ class VerifyToken
 
     public function handle($request)
     {
+        return false;
         if (in_array(implode('/', $request), self::$except))
             return true;
 

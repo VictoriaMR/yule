@@ -64,6 +64,17 @@
 					<img src="<?php echo mediaUrl('image/common/rule.png');?>">
 				</a>
 			</div>
+			<div id="jiangqubox">
+				<div class="three-item-box">
+					<div class="item xian-item"></div>
+					<div class="item he-item"></div>
+					<div class="item zhuan-item"></div>
+				</div>
+				<div class="two-item-box">
+					<div class="item"></div>
+					<div class="item"></div>
+				</div>
+			</div>
 			<div class="footer">
 				<table width="100%" height="100%">
 					<tr>

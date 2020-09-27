@@ -186,3 +186,40 @@
 	display: block;
 	margin-bottom: 0.15rem;
 }
+#jiangqubox {
+	position: absolute;
+	width: 74%;
+	left: 13%;
+	height: 39.5%;
+	top: 37%;
+	background: #fff;
+	opacity: 0;
+}
+#jiangqubox .three-item-box {
+	height: 61%;
+	width: 100%;
+}
+#jiangqubox .three-item-box .item {
+	display: inline-block;
+	cursor: pointer;
+	height: 100%;
+}
+#jiangqubox .three-item-box .item.xian-item{
+	width: 33.3%;
+}
+#jiangqubox .three-item-box .item.he-item{
+	width: 35%;
+}
+#jiangqubox .three-item-box .item.zhuan-item{
+	width: calc(100% - 33.3% - 35%);
+}
+#jiangqubox .two-item-box {
+	height: 39%;
+	width: 100%;
+}
+#jiangqubox .two-item-box .item {
+	cursor: pointer;
+	width: 50%;
+	display: inline-block;
+	height: 100%;
+}

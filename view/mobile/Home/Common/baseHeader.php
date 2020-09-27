@@ -16,4 +16,5 @@
 <body>
 <script type="text/javascript">
 var URI = "<?php echo url();?>";
+var DOMAIN = "<?php echo env('APP_DOMAIN');?>"
 </script>
