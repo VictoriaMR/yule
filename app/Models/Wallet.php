@@ -10,14 +10,16 @@ class Wallet extends BaseModel
     //主键
     protected $primaryKey = 'wallet_id';
 
-    public function incrementByKey($key, $money, $data=[])
+    public function incrementByMemId($memId, $money, $data=[])
     {
-    	if (empty($key) || empty($money)) return false;
+        $memId = (int) $memId;
+        $money = (int) $money;
+    	if (empty($memId) || empty($money)) return false;
     	$logModel = make('App/Models/WalletLog');
     	$this->begin();
-    	$this->where('wallet_key', $key)->increment('subtotal', (int) $money);
-    	$data['wallet_key'] = $key;
-    	$data['subtotal'] = (int) $money;
+    	$this->where('mem_id', $memId)->increment('subtotal', $money);
+        $data['mem_id'] = $memId;
+    	$data['subtotal'] = $money;
     	$data['type'] = $logModel::TYPE_INCREMENT;
     	$data['create_at'] = $this->getTime();
     	$logModel->insert($data);
@@ -25,14 +27,16 @@ class Wallet extends BaseModel
     	return true;
     }
 
-    public function decrementByKey($key, $money, $data=[])
+    public function decrementByMemId($memId, $money, $data=[])
     {
-    	if (empty($key) || empty($money)) return false;
+        $memId = (int) $memId;
+        $money = (int) $money;
+    	if (empty($memId) || empty($money)) return false;
     	$logModel = make('App/Models/WalletLog');
     	$this->begin();
-    	$this->where('wallet_key', $key)->decrement('subtotal', (int) $money);
+    	$this->where('mem_id', $memId)->decrement('subtotal', $money);
     	$data['wallet_key'] = $key;
-    	$data['subtotal'] = (int) $money;
+    	$data['subtotal'] = $money;
     	$data['type'] = $logModel::TYPE_DECREMENT;
     	$data['create_at'] = $this->getTime();
     	$logModel->insert($data);
@@ -40,20 +44,25 @@ class Wallet extends BaseModel
     	return true;
     }
 
-    public function checkMoney($key, $money)
+    public function checkMoney($memId, $money)
     {
-    	if (empty($key) || empty($money)) return false;
-    	return $this->where('wallet_key', $key)->where('subtotal', '>=', (int) $money)->count() > 0;
+        $memId = (int) $memId;
+        $money = (int) $money;
+    	if (empty($memId) || empty($money)) return false;
+    	return $this->where('mem_id', $memId)->where('balance', '>=', (int) $money)->count() > 0;
     }
 
-    public function existKey($key)
+    public function exist($memId)
     {
-    	if (empty($key)) return false;
-    	return $this->where('wallet_key', $key)->count() > 0;
+        $memId = (int) $memId;
+    	if (empty($memId)) return false;
+    	return $this->where('mem_id', $memId)->count() > 0;
     }
 
-    public function getInfo($key)
+    public function getInfo($memId)
     {
-        return $this->where('wallet_key', $key)->find();
+        $memId = (int) $memId;
+        if (empty($memId)) return false;
+        return $this->where('mem_id', (int) $memId)->find();
     }
 }

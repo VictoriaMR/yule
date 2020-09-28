@@ -7,6 +7,7 @@ class WalletLog extends BaseModel
 {
 	const TYPE_INCREMENT = 0;
 	const TYPE_DECREMENT = 1;
+	const ENTITY_TYPE_BLING = 1;
 
     //表名
     public $table = 'wallet_log';

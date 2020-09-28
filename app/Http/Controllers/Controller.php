@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 class Controller 
 {
     protected $tabs = '';
+    protected $mem_id = 0;
 
     protected function result($code, $data=[], $options=[])
     {
@@ -41,21 +42,8 @@ class Controller
         return \frame\View::getInstance()->assign($name, $value);
     }
 
-    protected function _initialize()
+    protected function _init()
     {
-        if (isAjax()) return false;
-
-        $info = \frame\Router::$_route;
-        $controllerService = \App::make('App\Services\Admin\ControllerService');
-        $data = $controllerService->getListByParentName($info['path']);
-        if (!empty($data['name'])) 
-            $navArr[] = $data['name'];
-        if (!empty($data['son'][$info['func']]))
-            $navArr[] = $data['son'][$info['func']]['name'];
-
-        $this->assign('navArr', $navArr ?? []);
-        $this->assign('path', $info['path'] ?? '');
-        $this->assign('func', $info['func'] ?? '');
-        $this->assign('tabs', $data['son'] ?? []);
+        $this->mem_id = \frame\Session::get('home_mem_id');
     }
 }
