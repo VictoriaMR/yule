@@ -34,6 +34,7 @@ input {-webkit-appearance: none; -moz-appearance: none; outline: 0; border: none
 .clear{clear: both;}
 .table {display: table;font-size: 0;height: 100%;width: 100%;}
 .table-cell {display: table-cell;vertical-align: middle;text-align: center;height: 100%;line-height: 0;}
+.pop-tips{background: #000000; opacity:0.8; padding: 0.10rem 0.20rem; width:auto; max-width: 85%; font-size:0.12rem; line-height: 0.14rem; color:#FFFFFF; position: fixed; display: none; border-radius: 0.05rem; z-index: 10005; }
 @keyframes loading{
 	0%{-webkit-transform:rotate(0deg);}
 	25%{-webkit-transform:rotate(90deg);}

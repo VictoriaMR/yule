@@ -25,7 +25,7 @@ class BjlController extends Controller
 		$data = [
 			'nickname' => $info['nickname'] ?? '',
 			'avatar' => $info['avatar'] ?? '',
-			'balance' => $data['balance'] ?? 0.00,
+			'balance' => (int) ($data['balance'] ?? 0),
 		];
 
 		$this->assign('info', $data);
@@ -40,6 +40,7 @@ class BjlController extends Controller
 		if (empty($client_id)) {
 			$this->error(['message'=>'param error', 'type'=>'init']);
 		}
+		dd($this->mem_id);
 		//绑定客户端地址
 		Gateway::bindUid($client_id, $this->mem_id);
 		//获取游戏状态
@@ -61,7 +62,7 @@ class BjlController extends Controller
 		//获取账户
 		$walletService = make('App/Services/WalletService');
 		$data = $walletService->getInfo($this->mem_id);
-		$data = ['balance' = $data['balance']];
+		$data = ['balance' => (int) $data['balance']];
 		$this->success('下注成功', $data);
 	}
 }

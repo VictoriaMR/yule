@@ -41,3 +41,26 @@ var VERIFY = {
 		return reg.test(input);
 	}
 };
+var tipsinterval = null;
+var POP = {
+	tips:function(text, time){
+        if(typeof time == 'undefined') {
+            time = 2000;
+        }
+        clearInterval(tipsinterval);
+        if($('.pop-tips').length==0){
+            $('body').append('<div class="pop-tips"></div>');
+        }
+        $('.pop-tips').html(text);
+        $('.pop-tips').show();
+        var tips_width= $('.pop-tips').width();
+        var win_width = $(window).width();
+        var tips_height = $('.pop-tips').height();
+        var win_height = $(window).height();
+        $('.pop-tips').css('left', (win_width-tips_width)/2-20);
+        $('.pop-tips').css('top', (win_height-tips_height)/2-10);
+        tipsinterval = setInterval(function(){
+            $('.pop-tips').hide();
+        }, time);
+    }
+};

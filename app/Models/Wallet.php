@@ -17,7 +17,7 @@ class Wallet extends BaseModel
     	if (empty($memId) || empty($money)) return false;
     	$logModel = make('App/Models/WalletLog');
     	$this->begin();
-    	$this->where('mem_id', $memId)->increment('subtotal', $money);
+    	$this->where('mem_id', $memId)->increment('subtotal,balance', $money);
         $data['mem_id'] = $memId;
     	$data['subtotal'] = $money;
     	$data['type'] = $logModel::TYPE_INCREMENT;
@@ -34,8 +34,8 @@ class Wallet extends BaseModel
     	if (empty($memId) || empty($money)) return false;
     	$logModel = make('App/Models/WalletLog');
     	$this->begin();
-    	$this->where('mem_id', $memId)->decrement('subtotal', $money);
-    	$data['wallet_key'] = $key;
+    	$this->where('mem_id', $memId)->decrement('balance', $money);
+        $data['mem_id'] = $memId;
     	$data['subtotal'] = $money;
     	$data['type'] = $logModel::TYPE_DECREMENT;
     	$data['create_at'] = $this->getTime();

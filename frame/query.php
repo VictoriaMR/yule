@@ -227,8 +227,13 @@ Class Query
 	public function increment($value, $num = 1) 
 	{
 		$this->analyzeWhere();
+		$value = explode(',', $value);
+		$str = '';
+		foreach ($value as $v) {
+			$str .= ','.$v.'='.$v.'+'.$num;
+		}
 		if (empty($this->_whereStr)) return false;
-		$sql = sprintf('UPDATE %s SET %s WHERE %s', $this->_table, $value.'='.$value.' + '.$num, $this->_whereStr);
+		$sql = sprintf('UPDATE %s SET %s WHERE %s', $this->_table,trim($str, ','), $this->_whereStr);
 		return $this->getQuery($sql, $this->_param);
 	}
 

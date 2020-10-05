@@ -36,7 +36,7 @@ class Gambling extends BaseModel
 		$data = ['creater' => $memId];
 		$data['entity_type'] = $walletLog::ENTITY_TYPE_BLING;
 		$data['entity_id'] = $id;
-		$wallet->incrementByMemId($decrementByMemId, $amount, $data);
+		$wallet->decrementByMemId($memId, $amount, $data);
 		$this->commit();
 		return true;
     }

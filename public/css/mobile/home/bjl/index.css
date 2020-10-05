@@ -141,7 +141,7 @@
 }
 #main-page .footer .userinfo .item {
 	width: 100%;
-	padding: 0 0.08rem;
+	padding: 0 0.05rem 0 0.12rem;
 	background: #3a060b;
 	border-top-left-radius: 0.1rem;
     border-bottom-left-radius: 0.1rem;
@@ -162,6 +162,8 @@
 	position: absolute;
 	margin-top: -0.2rem;
 	margin-left: -0.1rem;
+	border-radius: 50%;
+    overflow: hidden;
 }
 
 .icon-right-box {
@@ -193,7 +195,10 @@
 	height: 39.5%;
 	top: 37%;
 	background: #fff;
-	opacity: 0;
+	background-color:rgb(255,255,255);
+	background-color:rgba(255,255,255,0);
+	filter: alpha(opacity=0);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 }
 #jiangqubox .three-item-box {
 	height: 61%;

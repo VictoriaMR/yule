@@ -45,5 +45,6 @@ class Controller
     protected function _init()
     {
         $this->mem_id = \frame\Session::get('home_mem_id');
+        $this->mem_id = 1000000000;
     }
 }

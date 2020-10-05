@@ -57,9 +57,19 @@ class MemberService extends BaseService
     {
         if (empty($memberId)) return [];
         $info = $this->loadData($memberId);
-        $info['avatar'] = !empty($info['avatar']) ? mediaUrl('upload'.DS.$info['avatar']) : $this->getDefaultAvatar($memberId, $info['sex']);
+        $info['avatar'] = !empty($info['avatar']) ? mediaUrl('upload'.DS.$this->_thumbImage($info['avatar'])) : $this->getDefaultAvatar($memberId, $info['sex']);
         unset($info['password']);
         return $info;
+    }
+
+    protected function _thumbImage($image)
+    {
+        if (empty($image)) return '';
+        $temp = explode(DS, $image);
+        $count = count($temp);
+        $temp[$count] = $temp[$count - 1];
+        $temp[$count-1] = '_thumb';
+        return implode(DS, $temp);
     }
 
     public function getDefaultAvatar($memberId, $sex=0)

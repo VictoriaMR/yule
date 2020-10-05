@@ -66,13 +66,13 @@
 			</div>
 			<div id="jiangqubox">
 				<div class="three-item-box">
-					<div class="item xian-item"></div>
-					<div class="item he-item"></div>
-					<div class="item zhuan-item"></div>
+					<div class="item xian-item" data-type="1"></div>
+					<div class="item he-item" data-type="2"></div>
+					<div class="item zhuan-item" data-type="3"></div>
 				</div>
 				<div class="two-item-box">
-					<div class="item"></div>
-					<div class="item"></div>
+					<div class="item" data-type="4"></div>
+					<div class="item" data-type="5"></div>
 				</div>
 			</div>
 			<div class="footer">
@@ -80,8 +80,13 @@
 					<tr>
 						<td width="25%">
 							<div class="userinfo table-cell">
-								<div class="item">小小穿梭机</div>
-								<div class="item margin-top-4 wallet">1666</div>
+								<div class="item"><?php echo $info['nickname'] ?? '';?></div>
+								<?php if (!empty($info['avatar'])) { ?>
+								<div class="jinbi">
+									<img src="<?php echo $info['avatar'];?>">
+								</div>
+								<?php } ?>
+								<div id="user-balance" class="item margin-top-4 wallet"><?php echo $info['balance'] ?? '';?></div>
 								<div class="jinbi">
 									<img src="<?php echo mediaUrl('image/common/jinbi.png');?>">
 								</div>
@@ -90,19 +95,19 @@
 						<td width="75%">
 							<div class="chip-box table">
 								<div class="table-cell">
-									<a class="chip-number" href="javascript:;">
+									<a class="chip-number" href="javascript:;" data-amount="1000">
 										<img src="<?php echo mediaUrl('image/common/chip1000.png');?>">
 									</a>
-									<a class="chip-number" href="javascript:;">
+									<a class="chip-number" href="javascript:;" data-amount="500">
 										<img src="<?php echo mediaUrl('image/common/chip500.png');?>">
 									</a>
-									<a class="chip-number" href="javascript:;">
+									<a class="chip-number" href="javascript:;" data-amount="100">
 										<img src="<?php echo mediaUrl('image/common/chip100.png');?>">
 									</a>
-									<a class="chip-number" href="javascript:;">
+									<a class="chip-number" href="javascript:;" data-amount="50">
 										<img src="<?php echo mediaUrl('image/common/chip50.png');?>">
 									</a>
-									<a class="chip-number" href="javascript:;">
+									<a class="chip-number" href="javascript:;" data-amount="10">
 										<img src="<?php echo mediaUrl('image/common/chip10.png');?>">
 									</a>
 								</div>
