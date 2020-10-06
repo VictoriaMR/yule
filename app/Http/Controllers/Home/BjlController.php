@@ -40,9 +40,10 @@ class BjlController extends Controller
 		if (empty($client_id)) {
 			$this->error(['message'=>'param error', 'type'=>'init']);
 		}
-		dd($this->mem_id);
-		//绑定客户端地址
+		//绑定客户端
 		Gateway::bindUid($client_id, $this->mem_id);
+		//加入分组
+		Gateway::joinGroup($client_id, 'group_bjl_clint');
 		//获取游戏状态
 		
 	}
@@ -63,6 +64,41 @@ class BjlController extends Controller
 		$walletService = make('App/Services/WalletService');
 		$data = $walletService->getInfo($this->mem_id);
 		$data = ['balance' => (int) $data['balance']];
+		//发送通知
+		$sendData = [
+			'type' => 'bjl',
+			'entity_type' => $type,
+			'amount' => $amount,
+		];
+		Gateway::sendToGroup('group_bjl_clint', json_encode($sendData), [Gateway::getClientIdByUid($this->mem_id)]);
 		$this->success('下注成功', $data);
+	}
+
+	public function getzoushiList()
+	{
+		$page = (int) iget('page', 1);
+		$size = (int) iget('size', 20);
+		$ffcService = make('App/Services/FfcService');
+		$list = $ffcService->getList($page, $size);
+		if (!empty($list)) {
+			foreach ($list as $key => $value) {
+				$value['ffc_num1'] = $value['ffc_num1'] == 0 ? 10 : $value['ffc_num1'];
+				$value['ffc_num2'] = $value['ffc_num2'] == 0 ? 10 : $value['ffc_num2'];
+				$value['ffc_num4'] = $value['ffc_num4'] == 0 ? 10 : $value['ffc_num4'];
+				$value['ffc_num5'] = $value['ffc_num5'] == 0 ? 10 : $value['ffc_num5'];
+
+				$list[$key]['he'] = [
+					0 => mediaUrl('image/common/p'.$value['ffc_num1'].'_'.rand(1, 4).'.png'),
+					1 => mediaUrl('image/common/p'.$value['ffc_num2'].'_'.rand(1, 4).'.png'),
+					2 => mediaUrl('image/common/dian'.(($value['ffc_num1']+$value['ffc_num2']) % 10).'.png'),
+				];
+				$list[$key]['zhuang'] = [
+					0 => mediaUrl('image/common/p'.$value['ffc_num4'].'_'.rand(1, 4).'.png'),
+					1 => mediaUrl('image/common/p'.$value['ffc_num5'].'_'.rand(1, 4).'.png'),
+					2 => mediaUrl('image/common/dian'.(($value['ffc_num4']+$value['ffc_num5']) % 10).'.png'),
+				];
+			}
+		}
+		$this->success('获取成功', $list);
 	}
 }

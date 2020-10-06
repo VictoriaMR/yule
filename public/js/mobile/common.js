@@ -1,6 +1,7 @@
 var API = {
 	get: function(url, param, callback) {
 		var returnData = {};
+		$.ajaxSetup({async: false});
 		$.get(url, param, function(res) {
 			if (callback) callback(res);
 			else returnData = res;
@@ -9,6 +10,7 @@ var API = {
 	},
 	post: function(url, param, callback) {
 		var returnData = {};
+		$.ajaxSetup({async: false});
 		$.post(url, param, function(res) {
 			if (callback) callback(res);
 			else returnData = res;
@@ -43,7 +45,8 @@ var VERIFY = {
 };
 var tipsinterval = null;
 var POP = {
-	tips:function(text, time){
+	tips:function(text, time)
+	{
         if(typeof time == 'undefined') {
             time = 2000;
         }
@@ -62,5 +65,18 @@ var POP = {
         tipsinterval = setInterval(function(){
             $('.pop-tips').hide();
         }, time);
+    },
+    loading: function(obj)
+    {
+        var html = '<div class="load-ing">\
+			<div class="load-mask"></div>\
+			<img src="' + DOMAIN + 'image/common/loading_c.png" class="loading">\
+		</div>';
+        obj.find('.load-ing').remove();
+        obj.append(html);
+    },
+    loadout: function(obj)
+    {
+        obj.find('.load-ing').remove();
     }
 };

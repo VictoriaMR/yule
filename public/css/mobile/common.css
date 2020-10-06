@@ -10,6 +10,7 @@ table{border-collapse:collapse;border-spacing:0;}
 th{font-weight: normal}
 input {-webkit-appearance: none; -moz-appearance: none; outline: 0; border: none; }
 .text-center {text-align: center;}
+.text-left {text-align: left;}
 .text-right {text-align: right;}
 .hide, .hidden {display: none;}
 .bg-f {background: #ededed;}
@@ -35,6 +36,11 @@ input {-webkit-appearance: none; -moz-appearance: none; outline: 0; border: none
 .table {display: table;font-size: 0;height: 100%;width: 100%;}
 .table-cell {display: table-cell;vertical-align: middle;text-align: center;height: 100%;line-height: 0;}
 .pop-tips{background: #000000; opacity:0.8; padding: 0.10rem 0.20rem; width:auto; max-width: 85%; font-size:0.12rem; line-height: 0.14rem; color:#FFFFFF; position: fixed; display: none; border-radius: 0.05rem; z-index: 10005; }
+.load-ing {position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 16000010; }
+
+.load-ing .load-mask {position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: #000; opacity: 0.5; }
+.load-ing img {position: absolute; top: calc(50% - .20rem); height: .40rem; width: .40rem; left: calc(50% - .20rem); }
+
 @keyframes loading{
 	0%{-webkit-transform:rotate(0deg);}
 	25%{-webkit-transform:rotate(90deg);}

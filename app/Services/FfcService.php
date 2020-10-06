@@ -70,4 +70,9 @@ class FfcService extends BaseService
         }
         return $res;
     }
+
+    public function getList($page = 1, $size = 20)
+    {
+        return $this->baseModel->getList($page, $size);
+    }
 }
