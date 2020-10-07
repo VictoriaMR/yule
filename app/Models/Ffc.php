@@ -24,9 +24,10 @@ class Ffc extends BaseModel
     	return $this->where('ffc_key', $qishu)->count() > 0;
     }
 
-    public function getList($page, $size)
+    public function getList($where, $page, $size)
     {
-        return $this->page($page, $size)
+        return $this->where($where)
+                    ->page($page, $size)
                     ->orderBy('ffc_id')
                     ->select(['ffc_key', 'ffc_num1', 'ffc_num2', 'ffc_num3', 'ffc_num4', 'ffc_num5'])
                     ->get();

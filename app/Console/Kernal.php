@@ -6,6 +6,7 @@ class Kernal
 {
     const COMMON_LIST = [
         ['App/Services/FfcService', 'getOriginFfc', '1'],
+        ['App/Services/OtherService', 'randBlingBjl', '1'],
     ];
 
     public function run()

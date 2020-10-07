@@ -106,12 +106,14 @@ Class Query
         return $this;
     }
 
-    public function page($page, $size=20)
+    public function page($page = 0, $size=20)
 	{
 		$page = (int) $page;
 		$size = (int) $size;
-		$this->_offset = ($page - 1) * $size;
-		$this->_limit = $size;
+		if ($page > 0) {
+			$this->_offset = ($page - 1) * $size;
+			$this->_limit = $size;
+		}
 		return $this;
 	}
 

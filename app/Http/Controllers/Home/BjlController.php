@@ -45,7 +45,14 @@ class BjlController extends Controller
 		//加入分组
 		Gateway::joinGroup($client_id, 'group_bjl_clint');
 		//获取游戏状态
-		
+		$ffcService = make('App/Services/FfcService');
+		$data = $ffcService->getStatus();
+		$this->success('success', $data);
+	}
+
+	protected function checkStatus()
+	{
+		return redis()->get('BJL_STATUS');
 	}
 
 	public function wager()
@@ -55,8 +62,11 @@ class BjlController extends Controller
 		if (empty($amount) || empty($type)) {
 			$this->error('参数不正确');
 		}
-		$gamblingService = make('App/Services/GamblingService');
-		$res = $gamblingService->create($this->mem_id, $gamblingService::constant('TYPE_BJL'), $type, $amount, $error);
+		if (empty($this->getStatus())) {
+			$this->error('等待下期开始');
+		}
+		$blingService = make('App/Services/GamblingService');
+		$res = $blingService->create($this->mem_id, $blingService::constant('TYPE_BJL'), $amount, ['entity_id' => $type, 'qishu' => date('Ymd', time()).(str_pad(date('H', time())*60 + date('i', time()), 4, '0', STR_PAD_LEFT))], $error);
 		if (!empty($error)) {
 			$this->error($error);
 		}
@@ -79,7 +89,7 @@ class BjlController extends Controller
 		$page = (int) iget('page', 1);
 		$size = (int) iget('size', 20);
 		$ffcService = make('App/Services/FfcService');
-		$list = $ffcService->getList($page, $size);
+		$list = $ffcService->getList($where, $page, $size);
 		if (!empty($list)) {
 			foreach ($list as $key => $value) {
 				$value['ffc_num1'] = $value['ffc_num1'] == 0 ? 10 : $value['ffc_num1'];
@@ -99,6 +109,73 @@ class BjlController extends Controller
 				];
 			}
 		}
-		$this->success('获取成功', $list);
+		$this->success('success', $list);
+	}
+
+	public function getBlingList()
+	{
+		$page = (int) iget('page', 1);
+		$size = (int) iget('size', 20);
+		$blingService = make('App/Services/GamblingService');
+		$list = $blingService->getList(['mem_id'=>$this->mem_id, 'type'=>$blingService::constant('TYPE_BJL')], $page, $size);
+		if (!empty($list)) {
+			foreach ($list as $key => $value) {
+				$value['entity_text'] = $blingService->getTypeText($value['type'], $value['entity_id']);
+				$value['status_text'] = $blingService->getStatusText($value['status']);
+				$value['create_at'] = date('Y-m-d H:i', strtotime($value['create_at']));
+				unset($value['mem_id']);
+				$list[$ksy] = $value;
+			}
+		}
+		$this->success('success', $list);
+	}
+
+	public function getWalletList()
+	{
+		$page = (int) iget('page', 1);
+		$size = (int) iget('size', 20);
+		$walletService = make('App/Services/WalletService');
+		$list = $walletService->getList(['mem_id' => $this->mem_id], $page, $size);
+		if (!empty($list)) {
+			foreach ($list as $key => $value) {
+				unset($value['mem_id']);
+				$value['amount'] = ($value['type'] == $walletService::constant('TYPE_INCREMENT', 'log') ? '+' : '-').((int) $value['amount']);
+				$list[$key] = $value;
+			}
+		}
+		$this->success('success', $list);
+	}
+
+	public function cancelWager()
+	{
+		if (empty($this->getStatus())) {
+			$this->error('今期已经截止');
+		}
+		$blingService = make('App/Services/GamblingService');
+		$where = [
+			'qishu' => redis()->get('BJL_QISHU'),
+			'type' => $blingService::constant('TYPE_BJL'),
+			'mem_id' => $this->mem_id,
+			'status' => $blingService::constant('STATUS_REBACK'),
+		];
+		//允许撤回一次
+		if ($blingService->count($where)) {
+			$this->error('每期只能撤回一次');
+		}
+		$where['status'] = $blingService::constant('STATUS_DEFAULT');
+		if (!$blingService->count($where)) {
+			$this->error('无可撤回数据');
+		}
+		$list = $blingService->getList($where);
+		if (!empty($list)) {
+			$walletService = make('App/Services/WalletService');
+			foreach ($list as $key => $value) {
+				$blingService->updateDataById($value['bl_id'], ['status' => $blingService::constant('STATUS_REBACK')]);
+                $walletService->incrementByMemId($value['mem_id'], $value['amount'], ['creater'=>$value['mem_id'], 'entity_type' => $walletService::constant('ENTITY_TYPE_BLING', 'log'), 'entity_id'=>$value['bl_id'], 'remark' => '百家乐撤回下注']);
+			}
+		}
+		$data = $walletService->getInfo($this->mem_id);
+		$data = ['balance' => (int) $data['balance']];
+		$this->success('撤回成功', $data);
 	}
 }

@@ -10,14 +10,14 @@ class Wallet extends BaseModel
     //主键
     protected $primaryKey = 'wallet_id';
 
-    public function incrementByMemId($memId, $money, $data=[])
+    public function incrementByMemId($memId, $money, $data=[], $isBalance = true)
     {
         $memId = (int) $memId;
         $money = (int) $money;
     	if (empty($memId) || empty($money)) return false;
     	$logModel = make('App/Models/WalletLog');
     	$this->begin();
-    	$this->where('mem_id', $memId)->increment('subtotal,balance', $money);
+    	$this->where('mem_id', $memId)->increment($isBalance ? 'balance' : 'subtotal,balance', $money);
         $data['mem_id'] = $memId;
     	$data['subtotal'] = $money;
     	$data['type'] = $logModel::TYPE_INCREMENT;
