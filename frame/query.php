@@ -90,7 +90,7 @@ Class Query
 	{
 		if (is_array($value)) {
 			foreach ($value as $k => $v) {
-				$this->_orderBy .= ', `'.$v[0] . '` ' . strtoupper($v[1] ?? 'desc');
+				$this->_orderBy .= ', `'.$k . '` ' . strtoupper($v ?? 'desc');
 			}
 		} else {
 			$this->_orderBy .= ', `'.$value . '` ' . strtoupper($type);

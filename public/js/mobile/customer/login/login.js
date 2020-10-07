@@ -24,7 +24,7 @@ var LOGIN = {
 				if (!VERIFY[name]($(this).val())) {
 					switch (name) {
 						case 'phone':
-							msg = '手机号码格式不正确';
+							msg = '账号格式不正确';
 							break;
 						case 'password':
 							msg = '密码格式不正确';

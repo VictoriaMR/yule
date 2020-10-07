@@ -57,13 +57,13 @@ class Error
 			if (is_cli()) {
 				exit();
 			}
-			$route = Router::getFunc();
+			$route = Router::$_route;
 			$msg = '';
 			$msg .= '<div>网址:'.$_SERVER['REDIRECT_URL'].'</div>';
 			$msg .= '<div>入口: <strong>'.implode('/', $route).'</strong></div>';
-			$msg .= '<div>子目录: <strong>'.$route['ClassPath'].'</strong></div>';
-			$msg .= '<div>类: <strong>'.$route['Class'].'</strong></div>';
-			$msg .= '<div>方法: <strong>'.$route['Func'].'</strong></div>';
+			$msg .= '<div>子目录: <strong>'.$route['path'].'</strong></div>';
+			$msg .= '<div>类: <strong>'.$route['class'].'</strong></div>';
+			$msg .= '<div>方法: <strong>'.$route['func'].'</strong></div>';
 			$msg .= '<div>参数: <strong>'. json_encode(array_merge($_GET, $_POST)) .'</strong></div>';
 			$msg .= '<div style="color:#c00">'.$_error['message'].'</div>';
 			$msg .= '文件: <strong>'.$_error['file'].'</strong></br>';

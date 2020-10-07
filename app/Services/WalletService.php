@@ -42,7 +42,12 @@ class WalletService extends BaseService
         return $this->baseModel->getInfo($memId);
     }
 
-    public function getList($where = [], $page = 0, $page = 20)
+    public function getList($where = [], $page = 0, $size = 20)
+    {
+        return $this->baseModel->getList($where, $page, $page);
+    }
+
+    public function getLogList($where = [], $page = 0, $size = 20)
     {
         $logModel = make('App/Models/WalletLog');
         return $logModel->getList($where, $page, $page);

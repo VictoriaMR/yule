@@ -16,6 +16,7 @@ input {-webkit-appearance: none; -moz-appearance: none; outline: 0; border: none
 .bg-f {background: #ededed;}
 .bg-f5 {background: #f5f5f5;}
 .bg-f8 {background: #f8f8f8;}
+.color-w {color: #fff;}
 .flex {display: flex;}
 .flex1{flex: 1;}
 .right{float: right;}
@@ -26,8 +27,11 @@ input {-webkit-appearance: none; -moz-appearance: none; outline: 0; border: none
 .btn {display: inline-block; border-radius: 0.04rem; padding: 0 0.10rem; height: 0.40rem; line-height: 0.38rem; font-size: 0.14rem;width: 100%; border: 0.01rem solid transparent;cursor: pointer;}
 .btn.primary {color: #fff; background-color: #337ab7; border-color: #2e6da4;}
 .btn-green {background: #08bf62; color: #fff; border-color: #08bf62; }
-.font-30 {font-size: 0.30rem;}
 .table {display: table;}
+.block {display: block;}
+.w50 {width: 50%}
+.w3{width: calc(100% / 3)}
+.h100 {height: 100%}
 .loading {animation: loading 2s linear infinite;}
 .input{height:0.40rem;width:100%;border:0.01rem solid #f1eeee;padding:0 0.10rem;font-size:0.14rem;border-radius:0.04rem}
 .relative{position: relative;}
@@ -37,7 +41,6 @@ input {-webkit-appearance: none; -moz-appearance: none; outline: 0; border: none
 .table-cell {display: table-cell;vertical-align: middle;text-align: center;height: 100%;line-height: 0;}
 .pop-tips{background: #000000; opacity:0.8; padding: 0.10rem 0.20rem; width:auto; max-width: 85%; font-size:0.12rem; line-height: 0.14rem; color:#FFFFFF; position: fixed; display: none; border-radius: 0.05rem; z-index: 10005; }
 .load-ing {position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 16000010; }
-
 .load-ing .load-mask {position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: #000; opacity: 0.5; }
 .load-ing img {position: absolute; top: calc(50% - .20rem); height: .40rem; width: .40rem; left: calc(50% - .20rem); }
 

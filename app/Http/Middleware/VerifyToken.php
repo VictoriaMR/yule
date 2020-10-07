@@ -17,22 +17,26 @@ class VerifyToken
     public function handle($request)
     {
         return false;
-        if (in_array(implode('/', $request), self::$except))
+        if (in_array(implode('/', $request), self::$except)) {
             return true;
+        }
 
         //检查登录状态
         switch ($request['class']) {
             case 'Home':
-                if (empty(\frame\Session::get('home_mem_id')))
+                if (empty(\frame\Session::get('home_mem_id'))) {
                     redirect(url('login'));
+                }
                 break;
             case 'Customer':
-                if (empty(\frame\Session::get('customer_mem_id')))
+                if (empty(\frame\Session::get('customer_mem_id'))) {
                     redirect(url('login'));
+                }
                 break;
             case 'Admin':
-                if (empty(\frame\Session::get('admin_mem_id')))
+                if (empty(\frame\Session::get('admin_mem_id'))) {
                     redirect(url('login'));
+                }
                 break;
         }
         return true;

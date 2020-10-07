@@ -135,7 +135,7 @@ class BjlController extends Controller
 		$page = (int) iget('page', 1);
 		$size = (int) iget('size', 20);
 		$walletService = make('App/Services/WalletService');
-		$list = $walletService->getList(['mem_id' => $this->mem_id], $page, $size);
+		$list = $walletService->getLogList(['mem_id' => $this->mem_id], $page, $size);
 		if (!empty($list)) {
 			foreach ($list as $key => $value) {
 				unset($value['mem_id']);

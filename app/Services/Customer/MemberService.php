@@ -20,4 +20,11 @@ class MemberService extends BaseService
         if (!$res) return false;
         return $this->login($info['mem_id'], 3);
     }
+
+    public function getProxyId($memId)
+    {
+        if (empty($memId)) return [];
+        return $this->baseModel->where('recommender', $memId)
+                               ->value('mem_id');
+    }
 }

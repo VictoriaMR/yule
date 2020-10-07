@@ -65,4 +65,11 @@ class Wallet extends BaseModel
         if (empty($memId)) return false;
         return $this->where('mem_id', (int) $memId)->find();
     }
+
+    public function getList($where, $page, $size)
+    {
+        return $this->where($where)
+                    ->page($page, $size)
+                    ->get();
+    }
 }

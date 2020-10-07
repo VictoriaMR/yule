@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use frame\Html;
 
-class IndexController extends Controller
+class UserInfoController extends Controller
 {
 	public function __construct()
     {

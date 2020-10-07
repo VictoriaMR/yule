@@ -1,0 +1,21 @@
+.common-header,
+.common-footer {
+	position: fixed;
+	height: 0.4rem;
+	width: 100%;
+	background: #337ab7;
+}
+.common-header a,
+.common-footer a {
+	line-height: 0.4rem;
+	text-align: center;
+}
+.common-header {
+	top: 0;
+}
+.common-footer {
+	bottom: 0;
+}
+.main {
+	padding-top: 0.4rem;
+}
