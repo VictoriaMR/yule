@@ -64,29 +64,13 @@ class GamblingService extends BaseService
 		return $this->baseModel->getList($where, $page, $size);
 	}
 
-	protected function getTypeText($type, $entityId)
+	public function getTypeText($type, $entityId)
 	{
-		$arr = [
-			self::constant('TYPE_BJL') => [
-				self::constant('ENTITY_TYPE_BJL_ZHUANG') => '庄',
-				self::constant('ENTITY_TYPE_BJL_HE') => '和',
-				self::constant('ENTITY_TYPE_BJL_XIAN') => '闲',
-				self::constant('ENTITY_TYPE_BJL_ZHUANGDUI') => '庄对',
-				self::constant('ENTITY_TYPE_BJL_XIANDUI') => '闲对',
-			],
-		];
-		if (empty($arr[$type])) return '';
-		return $arr[$type][$entityId] ?? '';
+		return $this->baseModel->getTypeText($type, $entityId);
 	}
 
-	protected function getStatusText($status)
+	public function getStatusText($status)
 	{
-		$arr = [
-			self::constant('STATUS_DEFAULT') => '未开奖',
-			self::constant('STATUS_WIN') => '中奖',
-			self::constant('STATUS_FAIL') => '未中奖',
-			self::constant('STATUS_REBACK') => '取消',
-		];
-		return $arr[$status] ?? '';
+		return $this->baseModel->getStatusText($status);
 	}
 }

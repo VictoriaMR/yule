@@ -57,6 +57,7 @@ class MemberService extends BaseService
     {
         if (empty($memberId)) return [];
         $info = $this->loadData($memberId);
+        if (empty($info)) return [];
         $info['avatar'] = !empty($info['avatar']) ? mediaUrl('upload'.DS.$this->_thumbImage($info['avatar'])) : $this->getDefaultAvatar($memberId, $info['sex']);
         unset($info['password']);
         return $info;

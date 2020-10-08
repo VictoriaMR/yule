@@ -46,21 +46,21 @@
 				<a class="item" href="javascript:;" id="zoushitu-icon">
 					<img src="<?php echo mediaUrl('image/common/zoushi.png');?>">
 				</a>
-				<a class="item" href="javascript:;">
+				<a class="item" href="javascript:;" id="xiazhujilu-icon">
 					<img src="<?php echo mediaUrl('image/common/logger.png');?>">
 				</a>
-				<a class="item" href="javascript:;">
+				<a class="item" href="javascript:;" id="lianxikefu-icon">
 					<img src="<?php echo mediaUrl('image/common/kefu.png');?>">
 				</a>
 			</div>
 			<div class="icon-left-box">
-				<a class="item" href="javascript:;">
+				<a class="item" href="javascript:;" id="bjyinyue-icon" data-type="1">
 					<img src="<?php echo mediaUrl('image/common/musicon.png');?>">
 				</a>
-				<a class="item" href="javascript:;">
+				<a class="item" href="javascript:;" id="jiaoyi-icon">
 					<img src="<?php echo mediaUrl('image/common/jiaoyi.png');?>">
 				</a>
-				<a class="item" href="javascript:;">
+				<a class="item" href="javascript:;" id="ruletext-icon">
 					<img src="<?php echo mediaUrl('image/common/rule.png');?>">
 				</a>
 			</div>
@@ -121,54 +121,76 @@
 					</tr>
 				</table>
 			</div>
-		</div>
-	</div>
-	<div id="zoushitu" class="modal">
-		<div class="top table">
-			<span class="font-24 font-600 table-cell">走势图</span>
-		</div>
-		<div class="middle">
-			<ul data-type='zoushitu' data-page="1" data-end="false">
-				<li>
-					<div class="li-top flex">
-						<div class="flex1 text-left">
-							<span class="font-600 font-16">202009260476&nbsp;期</span>
-						</div>
-						<div style="margin-left: auto;min-width: 150px;">
-							<div class="number-box">
-								<span class="number">0</span>
-								<span class="number">0</span>
-								<span class="number">0</span>
-								<span class="number">0</span>
-								<span class="number">0</span>
-							</div>
+			<div id="zoushitu" class="modal">
+				<div class="modal-top table">
+					<span class="font-20 font-600 table-cell">走势图</span>
+				</div>
+				<div class="modal-middle">
+					<ul data-type='zoushitu' data-page="1" data-end="false">
+					</ul>
+				</div>
+				<div class="modal-footer">
+					<a href="javascript:;" class="confirm-btn">
+						<img src="<?php echo mediaUrl('image/common/confirm.png');?>">
+					</a>
+				</div>
+			</div>
+			<div id="jiaoyi" class="modal">
+				<div class="modal-top table">
+					<span class="font-20 font-600 table-cell">上下分记录</span>
+				</div>
+				<div class="modal-middle">
+					<ul data-type='jiaoyi' data-page="1" data-end="false"></ul>
+				</div>
+				<div class="modal-footer">
+					<a href="javascript:;" class="confirm-btn">
+						<img src="<?php echo mediaUrl('image/common/confirm.png');?>">
+					</a>
+				</div>
+			</div>
+			<div id="xiazhujilu" class="modal">
+				<div class="modal-top table">
+					<span class="font-20 font-600 table-cell">下注记录</span>
+				</div>
+				<div class="modal-middle">
+					<ul data-type='xiazhujilu' data-page="1" data-end="false"></ul>
+				</div>
+				<div class="modal-footer">
+					<a href="javascript:;" class="confirm-btn">
+						<img src="<?php echo mediaUrl('image/common/confirm.png');?>">
+					</a>
+				</div>
+			</div>
+			<div id="lianxikefu" class="modal">
+				<div class="modal-top table">
+					<span class="font-20 font-600 table-cell">上下分请加客服微信</span>
+				</div>
+				<div class="modal-middle">
+					<div class="kefu-box table">
+						<div class="table-cell">
+							<img src="<?php echo mediaUrl('image/common/chat.png');?>">
 						</div>
 					</div>
-					<div class="li-footer flex margin-top-4">
-						<div class="flex1">
-							<div class="xian font-600 font-20 left">闲</div>
-							<div class="left margin-left-4 relative image-box">
-								<img class="image0" src="<?php echo mediaUrl('image/common/p1_1.png');?>" />
-								<img class="image1" src="<?php echo mediaUrl('image/common/p1_1.png');?>" />
-								<img class="image2" src="<?php echo mediaUrl('image/common/dian2.png');?>" />
-							</div>
-						</div>
-						<div style="margin-left: auto;">
-							<div class="zhuang font-600 font-20 left">庄</div>
-							<div class="left margin-left-4 relative image-box">
-								<img class="image0" src="<?php echo mediaUrl('image/common/p1_1.png');?>" />
-								<img class="image1" src="<?php echo mediaUrl('image/common/p1_1.png');?>" />
-								<img class="image2" src="<?php echo mediaUrl('image/common/dian2.png');?>" />
-							</div>
-						</div>
-					</div>
-				</li>
-			</ul>
-		</div>
-		<div class="footer">
-			<a href="javascript:;" class="confirm-btn">
-				<img src="<?php echo mediaUrl('image/common/confirm.png');?>">
-			</a>
+				</div>
+				<div class="modal-footer">
+					<a href="javascript:;" class="confirm-btn">
+						<img src="<?php echo mediaUrl('image/common/confirm.png');?>">
+					</a>
+				</div>
+			</div>
+			<div id="ruletext" class="modal">
+				<div class="modal-top table">
+					<span class="font-20 font-600 table-cell">游戏规则</span>
+				</div>
+				<div class="modal-middle">
+					<img src="<?php echo mediaUrl('image/common/ruletext.png');?>">
+				</div>
+				<div class="modal-footer">
+					<a href="javascript:;" class="confirm-btn">
+						<img src="<?php echo mediaUrl('image/common/confirm.png');?>">
+					</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

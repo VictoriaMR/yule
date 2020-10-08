@@ -62,7 +62,7 @@ class BjlController extends Controller
 		if (empty($amount) || empty($type)) {
 			$this->error('参数不正确');
 		}
-		if (empty($this->getStatus())) {
+		if (empty($this->checkStatus())) {
 			$this->error('等待下期开始');
 		}
 		$blingService = make('App/Services/GamblingService');
@@ -89,7 +89,7 @@ class BjlController extends Controller
 		$page = (int) iget('page', 1);
 		$size = (int) iget('size', 20);
 		$ffcService = make('App/Services/FfcService');
-		$list = $ffcService->getList($where, $page, $size);
+		$list = $ffcService->getList([], $page, $size);
 		if (!empty($list)) {
 			foreach ($list as $key => $value) {
 				$value['ffc_num1'] = $value['ffc_num1'] == 0 ? 10 : $value['ffc_num1'];
@@ -112,7 +112,7 @@ class BjlController extends Controller
 		$this->success('success', $list);
 	}
 
-	public function getBlingList()
+	public function getxiazhuList()
 	{
 		$page = (int) iget('page', 1);
 		$size = (int) iget('size', 20);
@@ -124,22 +124,25 @@ class BjlController extends Controller
 				$value['status_text'] = $blingService->getStatusText($value['status']);
 				$value['create_at'] = date('Y-m-d H:i', strtotime($value['create_at']));
 				unset($value['mem_id']);
-				$list[$ksy] = $value;
+				$list[$key] = $value;
 			}
 		}
 		$this->success('success', $list);
 	}
 
-	public function getWalletList()
+	public function getjiaoyiList()
 	{
 		$page = (int) iget('page', 1);
 		$size = (int) iget('size', 20);
 		$walletService = make('App/Services/WalletService');
-		$list = $walletService->getLogList(['mem_id' => $this->mem_id], $page, $size);
+		$list = $walletService->getLogList(['mem_id' => $this->mem_id], $page, $size, ['log_id', 'type', 'subtotal', 'remark', 'create_at']);
 		if (!empty($list)) {
 			foreach ($list as $key => $value) {
 				unset($value['mem_id']);
-				$value['amount'] = ($value['type'] == $walletService::constant('TYPE_INCREMENT', 'log') ? '+' : '-').((int) $value['amount']);
+				$value['create_at'] = date('Y-m-d H:i', strtotime($value['create_at']));
+				$arr = explode('-', $value['remark']);
+				$value['type_text'] = $arr[0] ?? '';
+				$value['entity_text'] = $arr[1] ?? '';
 				$list[$key] = $value;
 			}
 		}

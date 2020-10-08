@@ -37,16 +37,43 @@ class Gambling extends BaseModel
 		$walletLog = make('App/Models/WalletLog');
 		$this->begin();
 		$id = $this->insertGetId($data);
+		$entityId = $data['entity_id'];
 		$data = ['creater' => $memId];
 		$data['entity_type'] = $walletLog::ENTITY_TYPE_BLING;
 		$data['entity_id'] = $id;
-		$data['remark'] = '百家乐下注';
+		$data['remark'] = '百家乐下注-'.$this->getTypeText($type, $entityId);
 		$wallet->decrementByMemId($memId, $amount, $data);
 		$this->commit();
 		return true;
     }
 
-    public function count($where)
+    public function getTypeText($type, $entityId)
+    {
+    	$arr = [
+			self::TYPE_BJL => [
+				self::ENTITY_TYPE_BJL_ZHUANG => '庄',
+				self::ENTITY_TYPE_BJL_HE => '和',
+				self::ENTITY_TYPE_BJL_XIAN => '闲',
+				self::ENTITY_TYPE_BJL_ZHUANGDUI => '庄对',
+				self::ENTITY_TYPE_BJL_XIANDUI => '闲对',
+			],
+		];
+		if (empty($arr[$type])) return '';
+		return $arr[$type][$entityId] ?? '';
+    }
+
+    public function getStatusText($status)
+	{
+		$arr = [
+			self::STATUS_DEFAULT => '未开奖',
+			self::STATUS_WIN => '中奖',
+			self::STATUS_FAIL => '未中奖',
+			self::STATUS_REBACK => '取消',
+		];
+		return $arr[$status] ?? '';
+	}
+
+    public function count($where = [])
     {
     	return $this->where($where)->count() > 0;
     }

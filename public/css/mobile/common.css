@@ -17,6 +17,7 @@ input {-webkit-appearance: none; -moz-appearance: none; outline: 0; border: none
 .bg-f5 {background: #f5f5f5;}
 .bg-f8 {background: #f8f8f8;}
 .color-w {color: #fff;}
+.color-g {color: #bbb;}
 .flex {display: flex;}
 .flex1{flex: 1;}
 .right{float: right;}

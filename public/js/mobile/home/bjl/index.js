@@ -35,20 +35,68 @@ var BJL = {
 			_this.x = e.pageX;
 			_this.y = e.pageY;
 		});
+		//走势图
 		$('#zoushitu-icon').on('click', function(){
+			$('.modal').hide();
+			$('#zoushitu .modal-middle ul').html('');
 			$('#zoushitu').show();
-			POP.loading($('#zoushitu .middle'));
+			POP.loading($('#zoushitu .modal-middle'));
 			var html = _this.getzoushiList(1);
-			$('#zoushitu .middle ul').html(html);
-			$('#zoushitu .middle ul').data('page', 1);
-			$('#zoushitu .middle').animate({scrollTop: 0}, 100);
-			POP.loadout($('#zoushitu .middle'));
+			$('#zoushitu .modal-middle ul').html(html);
+			$('#zoushitu .modal-middle ul').data('page', 1);
+			$('#zoushitu .modal-middle').animate({scrollTop: 0}, 100);
+			POP.loadout($('#zoushitu .modal-middle'));
 		});
-		$('#zoushitu').on('click', '.confirm-btn', function(){
-			$('#zoushitu').hide();
+		$('.modal').on('click', '.confirm-btn', function(){
+			$(this).parents('.modal').hide();
+		});
+		//下注记录
+		$('#xiazhujilu-icon').on('click', function(){
+			$('.modal').hide();
+			$('#xiazhujilu .modal-middle ul').html('');
+			$('#xiazhujilu').show();
+			POP.loading($('#zoushitu .modal-middle'));
+			var html = _this.getxiazhuList(1);
+			$('#xiazhujilu .modal-middle ul').html(html);
+			$('#xiazhujilu .modal-middle ul').data('page', 1);
+			$('#xiazhujilu .modal-middle').animate({scrollTop: 0}, 100);
+			POP.loadout($('#xiazhujilu .modal-middle'));
+		});
+		//联系客服
+		$('#lianxikefu-icon').on('click', function(){
+			$('.modal').hide();
+			$('#lianxikefu').show();
+		});
+		//背景音乐
+		$('#bjyinyue-icon').on('click', function(){
+			var type = $(this).data('type');
+			if (type) {
+				$(this).find('img').attr('src', DOMAIN+'image/common/musicoff.png');
+				$(this).data('type', 0);
+			} else {
+				$(this).find('img').attr('src', DOMAIN+'image/common/musicon.png');
+				$(this).data('type', 1);
+			}
+		});
+		//规则
+		$('#ruletext-icon').on('click', function(){
+			$('.modal').hide();
+			$('#ruletext').show();
+		});
+		//交易记录
+		$('#jiaoyi-icon').on('click', function(){
+			$('.modal').hide();
+			$('#jiaoyi .modal-middle ul').html('');
+			$('#jiaoyi').show();
+			POP.loading($('#jiaoyi .modal-middle'));
+			var html = _this.getjiaoyiList(1);
+			$('#jiaoyi .modal-middle ul').html(html);
+			$('#jiaoyi .modal-middle ul').data('page', 1);
+			$('#jiaoyi .modal-middle').animate({scrollTop: 0}, 100);
+			POP.loadout($('#jiaoyi .modal-middle'));
 		});
 		//监听滚动到底部
-		$('.modal .middle').scroll(function(){
+		$('.modal .modal-middle').scroll(function(){
 			if ($(this).find('ul .end-li').length > 0 || $(this).find('ul .loading-li').length > 0) {
 				return false;
 			}
@@ -62,18 +110,39 @@ var BJL = {
 					if (_thisobj.find('ul .end-li').length == 0) {
 						_thisobj.find('ul').append('<li class="end-li"><span class="font-12">已经到底了</span></li>');
 					}
-					$('#zoushitu .middle').animate({scrollTop: height}, 100);
+					$('#zoushitu .modal-middle').animate({scrollTop: height}, 100);
 				} else {
-					_thisobj.find('ul').append('<li class="loading-li"><img src="' + DOMAIN + 'image/common/loading_c.png" class="loading"></li>');
+					_thisobj.find('ul').append('<li class="loading-li"><img src="' + DOMAIN + 'image/common/loading_c.png" class="loading" style="max-height:0.2rem;max-width:0.2rem;"></li>');
 					var page = _thisobj.find('ul').data('page') + 1;
 					var type = _thisobj.find('ul').data('type');
-					$('#zoushitu .middle').animate({scrollTop: height}, 300, function(){
+					$('#zoushitu .modal-middle').animate({scrollTop: height}, 300, function(){
 						switch (type) {
 							case 'zoushitu':
 								var html = _this.getzoushiList(page);
-								$('#zoushitu .middle ul .loading-li').remove();
-								$('#zoushitu .middle ul').append(html);
-								$('#zoushitu .middle ul').data('page', page);
+								if (html == '') {
+									$('#zoushitu .modal-middle ul').data('end', 'true');
+								}
+								$('#zoushitu .modal-middle ul .loading-li').remove();
+								$('#zoushitu .modal-middle ul').append(html);
+								$('#zoushitu .modal-middle ul').data('page', page);
+								break;
+							case 'xiazhujilu':
+								var html = _this.getxiazhuList(page);
+								if (html == '') {
+									$('#xiazhujilu .modal-middle ul').data('end', 'true');
+								}
+								$('#xiazhujilu .modal-middle ul .loading-li').remove();
+								$('#xiazhujilu .modal-middle ul').append(html);
+								$('#xiazhujilu .modal-middle ul').data('page', page);
+								break;
+							case 'jiaoyi':
+								var html = _this.getjiaoyiList(page);
+								if (html == '') {
+									$('#jiaoyi .modal-middle ul').data('end', 'true');
+								}
+								$('#jiaoyi .modal-middle ul .loading-li').remove();
+								$('#jiaoyi .modal-middle ul').append(html);
+								$('#jiaoyi .modal-middle ul').data('page', page);
 								break;
 						}
 					});
@@ -91,9 +160,9 @@ var BJL = {
 				html += `<li>
 					<div class="li-top flex">
 						<div class="flex1 text-left">
-							<span class="font-600 font-16">`+res.data[i].ffc_key+`&nbsp;期</span>
+							<span class="font-600 font-14">`+res.data[i].ffc_key+`&nbsp;期</span>
 						</div>
-						<div style="margin-left: auto;min-width: 150px;">
+						<div style="margin-left: auto;">
 							<div class="number-box">
 								<span class="number">`+res.data[i].ffc_num1+`</span>
 								<span class="number">`+res.data[i].ffc_num2+`</span>
@@ -122,6 +191,46 @@ var BJL = {
 						</div>
 					</div>
 				</li>`;
+			}
+		}
+		return html;
+	},
+	getjiaoyiList: function(page)
+	{
+		var res = API.get(URI+'bjl/getjiaoyiList', {page: page});
+		var html = '';
+		if (res.code == 200) {
+			for (var i in res.data) {
+				html += `<li>
+							<div class="flex font-600 font-14">
+								<div style="margin-right: auto;">`+res.data[i].entity_text+`</div>
+								<div style="margin-left: auto;">`+res.data[i].subtotal+`</div>
+							</div>
+							<div class="flex font-12 color-g margin-top-4">
+								<div style="margin-right: auto;">`+res.data[i].type_text+`</div>
+								<div style="margin-left: auto;">`+res.data[i].create_at+`</div>
+							</div>
+						</li>`;
+			}
+		}
+		return html;
+	},
+	getxiazhuList: function(page)
+	{
+		var res = API.get(URI+'bjl/getxiazhuList', {page: page});
+		var html = '';
+		if (res.code == 200) {
+			for (var i in res.data) {
+				html += `<li>
+							<div class="flex font-600 font-14">
+								<div style="margin-right: auto;">`+res.data[i].entity_text+`</div>
+								<div style="margin-left: auto;">`+res.data[i].amount+`</div>
+							</div>
+							<div class="flex font-12 color-g margin-top-4">
+								<div style="margin-right: auto;">`+res.data[i].status_text+`</div>
+								<div style="margin-left: auto;">`+res.data[i].create_at+`</div>
+							</div>
+						</li>`;
 			}
 		}
 		return html;

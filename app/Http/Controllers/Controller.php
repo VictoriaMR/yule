@@ -45,6 +45,6 @@ class Controller
     protected function _init()
     {
         $this->mem_id = \frame\Session::get(strtolower(\frame\Router::$_route['class']).'_mem_id');
-        $this->mem_id = 3000000;
+        $this->mem_id = 1000000000;
     }
 }

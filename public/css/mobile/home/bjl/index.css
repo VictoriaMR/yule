@@ -141,6 +141,7 @@
 	font-size: 0.12rem;
 	color: #fff;
 	padding-left: 0.15rem;
+	width: 75%;
 }
 #main-page .footer .userinfo .item {
 	width: 100%;
@@ -232,7 +233,7 @@
 	display: inline-block;
 	height: 100%;
 }
-#zoushitu {
+.modal {
 	position: absolute;
 	width: 96%;
 	left: 2%;
@@ -244,53 +245,59 @@
 	color: #fff;
 	display: none;
 }
-#zoushitu .middle {
+.modal .modal-middle {
 	height: 80%;
 	background: #16151b;
 	border-radius: 0.06rem;
 	padding: 0.02rem;
 	overflow: auto;
 }
-#zoushitu .top,
-#zoushitu .footer {
+.modal .modal-top,
+.modal .modal-footer {
 	height: 10%;
 	padding: 0.05rem 0;
 }
-#zoushitu .middle li {
+.modal .modal-middle li {
 	background: #44453e;
 	padding: 0.05rem;
 	margin-bottom: 0.02rem;
 }
-#zoushitu .middle .number-box {
+#zoushitu .modal-middle .number-box {
 	padding-top: 0.02rem;
 }
-#zoushitu .middle .xian {
+#zoushitu .modal-middle .xian {
 	background: url('/image/common/blue.png') no-repeat;
 	background-size: 100% 100%;
 	height: 0.4rem;
 	width: 0.4rem;
 	line-height: 0.4rem;
 }
-#zoushitu .middle .zhuang {
+#zoushitu .modal-middle .zhuang {
 	background: url('/image/common/red.png') no-repeat;
 	background-size: 100% 100%;
 	height: 0.4rem;
 	width: 0.4rem;
 	line-height: 0.4rem;
 }
-#zoushitu .middle img {
+#zoushitu .modal-middle img {
 	max-height: 0.4rem;
 }
-#zoushitu .middle .image1 {
+#zoushitu .modal-middle .image1 {
 	position: absolute;
 	left: 0.11rem;
 }
-#zoushitu .middle .image2 {
+#zoushitu .modal-middle .image2 {
 	position: absolute;
 	left: 0;
 	bottom: 0;
 }
-#zoushitu .middle .image-box {
+#zoushitu .modal-middle .image-box {
 	width: 0.4rem;
 	text-align: left;
+}
+#zoushitu .number-box .number {
+	margin-right: 0.05rem;
+}
+#lianxikefu .kefu-box {
+	padding: 0.1rem 0.3rem;
 }
