@@ -14,7 +14,6 @@ class UserInfoController extends Controller
 	public function index()
 	{
 		Html::addCss(['index']);
-		Html::addJs(['index']);
 
 		//用户信息
 		$memberService = make('App/Services/Customer/MemberService');
@@ -28,6 +27,14 @@ class UserInfoController extends Controller
 		$this->assign('info', $info);
 		$this->assign('title', '个人中心');
 
+		return view();
+	}
+
+	public function setting()
+	{
+		Html::addCss(['index']);
+		Html::addJs(['index']);
+		
 		return view();
 	}
 }

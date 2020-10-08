@@ -24,11 +24,13 @@ input {-webkit-appearance: none; -moz-appearance: none; outline: 0; border: none
 .main {width: 100vw; height: 100vh; position: relative; margin: 0 auto; font-size: 0; text-align: center}
 .container {width:100%;padding: 0 0.05rem;}
 .container-10 {width:100%;padding: 0 0.10rem;}
-.btn {display: inline-block; border-radius: 0.04rem; padding: 0 0.10rem; height: 0.40rem; line-height: 0.38rem; font-size: 0.14rem;width: 100%; border: 0.01rem solid transparent;cursor: pointer;}
+.btn {display: inline-block; border-radius: 0.04rem; padding: 0 0.10rem; height: 0.40rem; line-height: 0.38rem; font-size: 0.14rem;font-weight: 600; width: 100%; border: 0.01rem solid transparent;cursor: pointer;}
 .btn.primary {color: #fff; background-color: #337ab7; border-color: #2e6da4;}
-.btn-green {background: #08bf62; color: #fff; border-color: #08bf62; }
+.btn-green {background: #08bf62; color: #fff; border-color: #08bf62;}
+.btn-blue {background: #337ab7; color: #fff; border-color: #337ab7;}
 .table {display: table;}
 .block {display: block;}
+.w100{width: 100%}
 .w50 {width: 50%}
 .w25{width: 25%}
 .h100 {height: 100%}

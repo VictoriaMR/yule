@@ -25,7 +25,9 @@ class LevelService extends BaseService
 
     public function getList()
     {
-        return $this->baseModel->getList();
+        $list = $this->baseModel->getList();
+        $list = array_column($list, null, 'lev_id');
+        return $list;
     }
 
     public function deleteCache()

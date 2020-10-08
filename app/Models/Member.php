@@ -11,18 +11,28 @@ class Member extends BaseModel
     //主键
     protected $primaryKey = 'mem_id';
 
-    public function addMember($data, $type = 0)
+    public function addMember($data)
     {
     	$relation = make('App/Models/BindRelation');
     	$this->begin(); //事务开启
-    	$openid = $data['openid'] ?? '';
-    	unset($data['openid']);
+        if (!empty($data['openid'])) {
+        	$openid = $data['openid'];
+        	unset($data['openid']);
+
+        }
     	$data['code'] = $this->getCode();
     	$memberId = $this->insertGetId($data);
     	//绑定关系
-    	$relation->addNotExist($openid, $memberId, $type);
+        if (!empty($openid)) {
+    	   $relation->addNotExist($openid, $memberId, $this->getType($memberId));
+        }
     	$this->commit(); //事务结束
     	return $memberId;
+    }
+
+    public function getType($memberId)
+    {
+        return substr($memberId, 0, 1);
     }
 
     public function getCode($len)

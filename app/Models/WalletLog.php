@@ -14,10 +14,11 @@ class WalletLog extends BaseModel
     //主键
     protected $primaryKey = 'log_id';
 
-    public function getList($where, $page, $size) 
+    public function getList($where, $page, $size, $fields) 
     {
     	return $this->where($where)
     				->page($page, $size)
+                    ->select($fields)
     				->orderBy('log_id', 'desc')
     				->get();
     }

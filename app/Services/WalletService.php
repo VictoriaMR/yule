@@ -48,8 +48,8 @@ class WalletService extends BaseService
         return $this->baseModel->getList($where, $page, $page);
     }
 
-    public function getLogList($where = [], $page = 0, $size = 20)
+    public function getLogList($where = [], $page = 0, $size = 20, $fields = ['*'])
     {
-        return $this->logModel->getList($where, $page, $page);
+        return $this->logModel->getList($where, $page, $page, $fields);
     }
 }

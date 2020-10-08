@@ -8,96 +8,92 @@
 }
 
 .icon {
-	font-family: "iconfont" !important;
-	font-style: normal;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  font-family: "iconfont" !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-qianbao:before {
-  content: "\e639";
+.icon-bussiness-man:before {
+  content: "\e6ef";
 }
 
-.icon-daili:before {
-  content: "\e64d";
+.icon-integral:before {
+  content: "\e6f9";
 }
 
-.icon-kehu:before {
-  content: "\e64e";
+.icon-qrcode:before {
+  content: "\e704";
 }
 
-.icon-back:before {
-  content: "\e658";
+.icon-rmb:before {
+  content: "\e703";
 }
 
-.icon-lingshouguanli:before {
-  content: "\e624";
+.icon-add-account:before {
+  content: "\e741";
 }
 
-.icon-caigouguanli:before {
-  content: "\e625";
+.icon-arrow-right:before {
+  content: "\e743";
 }
 
-.icon-kucunguanli:before {
-  content: "\e626";
+.icon-arrow-left:before {
+  content: "\e744";
 }
 
-.icon-yingfuguanli:before {
-  content: "\e627";
+.icon-ashbin:before {
+  content: "\e745";
 }
 
-.icon-huiyuanguanli:before {
-  content: "\e628";
+.icon-conditions:before {
+  content: "\e748";
 }
 
-.icon-hetongguanli:before {
-  content: "\e62c";
+.icon-connections:before {
+  content: "\e74a";
 }
 
-.icon-shoufeiguanli:before {
-  content: "\e62d";
+.icon-customermanagement:before {
+  content: "\e74b";
 }
 
-.icon-yingyeshouru:before {
-  content: "\e62e";
+.icon-download:before {
+  content: "\e74d";
 }
 
-.icon-wanglaixianjin:before {
-  content: "\e62f";
+.icon-moneymanagement:before {
+  content: "\e759";
 }
 
-.icon-fapiaoguanli:before {
-  content: "\e631";
+.icon-pic:before {
+  content: "\e75c";
 }
 
-.icon-zonghechaxun:before {
-  content: "\e632";
+.icon-save:before {
+  content: "\e762";
 }
 
-.icon-pingzhengzhongxin:before {
-  content: "\e634";
+.icon-switch:before {
+  content: "\e768";
 }
 
-.icon-shouye:before {
-  content: "\e637";
+.icon-set:before {
+  content: "\e76c";
 }
 
-.icon-zhankai:before {
-  content: "\e638";
+.icon-discounts:before {
+  content: "\e771";
 }
 
-.icon-xiaoxitishi:before {
-  content: "\e63a";
+.icon-invoice:before {
+  content: "\e772";
 }
 
-.icon-zhanghao:before {
-  content: "\e63b";
+.icon-usercenter:before {
+  content: "\e773";
 }
 
-.icon-zhuxiao:before {
-  content: "\e63c";
-}
-
-.icon-guanbi:before {
-  content: "\e63e";
+.icon-wallet:before {
+  content: "\e774";
 }
