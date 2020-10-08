@@ -12,9 +12,10 @@ class WalletService extends BaseService
         'log' => WalletLog::class,
     ];
 
-	public function __construct(Wallet $model)
+	public function __construct(Wallet $model, WalletLog $logModel)
     {
         $this->baseModel = $model;
+        $this->logModel = $logModel;
     }
 
     public function incrementByMemId($memId, $money, $data=[])
@@ -49,7 +50,6 @@ class WalletService extends BaseService
 
     public function getLogList($where = [], $page = 0, $size = 20)
     {
-        $logModel = make('App/Models/WalletLog');
-        return $logModel->getList($where, $page, $page);
+        return $this->logModel->getList($where, $page, $page);
     }
 }

@@ -41,7 +41,7 @@ class LoginController extends Controller
 
 	public function logout()
 	{
-		Session::set('admin');
-		redirect('customer');
+		Session::set('customer');
+		redirect(url('login'));
 	}
 }

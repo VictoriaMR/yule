@@ -20,6 +20,10 @@ var URI = "<?php echo url();?>";
 </script>
 <?php if (\frame\Router::$_route['path'] != 'Login') { ?>
 <div class="common-header">
-
+	<a href="javascript:;" class="font-16 color-w block w100"><?php echo $title ?? '';?></a>
+	<?php if (\frame\Router::$_route['path'] != 'Index') { ?>
+	<a href="javascript:;" onclick="javascript:history.back(-1);" class="icon icon-back font-30 color-w"></a>
+	<?php } ?>
 </div>
+<div class="main">
 <?php } ?>

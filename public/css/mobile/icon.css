@@ -8,28 +8,96 @@
 }
 
 .icon {
-	font-family:'iconfont' !important;
-	font-style:normal;
+	font-family: "iconfont" !important;
+	font-style: normal;
 	-webkit-font-smoothing: antialiased;
-	-webkit-text-stroke-width: 0.2px;
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-home:before { content: '\e610'; }
-.icon-search:before { content: '\e600'; }
-.icon-qq:before { content: '\e60a'; }
-.icon-message:before { content: '\e60b'; }
-.icon-category:before { content: '\e601'; }
-.icon-map:before { content: '\e60c'; }
-.icon-product:before { content: '\e602'; }
-.icon-phonecalling:before { content: '\e605'; }
-.icon-feedback:before { content: '\e60d'; }
-.icon-email:before { content: '\e60e'; }
-.icon-caret:before { content: '\e60f'; }
-.icon-more:before { content: '\e606'; }
-.icon-tabs:before { content: '\e603'; }
-.icon-back:before { content: '\e611'; }
-.icon-lang:before { content: '\e607'; }
-.icon-nav:before { content: '\e608'; }
-.icon-tabs1:before { content: '\e604'; }
-.icon-angleup:before { content: '\e609'; }
+.icon-qianbao:before {
+  content: "\e639";
+}
+
+.icon-daili:before {
+  content: "\e64d";
+}
+
+.icon-kehu:before {
+  content: "\e64e";
+}
+
+.icon-back:before {
+  content: "\e658";
+}
+
+.icon-lingshouguanli:before {
+  content: "\e624";
+}
+
+.icon-caigouguanli:before {
+  content: "\e625";
+}
+
+.icon-kucunguanli:before {
+  content: "\e626";
+}
+
+.icon-yingfuguanli:before {
+  content: "\e627";
+}
+
+.icon-huiyuanguanli:before {
+  content: "\e628";
+}
+
+.icon-hetongguanli:before {
+  content: "\e62c";
+}
+
+.icon-shoufeiguanli:before {
+  content: "\e62d";
+}
+
+.icon-yingyeshouru:before {
+  content: "\e62e";
+}
+
+.icon-wanglaixianjin:before {
+  content: "\e62f";
+}
+
+.icon-fapiaoguanli:before {
+  content: "\e631";
+}
+
+.icon-zonghechaxun:before {
+  content: "\e632";
+}
+
+.icon-pingzhengzhongxin:before {
+  content: "\e634";
+}
+
+.icon-shouye:before {
+  content: "\e637";
+}
+
+.icon-zhankai:before {
+  content: "\e638";
+}
+
+.icon-xiaoxitishi:before {
+  content: "\e63a";
+}
+
+.icon-zhanghao:before {
+  content: "\e63b";
+}
+
+.icon-zhuxiao:before {
+  content: "\e63c";
+}
+
+.icon-guanbi:before {
+  content: "\e63e";
+}

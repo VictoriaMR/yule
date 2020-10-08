@@ -30,7 +30,7 @@ input {-webkit-appearance: none; -moz-appearance: none; outline: 0; border: none
 .table {display: table;}
 .block {display: block;}
 .w50 {width: 50%}
-.w3{width: calc(100% / 3)}
+.w25{width: 25%}
 .h100 {height: 100%}
 .loading {animation: loading 2s linear infinite;}
 .input{height:0.40rem;width:100%;border:0.01rem solid #f1eeee;padding:0 0.10rem;font-size:0.14rem;border-radius:0.04rem}

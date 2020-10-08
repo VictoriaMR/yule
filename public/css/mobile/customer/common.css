@@ -9,6 +9,10 @@
 .common-footer a {
 	line-height: 0.4rem;
 	text-align: center;
+	position: relative;
+}
+.common-footer a.select {
+	background: #00315d
 }
 .common-header {
 	top: 0;
@@ -18,4 +22,17 @@
 }
 .main {
 	padding-top: 0.4rem;
+}
+.common-header .icon-back{
+	position: absolute;
+	left: 0.05rem;
+	top: 0;
+	width: 0.3rem;
+}
+.line10 {
+	background: #f2f1f9;
+	height: 0.10rem;
+	width: 100%;
+	border-top: 0.01rem solid #ddd;
+	border-bottom: 0.01rem solid #ddd;
 }

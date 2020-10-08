@@ -1,0 +1,31 @@
+.userinfo-top {
+	padding: 0.2rem 0.4rem 0.2rem 0.3rem;
+	background: #337ab7;
+	color: #fff;
+	border-top: 0.01rem solid #0058a5;
+	position: relative;
+}
+.userinfo-top .avatar {
+	height: 0.6rem;
+	width: 0.6rem;
+	border-radius: 50%;
+	border: 0.01rem solid #ccc;
+	overflow: hidden;
+	margin-right: 0.1rem;
+}
+.userinfo-top .userinfo .item{
+	line-height: 0.3rem;
+}
+.userinfo-top .icon-zhuxiao {
+	position: absolute;
+	right: 0.13rem;
+	top: 0.29rem;
+}
+.wallet {
+	padding: 0.1rem;
+}
+.wallet ul>li {
+	width: calc(100% / 3);
+	float: left;
+	text-align: center;
+}
