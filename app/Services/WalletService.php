@@ -18,14 +18,36 @@ class WalletService extends BaseService
         $this->logModel = $logModel;
     }
 
-    public function incrementByMemId($memId, $money, $data=[])
+    public function incrementByMemId($memId, $money, $data=[], $isBalance=true)
     {
-    	return $this->baseModel->incrementByMemId($memId, $money, $data);
+    	$memId = (int) $memId;
+        $money = (int) $money;
+        if (empty($memId) || empty($money)) return false;
+        $this->baseModel->begin();
+        $this->baseModel->where('mem_id', $memId)->increment($isBalance ? 'balance' : 'subtotal,balance', $money);
+        $data['mem_id'] = $memId;
+        $data['subtotal'] = $money;
+        $data['type'] = $this->logModel::TYPE_INCREMENT;
+        $data['create_at'] = $this->getTime();
+        $id = $this->logModel->insertGetId($data);
+        $this->baseModel->commit();
+        return $id;
     }
 
     public function decrementByMemId($memId, $money, $data=[])
     {
-    	return $this->baseModel->decrementByMemId($memId, $money, $data);
+    	$memId = (int) $memId;
+        $money = (int) $money;
+        if (empty($memId) || empty($money)) return false;
+        $this->baseModel->begin();
+        $this->baseModel->where('mem_id', $memId)->decrement('balance', $money);
+        $data['mem_id'] = $memId;
+        $data['subtotal'] = $money;
+        $data['type'] = $this->logModel::TYPE_DECREMENT;
+        $data['create_at'] = $this->getTime();
+        $id = $this->logModel->insertGetId($data);
+        $this->baseModel->commit();
+        return $id;
     }
 
     public function checkMoney($memId, $money)

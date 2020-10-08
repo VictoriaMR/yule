@@ -60,7 +60,6 @@ class FfcService extends BaseService
             $arr['ffc_key'] = $qishu;
             $arr['status'] = 1;
             $arr['number'] = $number;
-            $arr['difference'] = $diff;
             $this->addIfNotExist($qishu, $arr);
             $status = false;
         }

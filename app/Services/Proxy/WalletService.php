@@ -1,9 +1,9 @@
 <?php 
 
-namespace App\Services\Customer;
+namespace App\Services\Proxy;
 use App\Services\WalletService as BaseService;
-use App\Models\Customer\Wallet;
-use App\Models\Customer\WalletLog;
+use App\Models\Proxy\Wallet;
+use App\Models\Proxy\WalletLog;
 
 class WalletService extends BaseService
 {	

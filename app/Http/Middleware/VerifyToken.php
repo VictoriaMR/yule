@@ -7,9 +7,8 @@ class VerifyToken
     protected static $except = [
         'Home/Login/index',
         'Home/Login/login',
-        'Home/Bjl/index',
-        'Customer/Login/index',
-        'Customer/Login/login',
+        'Proxy/Login/index',
+        'Proxy/Login/login',
         'Admin/Login/index',
         'Admin/Login/login',
     ];
@@ -28,8 +27,8 @@ class VerifyToken
                     redirect(url('login'));
                 }
                 break;
-            case 'Customer':
-                if (empty(\frame\Session::get('customer_mem_id'))) {
+            case 'Proxy':
+                if (empty(\frame\Session::get('proxy_mem_id'))) {
                     redirect(url('login'));
                 }
                 break;

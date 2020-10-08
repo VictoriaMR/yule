@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use frame\Html;
 
-class CustomerController extends Controller
+class ProxyController extends Controller
 {
 	public function __construct()
 	{
@@ -13,9 +13,15 @@ class CustomerController extends Controller
 
 	public function index()
 	{
-		$this->baseService = make('App/Services/Admin/CustomerService');
+		$this->baseService = make('App/Services/Admin/ProxyService');
 		$opt = ipost('opt');
 		switch ($opt) {
+			case 'edit':
+				$this->editMember();
+				break;
+			case 'delete':
+				$this->deleteMember();
+				break;
 			case 'recharge':
 				$this->recharge();
 				break;
@@ -180,7 +186,7 @@ class CustomerController extends Controller
 			$this->error('充值金额不能为空');
 		}
 
-		$res = $this->baseService->recharge($memId, $account, $this->mem_id, $error);
+		$res = $this->baseService->recharge($memId, $account, $error);
 		if (!empty($error)) {
 			$this->error($error);
 		}

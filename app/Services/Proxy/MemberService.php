@@ -1,8 +1,8 @@
 <?php 
 
-namespace App\Services\Customer;
+namespace App\Services\Proxy;
 use App\Services\MemberService as BaseService;
-use App\Models\Customer\Member;
+use App\Models\Proxy\Member;
 
 class MemberService extends BaseService
 {	
