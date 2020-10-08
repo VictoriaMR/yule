@@ -62,7 +62,7 @@ class BjlController extends Controller
 		if (empty($amount) || empty($type)) {
 			$this->error('参数不正确');
 		}
-		if (empty($this->checkStatus())) {
+		if (!empty($this->checkStatus())) {
 			$this->error('等待下期开始');
 		}
 		$blingService = make('App/Services/GamblingService');
@@ -80,7 +80,7 @@ class BjlController extends Controller
 			'entity_type' => $type,
 			'amount' => $amount,
 		];
-		Gateway::sendToGroup('group_bjl_clint', json_encode($sendData), [Gateway::getClientIdByUid($this->mem_id)]);
+		Gateway::sendToGroup('group_bjl_clint', json_encode($sendData));
 		$this->success('下注成功', $data);
 	}
 

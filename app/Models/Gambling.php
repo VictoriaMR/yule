@@ -33,16 +33,15 @@ class Gambling extends BaseModel
 			'create_at' => $this->getTime(),
 		];
 		$data = array_merge($data, $temp);
-		$wallet = make('App/Models/Wallet');
-		$walletLog = make('App/Models/WalletLog');
+		$walletService = make('App/Services/WalletService');
 		$this->begin();
 		$id = $this->insertGetId($data);
 		$entityId = $data['entity_id'];
 		$data = ['creater' => $memId];
-		$data['entity_type'] = $walletLog::ENTITY_TYPE_BLING;
+		$data['entity_type'] = $walletService::constant('ENTITY_TYPE_BLING', 'log');
 		$data['entity_id'] = $id;
 		$data['remark'] = '百家乐下注-'.$this->getTypeText($type, $entityId);
-		$wallet->decrementByMemId($memId, $amount, $data);
+		$walletService->decrementByMemId($memId, $amount, $data);
 		$this->commit();
 		return true;
     }

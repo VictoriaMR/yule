@@ -24,7 +24,7 @@ var BJL = {
             	POP.tips(res.message);
 				if (typeof res.data.balance != 'undefined') {
 					$('#user-balance').text(res.data.balance);
-					// _this.moveChip($('.chip-number.select'), _thisobj, $('.chip-number.select').offset().left, $('.chip-number.select').offset().top, _this.x - 13, _this.y - 13);
+					_this.moveChip($('.chip-number.select'), _thisobj, $('.chip-number.select').offset().left, $('.chip-number.select').offset().top, _this.x - 13, _this.y - 13);
 				}
             });
 		});
