@@ -198,8 +198,8 @@ var BJL = {
 						<div class="flex1">
 							<div class="xian font-600 font-20 left">闲</div>
 							<div class="left margin-left-4 relative image-box">`;
-								for (var j in res.data[i].he) {
-									html += `<img class="image`+j+`" src="`+res.data[i].he[j]+`" />`;
+								for (var j in res.data[i].xian) {
+									html += `<img class="image`+j+`" src="`+res.data[i].xian[j]+`" />`;
 								}
 					html += `</div>
 						</div>
