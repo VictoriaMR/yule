@@ -280,6 +280,9 @@ var BJL = {
 		            	}
 		            });
 		            break;
+		        case 'wallet':
+		        	$('#user-balance').text(data.balance);
+		        	break;
 		        case 'bjl':
 		        	var ox = $('.icon-right-box .item').eq(2).offset().left;
 		        	var oy = $('.icon-right-box .item').eq(2).offset().top;

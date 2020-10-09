@@ -91,6 +91,7 @@ class FfcService extends BaseService
             $blingService = make('App/Services/GamblingService');
             $list = $blingService->getList(['qishu' => $qishu, 'type' => $blingService::constant('TYPE_BJL'), 'status' => $blingService::constant('STATUS_DEFAULT')]);
             if (!empty($list)) {
+                $memIdArr = array_unique(array_column($list, 'mem_id'));
                 $walletService = make('App/Services/WalletService');
                 foreach ($list as $key => $value) {
                     switch ($value['entity_id']) {
@@ -134,6 +135,13 @@ class FfcService extends BaseService
                                 $blingService->updateDataById($value['bl_id'], ['status' => $blingService::constant('STATUS_FAIL')]);
                             }
                             break;
+                    }
+                }
+                //发送通知
+                if (!empty($memIdArr)) {
+                    foreach ($memIdArr as $value) {
+                        $info = $walletService->getInfo($value);
+                        Gateway::sendToUid($value, json_encode(['type'=>'wallet', 'balance' => $info['balance'] ?? '0.00']));
                     }
                 }
             }
