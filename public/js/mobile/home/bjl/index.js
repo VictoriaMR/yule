@@ -5,6 +5,7 @@ var BJL = {
 		_this.socket;
 		_this.x = 0;
 		_this.y = 0;
+		_this.interval = null;
 		$('.progress').animate({'width': '100%'}, 800, function(){
 			$('#loading-page').hide();
 			$('#main-page').show();
@@ -12,8 +13,26 @@ var BJL = {
 		$('.footer').on('click', '.chip-number', function(){
 			$(this).addClass('select').siblings().removeClass('select');
 		});
+		//取消
+		$('#cancel-btn').on('click', function(){
+			if ($('#cancel-btn').data('status')) {
+				confirm('每期只能取消一次, 确定取消吗', function(){
+					API.post(URI+'bjl/cancelWager', function(res) {
+						POP.tips(res.message);
+						if (res.code == 200) {
+							$('#cancel-btn').data('status', 0);
+							$('#user-balance').text(res.data.balance);
+						}
+					});
+				});
+			}
+		});
 		//下注
 		$('#jiangqubox').on('click', '.item', function(e){
+			if (!$('#jiangqubox').data('status')) {
+				POP.tips('停止下注');
+				return false;
+			}
 			if ($('.chip-number.select').length == 0) {
 				POP.tips('先选择下注金额');
 				return false;
@@ -254,7 +273,11 @@ var BJL = {
 		    switch(type){
 		        case 'init':
 		            API.post(URI+'bjl/initGame', {client_id: data.client_id}, function(res){
-		            	// POP.tips(res.message);
+		            	if (res.code == 200) {
+		            		_this.startBling(res.data.time, res.data.qishu, res.data.value);
+		            	} else {
+		            		POP.tips(res.message);
+		            	}
 		            });
 		            break;
 		        case 'bjl':
@@ -269,6 +292,24 @@ var BJL = {
 		        	_this.moveChip($('.chip-number[data-amount="'+data.amount+'"]'), $('#jiangqubox [data-type="'+data.entity_type+'"]'), ox, oy, x, y);
 		        	_this.music('choma');
 		        	break;
+		        case 'prize':
+		        	//开始
+		        	if (data.status) {
+		        		//输出结果
+		        		_this.music(data.result);
+		        		$('#cancel-btn').data('status', 1);
+		        		setTimeout(function(){
+		        			_this.startBling(data.time-2, data.qishu, data.value);
+		        		}, 2000);
+		        	} else {
+		        		$('#jiangqubox').data('status', 0);
+						$('#time-count').text('停止下注');
+		        		_this.music('stop');
+		        	}
+		        	break;
+		        case 'wait':
+		        	$('#time-count').text('等待开奖');
+		        	break;
 		        case 'message':
 		        	var html = _this.sendMessage(data);
 		        	$('#content .content').append(html);
@@ -279,6 +320,31 @@ var BJL = {
 		_this.socket.onclose = function(evt) {
 		  	console.log('Connection closed.');
 		};  
+	},
+	startBling: function(time, qishu, value)
+	{
+		var _this = this;
+		_this.music('start');
+		$('#jiangqubox').data('status', 1);
+		$('#jiangqubox .item').html('');
+		$('#qishu-no').text(qishu);
+		for (var i in value) {
+			$('#'+i).text(value[i]);
+		}
+		_this.interval = setInterval(function(){
+			$('#time-count').text(time+' s');
+			time--;
+			if (time < 5) {
+				_this.music('warning');
+			}
+			//倒计时结束
+			if (time <= 0) {
+				clearInterval(_this.interval);
+				_this.interval = null;
+				$('#jiangqubox').data('status', 0);
+				$('#time-count').text('停止下注');
+			}
+		}, 1000);
 	},
 	music: function(type)
 	{

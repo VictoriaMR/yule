@@ -12,11 +12,11 @@ class Kernal
     public function run()
     {
         if (empty(self::COMMON_LIST)) return false;
+        \App::log();
         if (!empty($_SERVER['argv'][1])) {
             call_user_func_array([make($_SERVER['argv'][1]), $_SERVER['argv'][2]], []);
             exit();
         }
-        \App::log();
         $minute = date('i', time());
         foreach (self::COMMON_LIST as $value) {
             if ($this->matchTime($minute, $value[2])) {

@@ -16,7 +16,6 @@ class App
 		//初始化方法
 		self::init();
         //注册异常处理
-        \frame\Error::register();
         \frame\Router::analyze();
 		//解析路由
 		return self::instance();
@@ -54,6 +53,7 @@ class App
 	public static function init() 
 	{
 		spl_autoload_register([__CLASS__ , 'autoload']);
+        \frame\Error::instance()->register();
 	}
 
 	private static function autoload($abstract) 
@@ -94,7 +94,7 @@ class App
 
     public static function Log($msg = '')
     {
-        $now         = date('Y-m-d H:i:s');
+        $now = date('Y-m-d H:i:s');
         $path = ROOT_PATH.'runtime/'.date('Ymd').'/';
         !is_dir($path) && mkdir($path, 0775, true);
         // 获取基本信息
@@ -103,24 +103,26 @@ class App
             $current_uri = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         } else {
             $path .= 'tasklog.log';
-            $current_uri = "cmd:" . implode(' ', $_SERVER['argv']);
+            $current_uri = 'cmd:' . implode(' ', $_SERVER['argv']);
         }
         $runtime    = number_format(microtime(true) - APP_TIME_START, 10,'.','');
         $reqs       = $runtime > 0 ? number_format(1 / $runtime, 2,'.','') : '∞';
-        $time_str   = ' [Time：' . number_format($runtime, 6) . 's][QPS：' . $reqs . 'req/s]';
+        $time_str   = '[Time：' . number_format($runtime, 6) . 's] [QPS：' . $reqs . 'req/s]';
         $memory_use = number_format((memory_get_usage() - APP_MEMORY_START) / 1024, 2,'.','');
-        $memory_str = ' [MEM：' . $memory_use . 'kb]';
-        $file_load  = ' [Files：' . count(get_included_files()) . ']';
-        $info   = '[ log ] ' . $current_uri . $time_str . $memory_str . $file_load;
-        $server = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '0.0.0.0';
-        $remote = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
+        $memory_str = '[MEM：' . $memory_use . 'kb]';
+        $file_load  = '[Files：' . count(get_included_files()) . ']';
+        $server = $_SERVER['SERVER_ADDR'] ?? '0.0.0.0';
         $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'CLI';
         $message = error_get_last()['message'] ?? '';
-        if (empty($message)) $message = preg_replace('/\s(?=\s)/', '\\1', $msg);
-
-        if (!empty($message)) {
-            $info .= '\r\n'.rtrim($message, PHP_EOL);
+        if (empty($message)) {
+            $message = preg_replace('/\s(?=\s)/', '\\1', $msg);
         }
-        return error_log("\r\n[{$now}] {$server} {$remote} {$method} {$current_uri}\r\n{$info}\r\n---------------------------------------------------------------", 3, $path);
+        $str = sprintf('[%s] %s %s %s', $now, $server, $method, $current_uri).PHP_EOL;
+        $str .= sprintf('%s %s %s', $time_str, $memory_str, $file_load).PHP_EOL;
+        if (!empty($message)) {
+            $str .= rtrim($message, PHP_EOL).PHP_EOL;
+        }
+        $str .= '---------------------------------------------------------------'.PHP_EOL;
+        return error_log($str, 3, $path);
     }
 }

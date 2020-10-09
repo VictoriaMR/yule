@@ -21,20 +21,22 @@ class FfcService extends BaseService
     public function getOriginFfc()
     {
         //状态停止
-        redis()->set('BJL_STATUS', '0');
+        redis(2)->set('BJL_STATUS', '0');
         //发送通知
         try {
             Gateway::sendToGroup('group_bjl_clint', json_encode(['type' => 'prize', 'status'=>'0', 'time' => '0']));
         } catch (Exception $e) {
             echo $e->getMessage().PHP_EOL;
         }
+        sleep(2);
+        Gateway::sendToGroup('group_bjl_clint', json_encode(['type' => 'wait']));
         //当前期数
         $status = true;
-        $count = 0;
+        $i = 0;
         while ($status) {
             $content = Http::post($this->_url);
             if (empty($content) || !empty($content['errno'])) {
-                if ($count > 30) {
+                if ($i > 20) {
                     $arr = [];
                     $qishu = date('Ymd', time()).(str_pad(date('H', time())*60 + date('i', time()), 4, '0', STR_PAD_LEFT));
                     $arr['ffc_key'] = $qishu;
@@ -42,7 +44,7 @@ class FfcService extends BaseService
                     $this->addIfNotExist($qishu, $arr, false);
                     exit();
                 }
-                $count ++;
+                $i ++;
                 usleep(300000);
                 continue;
             }
@@ -124,9 +126,9 @@ class FfcService extends BaseService
                     }
                 }
             }
-            redis()->set('BJL_STATUS', '1');
-            redis()->set('BJL_QISHU', $qishu);
-            redis()->set('BJL_QISHU_VALUE', $data);
+            redis(2)->set('BJL_STATUS', '1');
+            redis(2)->set('BJL_QISHU', $qishu);
+            redis(2)->set('BJL_QISHU_VALUE', $data);
             Gateway::sendToGroup('group_bjl_clint', json_encode($this->getStatus()));
         }
         return $res;
@@ -134,13 +136,38 @@ class FfcService extends BaseService
 
     public function getStatus()
     {
+        $data = redis(2)->get('BJL_QISHU_VALUE');
         return [
             'type' => 'prize',
-            'status'=> redis()->get('BJL_STATUS'),
+            'status'=> redis(2)->get('BJL_STATUS'),
             'time' => strtotime(date('Y-m-d H:i', strtotime('+1 Minute')).':00') - time(),
-            'qishu' => redis()->get('BJL_QISHU'),
-            'value' => redis()->get('BJL_QISHU_VALUE'),
+            'qishu' => redis(2)->get('BJL_QISHU'),
+            'value' => $data,
+            'xian' => [
+                0 => mediaUrl('image/common/p'.$data['ffc_num1'].'_'.rand(1, 4).'.png'),
+                1 => mediaUrl('image/common/p'.$data['ffc_num2'].'_'.rand(1, 4).'.png'),
+                2 => mediaUrl('image/common/dian'.(($data['ffc_num1']+$data['ffc_num2']) % 10).'.png'),
+            ],
+            'zhuang' => [
+                0 => mediaUrl('image/common/p'.$data['ffc_num4'].'_'.rand(1, 4).'.png'),
+                1 => mediaUrl('image/common/p'.$data['ffc_num5'].'_'.rand(1, 4).'.png'),
+                2 => mediaUrl('image/common/dian'.(($data['ffc_num4']+$data['ffc_num5']) % 10).'.png'),
+            ],
+            'result' => $this->getResult($data['ffc_num1'], $data['ffc_num2'], $data['ffc_num4'], $data['ffc_num5']),
         ];
+    }
+
+    public function getResult($num1, $num2, $num3, $num4)
+    {
+        $num1 = ($num1 + $num2) % 10;
+        $num2 = ($num3 + $num4) % 10;
+        if ($num1 < $num2) {
+            return 'zhuang';
+        } elseif ($num1 > $num2) {
+            return 'xian';
+        } else {
+            return 'he';
+        }
     }
 
     public function getList($where = [], $page = 1, $size = 20)

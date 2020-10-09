@@ -52,7 +52,7 @@ class BjlController extends Controller
 
 	protected function checkStatus()
 	{
-		return redis()->get('BJL_STATUS');
+		return redis(2)->get('BJL_STATUS');
 	}
 
 	public function wager()
@@ -97,7 +97,7 @@ class BjlController extends Controller
 				$value['ffc_num4'] = $value['ffc_num4'] == 0 ? 10 : $value['ffc_num4'];
 				$value['ffc_num5'] = $value['ffc_num5'] == 0 ? 10 : $value['ffc_num5'];
 
-				$list[$key]['he'] = [
+				$list[$key]['xian'] = [
 					0 => mediaUrl('image/common/p'.$value['ffc_num1'].'_'.rand(1, 4).'.png'),
 					1 => mediaUrl('image/common/p'.$value['ffc_num2'].'_'.rand(1, 4).'.png'),
 					2 => mediaUrl('image/common/dian'.(($value['ffc_num1']+$value['ffc_num2']) % 10).'.png'),

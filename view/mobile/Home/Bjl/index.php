@@ -30,11 +30,11 @@
 					</div>
 				</div>
 				<div class="number-box fontresize">
-					<span class="number" id="number-1">0</span>
-					<span class="number" id="number-2">0</span>
-					<span class="number" id="number-3">0</span>
-					<span class="number" id="number-4">0</span>
-					<span class="number" id="number-5" class="margin-right-0">0</span>
+					<span class="number" id="ffc_num1">0</span>
+					<span class="number" id="ffc_num2">0</span>
+					<span class="number" id="ffc_num3">0</span>
+					<span class="number" id="ffc_num4">0</span>
+					<span class="number" id="ffc_num5" class="margin-right-0">0</span>
 				</div>
 				<div class="gonggao">
 					<div class="table-cell">
@@ -64,7 +64,7 @@
 					<img src="<?php echo mediaUrl('image/common/rule.png');?>">
 				</a>
 			</div>
-			<div id="jiangqubox">
+			<div id="jiangqubox" data-status="0">
 				<div class="three-item-box">
 					<div class="item xian-item" data-type="3"></div>
 					<div class="item he-item" data-type="2"></div>
@@ -112,7 +112,7 @@
 									</a>
 								</div>
 								<div class="table-cell">
-									<a href="javascript:;" class="cancel">
+									<a href="javascript:;" class="cancel" id="cancel-btn" data-status="1">
 										<img src="<?php echo mediaUrl('image/common/cancel.png');?>">
 									</a>
 								</div>
