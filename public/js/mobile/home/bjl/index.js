@@ -270,6 +270,7 @@ var BJL = {
 		_this.socket.onmessage = function(e) {
 			var data = eval('(' +e.data + ')');
 		    var type = data.type || '';
+		    console.log(data)
 		    switch(type){
 		        case 'init':
 		            API.post(URI+'bjl/initGame', {client_id: data.client_id}, function(res){
@@ -305,9 +306,7 @@ var BJL = {
 		        			_this.startBling(data.time-2, data.qishu, data.value);
 		        		}, 2000);
 		        	} else {
-		        		$('#jiangqubox').data('status', 0);
-						$('#time-count').text('停止下注');
-		        		_this.music('stop');
+		        		_this.stopBling();
 		        	}
 		        	break;
 		        case 'wait':
@@ -327,27 +326,38 @@ var BJL = {
 	startBling: function(time, qishu, value)
 	{
 		var _this = this;
-		_this.music('start');
-		$('#jiangqubox').data('status', 1);
-		$('#jiangqubox .item').html('');
-		$('#qishu-no').text(qishu);
-		for (var i in value) {
-			$('#'+i).text(value[i]);
+		if (time <= 0) {
+			_this.stopBling();
+		} else {
+			_this.music('start');
+			$('#jiangqubox').data('status', 1);
+			$('#jiangqubox .item').html('');
+			$('#qishu-no').text(qishu);
+			for (var i in value) {
+				$('#'+i).text(value[i]);
+			}
+			_this.interval = setInterval(function(){
+				$('#time-count').text(time+' s');
+				time--;
+				if (time < 5) {
+					_this.music('warning');
+				}
+				//倒计时结束
+				if (time <= 0) {
+					clearInterval(_this.interval);
+					_this.interval = null;
+					$('#jiangqubox').data('status', 0);
+					$('#time-count').text('停止下注');
+				}
+			}, 1000);
 		}
-		_this.interval = setInterval(function(){
-			$('#time-count').text(time+' s');
-			time--;
-			if (time < 5) {
-				_this.music('warning');
-			}
-			//倒计时结束
-			if (time <= 0) {
-				clearInterval(_this.interval);
-				_this.interval = null;
-				$('#jiangqubox').data('status', 0);
-				$('#time-count').text('停止下注');
-			}
-		}, 1000);
+	},
+	stopBling: function(type)
+	{
+		var _this = this;
+		$('#jiangqubox').data('status', 0);
+		$('#time-count').text('停止下注');
+		_this.music('stop');
 	},
 	music: function(type)
 	{
@@ -373,7 +383,7 @@ var BJL = {
 				return false;
 				break;
 		}
-		$('.bg-music').remove();
-        $('body').append('<embed class="bg-music" src="'+DOMAIN+'media/'+type+'.mp3" autostart="true" hidden="true" loop="false">');
+		$('embed').remove();
+        $('embed').append('<embed src="'+DOMAIN+'media/'+type+'.mp3" autostart="true" hidden="true" loop="false">');
 	}
 };

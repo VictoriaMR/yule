@@ -15,8 +15,10 @@ class OtherService extends BaseService
 		while ($count <= 23) {
 			$count++;
 			if (empty($this->checkStatus())) {
-				sleep(rand(1, 3));
+				sleep(1);
+				echo 'sleep'.PHP_EOL;
 			} else {
+				dd('123123');
 				//每轮筹码
 				$number = rand(10, 30);
 				for ($i=1; $i <= $number; $i++) { 
