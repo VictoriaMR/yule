@@ -65,6 +65,10 @@ class BjlController extends Controller
 		if (!empty($this->checkStatus())) {
 			$this->error('等待下期开始');
 		}
+		$ffcService = make('App/Services/FfcService');
+		if ($ffcService->getNextQishu() != redis(2)->get('BJL_NEXT_QISHU')) {
+			$this->error('系统异常, 请联系客服');
+		}
 		$blingService = make('App/Services/GamblingService');
 		$res = $blingService->create($this->mem_id, $blingService::constant('TYPE_BJL'), $amount, ['entity_id' => $type, 'qishu' => date('Ymd', time()).(str_pad(date('H', time())*60 + date('i', time()), 4, '0', STR_PAD_LEFT))], $error);
 		if (!empty($error)) {
@@ -154,9 +158,13 @@ class BjlController extends Controller
 		if (empty($this->getStatus())) {
 			$this->error('今期已经截止');
 		}
+		$ffcService = make('App/Services/FfcService');
+		if ($ffcService->getNextQishu() != redis(2)->get('BJL_NEXT_QISHU')) {
+			$this->error('系统异常, 请联系客服');
+		}
 		$blingService = make('App/Services/GamblingService');
 		$where = [
-			'qishu' => redis()->get('BJL_QISHU'),
+			'qishu' => $ffcService->getNextQishu(),
 			'type' => $blingService::constant('TYPE_BJL'),
 			'mem_id' => $this->mem_id,
 			'status' => $blingService::constant('STATUS_REBACK'),

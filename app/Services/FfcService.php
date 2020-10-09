@@ -38,7 +38,7 @@ class FfcService extends BaseService
             if (empty($content) || !empty($content['errno'])) {
                 if ($i > 20) {
                     $arr = [];
-                    $qishu = date('Ymd', time()).(str_pad(date('H', time())*60 + date('i', time()), 4, '0', STR_PAD_LEFT));
+                    $qishu = $this->getNowQishu();
                     $arr['ffc_key'] = $qishu;
                     $arr['status'] = 0;
                     $this->addIfNotExist($qishu, $arr, false);
@@ -55,7 +55,7 @@ class FfcService extends BaseService
                 usleep(300000);
                 continue;
             }
-            $qishu = date('Ymd', $time).(str_pad(date('H', $time)*60 + date('i', $time), 4, '0', STR_PAD_LEFT));
+            $qishu = $this->getNowQishu();
             $number = (int)$content->row['number'];
             $diff = (int)$content->row['difference'];
             if (empty($number) || empty($time)) continue;
@@ -70,6 +70,17 @@ class FfcService extends BaseService
             $status = false;
         }
         return true;
+    }
+
+    public function getNowQishu()
+    {
+        return date('Ymd', time()).(str_pad(date('H', time())*60 + date('i', time()), 4, '0', STR_PAD_LEFT));
+    }
+
+    public function getNextQishu()
+    {
+        $time = strtotime(date('Y-m-d H:i', strtotime('+1 Minute')).':00');
+        return date('Ymd', $time).(str_pad(date('H', $time)*60 + date('i', $time), 4, '0', STR_PAD_LEFT));
     }
 
     protected function addIfNotExist($qishu, array $data, $checkout = true)
@@ -128,6 +139,7 @@ class FfcService extends BaseService
             }
             redis(2)->set('BJL_STATUS', '1');
             redis(2)->set('BJL_QISHU', $qishu);
+            redis(2)->set('BJL_NEXT_QISHU', $this->getNextQishu());
             redis(2)->set('BJL_QISHU_VALUE', $data);
             Gateway::sendToGroup('group_bjl_clint', json_encode($this->getStatus()));
         }
@@ -142,6 +154,7 @@ class FfcService extends BaseService
             'status'=> redis(2)->get('BJL_STATUS'),
             'time' => strtotime(date('Y-m-d H:i', strtotime('+1 Minute')).':00') - time(),
             'qishu' => redis(2)->get('BJL_QISHU'),
+            'next_qishu' => $this->getNextQishu(),
             'value' => $data,
             'xian' => [
                 0 => mediaUrl('image/common/p'.$data['ffc_num1'].'_'.rand(1, 4).'.png'),
