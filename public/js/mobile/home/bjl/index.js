@@ -12,6 +12,7 @@ var BJL = {
 		$('.footer').on('click', '.chip-number', function(){
 			$(this).addClass('select').siblings().removeClass('select');
 		});
+		//下注
 		$('#jiangqubox').on('click', '.item', function(e){
 			if ($('.chip-number.select').length == 0) {
 				POP.tips('先选择下注金额');
@@ -25,6 +26,7 @@ var BJL = {
 				if (typeof res.data.balance != 'undefined') {
 					$('#user-balance').text(res.data.balance);
 					_this.moveChip($('.chip-number.select'), _thisobj, $('.chip-number.select').offset().left, $('.chip-number.select').offset().top, _this.x - 13, _this.y - 13);
+					_this.music('choma');
 				}
             });
 		});
@@ -73,6 +75,7 @@ var BJL = {
 			if (type) {
 				$(this).find('img').attr('src', DOMAIN+'image/common/musicoff.png');
 				$(this).data('type', 0);
+				$('.bg-music').remove();
 			} else {
 				$(this).find('img').attr('src', DOMAIN+'image/common/musicon.png');
 				$(this).data('type', 1);
@@ -264,6 +267,7 @@ var BJL = {
 		        	var x = Math.random()*w + tempx;
 		        	var y = Math.random()*h + tempy;
 		        	_this.moveChip($('.chip-number[data-amount="'+data.amount+'"]'), $('#jiangqubox [data-type="'+data.entity_type+'"]'), ox, oy, x, y);
+		        	_this.music('choma');
 		        	break;
 		        case 'message':
 		        	var html = _this.sendMessage(data);
@@ -275,5 +279,32 @@ var BJL = {
 		_this.socket.onclose = function(evt) {
 		  	console.log('Connection closed.');
 		};  
+	},
+	music: function(type)
+	{
+		if (!$('#bjyinyue-icon').data('type')) {
+			return false;
+		}
+		switch(type) {
+			case 'start':
+				break;
+			case 'stop':
+				break;
+			case 'choma':
+				break;
+			case 'he':
+				break;
+			case 'zhuang':
+				break;
+			case 'xian':
+				break;
+			case 'warning':
+				break;
+			default:
+				return false;
+				break;
+		}
+		$('.bg-music').remove();
+        $('body').append('<embed class="bg-music" src="'+DOMAIN+'media/'+type+'.mp3" autostart="true" hidden="true" loop="false">');
 	}
 };

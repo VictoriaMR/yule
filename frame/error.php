@@ -29,9 +29,10 @@ class Error
 
     public static function exception_debug($exception)
     {
-    	$msg = sprintf('<div>[%s]</div> <div> %s </div> <div> 第 %s 行 </div> <div> 错误: %s </div><br />', date( "Y-m-d H:i:s" ), $exception->getFile(), $exception->getLine(), $exception->getMessage());
+    	$msg = sprintf('<div>[%s]</div> <div> %s </div> <div> 第 %s 行 </div> <div> 错误: %s </div><br />', date('Y-m-d H:i:s'), $exception->getFile(), $exception->getLine(), is_cli() ? '' : $exception->getMessage());
+    	$msg = empty($msg) ? '' : $msg;
     	foreach ($exception->getTrace() as $key => $value) {
-    		$msg .= '<div>'.sprintf(' %s, 第 %s 行', $value['file'] ?? '', $value['line'] ?? '').'</div>';
+    		$msg .= '<div>'.sprintf(' %s, 第 %s 行, 方法: %s, 类: %s', $value['file'] ?? '', $value['line'] ?? '', $value['functions'] ?? '', $value['class'] ?? '').'</div>';
     	}
     	self::$_error[] = $msg;
     	\App::Log(str_replace(['<div>', '</div>', '<br />'], ['', '', '\r\n'], $msg));
@@ -40,11 +41,17 @@ class Error
 
     public static function error_echo()
 	{
-		echo '<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" /><style>*{padding:0;margin:0;}img{max-width:100%;max-height:100%;}</style><div style="z-index: 9999;"><div style="clear:both;word-wrap: break-word;font-family: Arial;font-size: 18px;border: 2px solid #c00;border-radius: 20px;margin:0 30px;padding: 20px;background-color:#FFFFE1;font-weight:600;">';
-		foreach (self::$_error as $value) {
-			echo $value;
+		if (is_cli()) {
+			foreach (self::$_error as $value) {
+				echo str_replace(['<div>', '</div>', '<br />'], ['', '', '\r\n'], $value);
+			}
+		} else {
+			echo '<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" /><style>*{padding:0;margin:0;}img{max-width:100%;max-height:100%;}</style><div style="z-index: 9999;"><div style="clear:both;word-wrap: break-word;font-family: Arial;font-size: 18px;border: 2px solid #c00;border-radius: 20px;margin:0 30px;padding: 20px;background-color:#FFFFE1;font-weight:600;">';
+			foreach (self::$_error as $value) {
+				echo $value;
+			}
+			echo '</div></div>';
 		}
-		echo '</div></div>';
 		exit();
 	}
 

@@ -12,10 +12,11 @@ class Kernal
     public function run()
     {
         if (empty(self::COMMON_LIST)) return false;
-
-        if (!empty($_SERVER['argv'][1])) {
+        if (!empty($_SERVER['argv'][1]) && !empty($_SERVER['argv'][2])) {
             call_user_func_array([make($_SERVER['argv'][1]), $_SERVER['argv'][2]], []);
             exit();
+        } else {
+            exit('param error');
         }
         \App::log();
         $minute = date('i', time());
