@@ -31,7 +31,7 @@ var BJL = {
 		$('#jiangqubox').on('click', '.item', function(e){
 			if (!$('#jiangqubox').data('status')) {
 				POP.tips('停止下注');
-				return false;
+				// return false;
 			}
 			if ($('.chip-number.select').length == 0) {
 				POP.tips('先选择下注金额');
@@ -39,14 +39,18 @@ var BJL = {
 			}
 			var _thisobj = $(this);
 			var type = _thisobj.data('type');
-			var amount = $('.chip-number.select').data('amount');
+			var amount = $('.footer .chip-number.select').data('amount');
 			API.post(URI+'bjl/wager', {amount: amount, type: type}, function(res) {
             	POP.tips(res.message);
-				if (typeof res.data.balance != 'undefined') {
-					$('#user-balance').text(res.data.balance);
-					_this.moveChip($('.chip-number.select'), _thisobj, $('.chip-number.select').offset().left, $('.chip-number.select').offset().top, _this.x - 13, _this.y - 13);
+				// if (typeof res.data.balance != 'undefined') {
+					// $('#user-balance').text(res.data.balance);
+					var x = $('.footer .chip-number.select').offset().left;
+					var y = $('.footer .chip-number.select').offset().top;
+					var html = $('.footer .chip-number.select').clone(true).removeClass('chip-number, select').css({'position': 'fixed', 'width': '0.24rem', 'height': '0.24rem', 'padding': '0.01rem', 'border-radius': '50%', 'overflow': 'hidden', 'left': x, 'top': y});
+					$('#jiangqubox [data-type="'+type+'"]').append(html);
+					_this.moveChip(amount, type, _this.x - 12, _this.y - 12, html);
 					_this.music('choma');
-				}
+				// }
             });
 		});
 		$('#jiangqubox').on('mousemove', '.item', function(e){
@@ -58,7 +62,7 @@ var BJL = {
 		});
 		//走势图
 		$('#zoushitu-icon').on('click', function(){
-			$('.modal').hide();
+			$('.bjl-modal').hide();
 			$('#zoushitu .modal-middle ul').html('');
 			$('#zoushitu').show();
 			POP.loading($('#zoushitu .modal-middle'));
@@ -68,12 +72,12 @@ var BJL = {
 			$('#zoushitu .modal-middle').animate({scrollTop: 0}, 100);
 			POP.loadout($('#zoushitu .modal-middle'));
 		});
-		$('.modal').on('click', '.confirm-btn', function(){
-			$(this).parents('.modal').hide();
+		$('.bjl-modal').on('click', '.confirm-btn', function(){
+			$(this).parents('.bjl-modal').hide();
 		});
 		//下注记录
 		$('#xiazhujilu-icon').on('click', function(){
-			$('.modal').hide();
+			$('.bjl-modal').hide();
 			$('#xiazhujilu .modal-middle ul').html('');
 			$('#xiazhujilu').show();
 			POP.loading($('#zoushitu .modal-middle'));
@@ -85,7 +89,7 @@ var BJL = {
 		});
 		//联系客服
 		$('#lianxikefu-icon').on('click', function(){
-			$('.modal').hide();
+			$('.bjl-modal').hide();
 			$('#lianxikefu').show();
 		});
 		//背景音乐
@@ -102,12 +106,12 @@ var BJL = {
 		});
 		//规则
 		$('#ruletext-icon').on('click', function(){
-			$('.modal').hide();
+			$('.bjl-modal').hide();
 			$('#ruletext').show();
 		});
 		//交易记录
 		$('#jiaoyi-icon').on('click', function(){
-			$('.modal').hide();
+			$('.bjl-modal').hide();
 			$('#jiaoyi .modal-middle ul').html('');
 			$('#jiaoyi').show();
 			POP.loading($('#jiaoyi .modal-middle'));
@@ -118,7 +122,7 @@ var BJL = {
 			POP.loadout($('#jiaoyi .modal-middle'));
 		});
 		//监听滚动到底部
-		$('.modal .modal-middle').scroll(function(){
+		$('.bjl-modal .modal-middle').scroll(function(){
 			if ($(this).find('ul .end-li').length > 0 || $(this).find('ul .loading-li').length > 0) {
 				return false;
 			}
@@ -257,9 +261,15 @@ var BJL = {
 		}
 		return html;
 	},
-	moveChip: function(from, to, ox, oy, x, y)
+	moveChip: function(account, type, x, y, html)
 	{
-		from.clone(true).removeClass('select').appendTo(to).css({'position': 'fixed', 'max-width': '0.26rem', 'max-height': '0.26rem', 'top': oy, 'left': ox}).animate({'top': y, 'left': x}, 100);
+    	if (!html) {
+			html = $('<div class="chip-move-number">\
+						<img src="'+DOMAIN+'image/common/chip'+account+'.png">\
+					</div>');
+    	}
+		$('#jiangqubox [data-type="'+type+'"]').append(html);
+		html.animate({left: x, top: y}, 300);
 	},
 	start: function()
 	{
@@ -270,7 +280,6 @@ var BJL = {
 		_this.socket.onmessage = function(e) {
 			var data = eval('(' +e.data + ')');
 		    var type = data.type || '';
-		    console.log(data)
 		    switch(type){
 		        case 'init':
 		            API.post(URI+'bjl/initGame', {client_id: data.client_id}, function(res){
@@ -285,15 +294,13 @@ var BJL = {
 		        	$('#user-balance').text(data.balance);
 		        	break;
 		        case 'bjl':
-		        	var ox = $('.icon-right-box .item').eq(2).offset().left;
-		        	var oy = $('.icon-right-box .item').eq(2).offset().top;
 		        	var tempx = $('#jiangqubox [data-type="'+data.entity_type+'"]').offset().left;
-		        	var tempy = $('#jiangqubox [data-type="'+data.entity_type+'"]').offset().top;
-		        	var w = $('#jiangqubox [data-type="'+data.entity_type+'"]').width() - 20;
-		        	var h = $('#jiangqubox [data-type="'+data.entity_type+'"]').height() - 20;
-		        	var x = Math.random()*w + tempx;
-		        	var y = Math.random()*h + tempy;
-		        	_this.moveChip($('.chip-number[data-amount="'+data.amount+'"]'), $('#jiangqubox [data-type="'+data.entity_type+'"]'), ox, oy, x, y);
+			    	var tempy = $('#jiangqubox [data-type="'+data.entity_type+'"]').offset().top;
+			    	var x = $('#jiangqubox [data-type="'+data.entity_type+'"]').width() - 30;
+			    	var y = $('#jiangqubox [data-type="'+data.entity_type+'"]').height() - 30;
+			    	x = Math.random()*x + tempx;
+			    	y = Math.random()*y + tempy;
+		        	_this.moveChip(data.amount, data.entity_type, x, y);
 		        	_this.music('choma');
 		        	break;
 		        case 'prize':

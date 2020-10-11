@@ -121,7 +121,7 @@
 					</tr>
 				</table>
 			</div>
-			<div id="zoushitu" class="modal">
+			<div id="zoushitu" class="bjl-modal">
 				<div class="modal-top table">
 					<span class="font-20 font-600 table-cell">走势图</span>
 				</div>
@@ -135,7 +135,7 @@
 					</a>
 				</div>
 			</div>
-			<div id="jiaoyi" class="modal">
+			<div id="jiaoyi" class="bjl-modal">
 				<div class="modal-top table">
 					<span class="font-20 font-600 table-cell">上下分记录</span>
 				</div>
@@ -148,7 +148,7 @@
 					</a>
 				</div>
 			</div>
-			<div id="xiazhujilu" class="modal">
+			<div id="xiazhujilu" class="bjl-modal">
 				<div class="modal-top table">
 					<span class="font-20 font-600 table-cell">下注记录</span>
 				</div>
@@ -161,7 +161,7 @@
 					</a>
 				</div>
 			</div>
-			<div id="lianxikefu" class="modal">
+			<div id="lianxikefu" class="bjl-modal">
 				<div class="modal-top table">
 					<span class="font-20 font-600 table-cell">上下分请加客服微信</span>
 				</div>
@@ -178,7 +178,7 @@
 					</a>
 				</div>
 			</div>
-			<div id="ruletext" class="modal">
+			<div id="ruletext" class="bjl-modal">
 				<div class="modal-top table">
 					<span class="font-20 font-600 table-cell">游戏规则</span>
 				</div>

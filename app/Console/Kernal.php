@@ -14,7 +14,9 @@ class Kernal
         if (empty(self::COMMON_LIST)) return false;
         \App::log();
         if (!empty($_SERVER['argv'][1])) {
-            call_user_func_array([make($_SERVER['argv'][1]), $_SERVER['argv'][2]], []);
+            // dd($_SERVER['argv'][2]);
+            $func = $_SERVER['argv'][2];
+            make($_SERVER['argv'][1])->$func();
             exit();
         }
         $minute = date('i', time());

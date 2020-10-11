@@ -233,7 +233,7 @@
 	display: inline-block;
 	height: 100%;
 }
-.modal {
+.bjl-modal {
 	position: absolute;
 	width: 96%;
 	left: 2%;
@@ -245,19 +245,19 @@
 	color: #fff;
 	display: none;
 }
-.modal .modal-middle {
+.bjl-modal .modal-middle {
 	height: 80%;
 	background: #16151b;
 	border-radius: 0.06rem;
 	padding: 0.02rem;
 	overflow: auto;
 }
-.modal .modal-top,
-.modal .modal-footer {
+.bjl-modal .modal-top,
+.bjl-modal .modal-footer {
 	height: 10%;
 	padding: 0.05rem 0;
 }
-.modal .modal-middle li {
+.bjl-modal .modal-middle li {
 	background: #44453e;
 	padding: 0.05rem;
 	margin-bottom: 0.02rem;
@@ -300,4 +300,14 @@
 }
 #lianxikefu .kefu-box {
 	padding: 0.1rem 0.3rem;
+}
+.chip-move-number {
+	position: fixed;
+    width: 0.24rem;
+    height: 0.24rem;
+    padding: 0.01rem;
+    border-radius: 50%;
+    overflow: hidden;
+    top: 13%;
+    right: 10%;
 }

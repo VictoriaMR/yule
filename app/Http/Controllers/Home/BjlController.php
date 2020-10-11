@@ -57,6 +57,7 @@ class BjlController extends Controller
 
 	public function wager()
 	{
+		$this->success('下注成功', $data ?? []);
 		$amount = (int) ipost('amount');
 		$type = (int) ipost('type');
 		if (empty($amount) || empty($type)) {
@@ -155,7 +156,7 @@ class BjlController extends Controller
 
 	public function cancelWager()
 	{
-		if (empty($this->getStatus())) {
+		if (empty($this->checkStatus())) {
 			$this->error('今期已经截止');
 		}
 		$ffcService = make('App/Services/FfcService');

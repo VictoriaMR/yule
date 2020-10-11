@@ -84,29 +84,36 @@ function confirm(text, callback)
 {
     if ($('#confirm-modal').length == 0) {
         $('body').append(
-            '<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="confirm-modal">'+
-              '<div class="modal-dialog modal-sm" role="document">'+
+            '<div class="modal" id="confirm-modal">'+
                 '<div class="modal-content">'+
                   '<div class="modal-header">'+
-                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+                    '<span class="close">&times;</span>'+ 
                     '<h4 class="modal-title">提示</h4>'+
+                    '<div class="clear"></div>'+
                   '</div>'+
                   '<div class="modal-body">'+
-                    '<p>One fine body&hellip;</p>'+
+                    '<p></p>'+
                   '</div>'+
                   '<div class="modal-footer">'+
-                    '<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>'+
-                    '<button type="button" class="btn btn-primary btn-sm confirm-btn">确定</button>'+
+                    '<button type="button" class="btn margin-right-10 close">取消</button>'+
+                    '<button type="button" class="btn btn-blue confirm-btn">确定</button>'+
                   '</div>'+
                 '</div>'+
-              '</div>'+
             '</div>'
         );
     }
     $('#confirm-modal .modal-body p').text(text);
-    $('#confirm-modal .modal-body .confirm-btn').unbind('click');
-    if(callback) {
-        $('#confirm-modal .confirm-btn').bind('click', callback);
-    }
+    $('#confirm-modal .confirm-btn').unbind('click');
+    $('#confirm-modal .close').unbind('click');
+    var mw= $('#confirm-modal').width();
+    var ww = $(window).width();
+    var mh = $('#confirm-modal').height();
+    var wh = $(window).height();
+    $('#confirm-modal').css('left', (ww-mw)/2);
+    $('#confirm-modal').css('top', (wh-mh)/2);
     $('#confirm-modal').show();
+    $('body').on('click', '.modal .close', function(){
+        $(this).parents('.modal').hide();
+    });
+    $('body').on('click', '.modal .confirm-btn', callback);
 }

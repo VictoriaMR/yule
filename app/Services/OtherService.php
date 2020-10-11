@@ -16,11 +16,9 @@ class OtherService extends BaseService
 			$count++;
 			if (empty($this->checkStatus())) {
 				sleep(1);
-				echo 'sleep'.PHP_EOL;
 			} else {
-				dd('123123');
 				//每轮筹码
-				$number = rand(10, 30);
+				$number = rand(3, 8);
 				for ($i=1; $i <= $number; $i++) { 
 					$sendData = [
 						'type' => 'bjl',
@@ -28,8 +26,8 @@ class OtherService extends BaseService
 						'amount' => $amountArr[array_rand($amountArr)],
 					];
 					Gateway::sendToGroup('group_bjl_clint', json_encode($sendData));
+					usleep(100000);
 				}
-				sleep(rand(1, 3));
 			}
 		}
 		return true;
@@ -37,6 +35,6 @@ class OtherService extends BaseService
 
 	protected function checkStatus()
 	{
-		return redis()->get('BJL_STATUS');
+		return redis(2)->get('BJL_STATUS');
 	}
 }
