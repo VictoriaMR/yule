@@ -20,6 +20,7 @@ class Error
     	error_reporting(E_ALL|E_STRICT);
         set_exception_handler([self::$_instance, 'exceptionHandler']);
         set_error_handler([self::$_instance, 'errorHandler']);
+        register_shutdown_function([$this, 'fatalErrorHandler']);
     }
 
     public function errorHandler($errno, $errstr, $errfile, $errline)
@@ -35,6 +36,7 @@ class Error
 
     public function exceptionHandler($exception)
     {
+    	$this->unregister();
     	$code = $exception->getCode();
     	self::$_error[] = [
     		'errno' => $code,
@@ -52,7 +54,26 @@ class Error
     	$this->error_echo();
     }
 
-    protected function error_echo()
+    public function fatalErrorHandler()
+    {
+    	$error = error_get_last();
+    	if (empty($error)) return false;
+    	self::$_error[] = [
+    		'errno' => $error['type'],
+    		'errfile' => $error['file'],
+    		'errstr' => $error['message'],
+    		'errline' => $error['line'],
+    	];
+    	$this->error_echo();
+    }
+
+    private function unregister()
+    {
+        restore_error_handler();
+        restore_exception_handler();
+    }
+
+    private function error_echo()
 	{
 		if (is_cli()) {
 			$msg = '';
@@ -95,19 +116,19 @@ class Error
 		exit();
 	}
 
-	protected function getErrorText($type)
+	private function getErrorText($type)
 	{
 		switch ($type) {
-		    case E_USER_ERROR:
+		    case E_PARSE:
 		    	$text = 'FATAL';
 		        break;
-		    case E_USER_WARNING:
+		    case E_WARNING:
 		    	$text = 'WARNING';
 		        break;
-		    case E_USER_NOTICE:
+		    case E_NOTICE:
 		    	$text = 'NOTICE';
 		        break;
-		    case 1:
+		    case E_STRICT:
 		    	$text = 'FATAL';
 		    	break;
 		    default:

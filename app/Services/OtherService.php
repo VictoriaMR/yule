@@ -18,7 +18,7 @@ class OtherService extends BaseService
 				sleep(1);
 			} else {
 				//每轮筹码
-				$number = rand(3, 8);
+				$number = rand(1, 5);
 				for ($i=1; $i <= $number; $i++) { 
 					$sendData = [
 						'type' => 'bjl',
@@ -26,8 +26,9 @@ class OtherService extends BaseService
 						'amount' => $amountArr[array_rand($amountArr)],
 					];
 					Gateway::sendToGroup('group_bjl_clint', json_encode($sendData));
-					usleep(100000);
+					usleep(rand(100000, 300000));
 				}
+				usleep(rand(100000, 300000));
 			}
 		}
 		return true;

@@ -56,7 +56,7 @@ class Redis
         }
         $info = self::$_link->$func(...$arg);
         $temp = isJson($info);
-        if ($temp) return $temp;
+        if ($temp !== false) return $temp;
         return $info;
     }
 }

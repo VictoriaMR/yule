@@ -24,12 +24,12 @@ class FfcService extends BaseService
         redis(2)->set('BJL_STATUS', '0');
         //发送通知
         try {
-            Gateway::sendToGroup('group_bjl_clint', json_encode(['type' => 'prize', 'status'=>'0', 'time' => '0']));
+            Gateway::sendToGroup('group_bjl_clint', json_encode(['type' => 'wait', 'status'=>'0', 'time' => '0']));
         } catch (Exception $e) {
             echo $e->getMessage().PHP_EOL;
         }
-        sleep(2);
-        Gateway::sendToGroup('group_bjl_clint', json_encode(['type' => 'wait']));
+        sleep(3);
+        Gateway::sendToGroup('group_bjl_clint', json_encode(['type' => 'jiesuan']));
         //当前期数
         $status = true;
         $i = 0;

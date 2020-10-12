@@ -1,6 +1,7 @@
 <?php $this->load('Common.baseHeader');?>
 <div class="userinfo-top">
 	<div class="flex">
+		<?php if (!empty($info)) { ?>
 		<div class="avatar">
 			<img src="<?php echo $info['avatar'];?>">
 		</div>
@@ -8,6 +9,7 @@
 			<div class="item"><?php echo $info['name'];?></div>
 			<div class="item"><?php echo $info['mobile'];?></div>
 		</div>
+		<?php } ?>
 		<a href="<?php echo url('login/logout');?>" class="logout-btn icon icon-switch font-30 color-w"></a>
 	</div>
 </div>
@@ -17,19 +19,31 @@
 		<li>
 			<a href="<?php echo url('wallet', ['type'=>'1']);?>" class="block">
 				<div class="icon icon-wallet font-30"></div>
+				<?php if (isset($info['subtotal'])) { ?>
 				<div class="font-12">总额: <?php echo $info['subtotal'];?></div>
+				<?php } else { ?>
+				<div class="font-12">--</div>
+				<?php } ?>
 			</a>
 		</li>
 		<li>
 			<a href="<?php echo url('wallet', ['type'=>'1']);?>" class="block">
 				<div class="icon icon-discounts font-30"></div>
+				<?php if (isset($info['balance'])) { ?>
 				<div class="font-12">余额: <?php echo $info['balance'];?></div>
+				<?php } else { ?>
+				<div class="font-12">--</div>
+				<?php } ?>
 			</a>
 		</li>
 		<li>
 			<a href="<?php echo url('wallet', ['type'=>'2']);?>" class="block">
 				<div class="icon icon-rmb font-30"></div>
+				<?php if (isset($info['subtotal']) && isset($info['balance'])) { ?>
 				<div class="font-12">已提现: <?php echo sprintf('%.2f', $info['subtotal'] - $info['balance']);?></div>
+				<?php } else { ?>
+				<div class="font-12">--</div>
+				<?php } ?>
 			</a>
 		</li>
 	</ul>

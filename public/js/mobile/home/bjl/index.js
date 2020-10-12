@@ -31,7 +31,7 @@ var BJL = {
 		$('#jiangqubox').on('click', '.item', function(e){
 			if (!$('#jiangqubox').data('status')) {
 				POP.tips('停止下注');
-				// return false;
+				return false;
 			}
 			if ($('.chip-number.select').length == 0) {
 				POP.tips('先选择下注金额');
@@ -42,15 +42,15 @@ var BJL = {
 			var amount = $('.footer .chip-number.select').data('amount');
 			API.post(URI+'bjl/wager', {amount: amount, type: type}, function(res) {
             	POP.tips(res.message);
-				// if (typeof res.data.balance != 'undefined') {
-					// $('#user-balance').text(res.data.balance);
+				if (typeof res.data.balance != 'undefined') {
+					$('#user-balance').text(res.data.balance);
 					var x = $('.footer .chip-number.select').offset().left;
 					var y = $('.footer .chip-number.select').offset().top;
 					var html = $('.footer .chip-number.select').clone(true).removeClass('chip-number, select').css({'position': 'fixed', 'width': '0.24rem', 'height': '0.24rem', 'padding': '0.01rem', 'border-radius': '50%', 'overflow': 'hidden', 'left': x, 'top': y});
 					$('#jiangqubox [data-type="'+type+'"]').append(html);
 					_this.moveChip(amount, type, _this.x - 12, _this.y - 12, html);
 					_this.music('choma');
-				// }
+				}
             });
 		});
 		$('#jiangqubox').on('mousemove', '.item', function(e){
@@ -317,7 +317,10 @@ var BJL = {
 		        	}
 		        	break;
 		        case 'wait':
-		        	$('#time-count').text('等待开奖');
+		        	_this.stopBling();
+		        	break;
+		        case 'jiesuan':
+		        	$('#time-count').html('<img src="'+DOMAIN+'image/common/jiesuan.png">');
 		        	break;
 		        case 'message':
 		        	var html = _this.sendMessage(data);
@@ -344,7 +347,7 @@ var BJL = {
 				$('#'+i).text(value[i]);
 			}
 			_this.interval = setInterval(function(){
-				$('#time-count').text(time+' s');
+				$('#time-count').html('<span>'+time+' s</span>');
 				time--;
 				if (time < 5) {
 					_this.music('warning');
@@ -354,7 +357,7 @@ var BJL = {
 					clearInterval(_this.interval);
 					_this.interval = null;
 					$('#jiangqubox').data('status', 0);
-					$('#time-count').text('停止下注');
+					$('#time-count').html('<img src="'+DOMAIN+'image/common/wait.png">');
 				}
 			}, 1000);
 		}
@@ -363,7 +366,7 @@ var BJL = {
 	{
 		var _this = this;
 		$('#jiangqubox').data('status', 0);
-		$('#time-count').text('停止下注');
+		$('#time-count').html('<img src="'+DOMAIN+'image/common/wait.png">');
 		_this.music('stop');
 	},
 	music: function(type)

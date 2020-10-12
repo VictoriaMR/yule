@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Proxy;
 use App\Http\Controllers\Controller;
 use frame\Html;
 
@@ -20,7 +20,7 @@ class IndexController extends Controller
 		$memberService = make('App/Services/Admin/MemberService');
 		$info = $memberService->getInfoCache(\frame\Session::get('admin_member_id'));
 		//客户统计
-		$customerService = make('App/Services/Customer/MemberService');
+		$customerService = make('App/Services/Proxy/MemberService');
 		$idArr = $customerService->getProxyId($this->mem_id);
 		if (!is_array($idArr)) {
 			$idArr = explode(',', $idArr);

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="<?php echo mediaUrl('css/mobile/customer/common.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo mediaUrl('css/mobile/proxy/common.css');?>">
 <?php foreach (\frame\Html::getCss() as $value) { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo $value;?>">
 <?php }?>

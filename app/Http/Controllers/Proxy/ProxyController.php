@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Proxy;
 use App\Http\Controllers\Controller;
 use frame\Html;
 
@@ -19,12 +19,13 @@ class ProxyController extends Controller
 		$list = $this->getList();
 
 		$this->assign('list', $list);
+		$this->assign('title', '我的代理');
 		return view();
 	}
 
 	protected function getList($page = 1, $size = 20)
 	{
-		$memberService = make('App/Services/Customer/MemberService');
+		$memberService = make('App/Services/Proxy/MemberService');
 		$idArr = $memberService->getProxyId($this->mem_id);
 		if (!is_array($idArr)) {
 			$idArr = explode(',', $idArr);
@@ -33,7 +34,7 @@ class ProxyController extends Controller
 		$list = $memberService->getList(['mem_id' => ['in', $idArr]], $page, $size);
 		if (!empty($list)) {
 			$memIdArr = array_column($list, 'mem_id');
-			$walletService = make('App/Services/Customer/WalletService');
+			$walletService = make('App/Services/Proxy/WalletService');
 			$walletList = $walletService->getList(['mem_id'=>['in', $memIdArr]]);
 			$walletList = array_column($walletList, null, 'mem_id');
 			foreach ($list as $key => $value) {

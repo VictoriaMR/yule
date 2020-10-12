@@ -21,6 +21,7 @@
 			<div class="bigground-img">
 				<img class="bigground-img" src="<?php echo mediaUrl('image/common/bg_bj.png');?>">
 			</div>
+			<div id="time-count"></div>
 			<div class="top-box">
 				<div class="top">
 					<div class="fontresize text-center" id="qishu-box">

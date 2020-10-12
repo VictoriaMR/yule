@@ -14,7 +14,7 @@ class Router
 		//压入默认站点到路由数组
 		if (empty($pathInfo[0])) {
 			array_unshift($pathInfo, 'home');
-		} elseif (!in_array(strtolower($pathInfo[0]), ['home', 'customer', 'admin', 'uploads'])) {
+		} elseif (!in_array(strtolower($pathInfo[0]), ['home', 'proxy', 'admin', 'uploads'])) {
 			array_unshift($pathInfo, 'home');
 		}
         // 类名

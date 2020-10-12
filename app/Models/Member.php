@@ -9,7 +9,7 @@ class Member extends BaseModel
     //表名
     public $table = 'member';
     //主键
-    protected $primaryKey = 'mem_id';
+    public $primaryKey = 'mem_id';
 
     public function addMember($data)
     {
