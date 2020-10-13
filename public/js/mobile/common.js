@@ -47,6 +47,7 @@ var tipsinterval = null;
 var POP = {
 	tips:function(text, time)
 	{
+        if (!text) return false;
         if(typeof time == 'undefined') {
             time = 2000;
         }

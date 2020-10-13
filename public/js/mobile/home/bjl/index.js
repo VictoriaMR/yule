@@ -6,6 +6,7 @@ var BJL = {
 		_this.x = 0;
 		_this.y = 0;
 		_this.interval = null;
+		$('#lianxikefu').show();
 		$('.progress').animate({'width': '100%'}, 800, function(){
 			$('#loading-page').hide();
 			$('#main-page').show();
@@ -376,7 +377,6 @@ var BJL = {
 		}
 		var audio = document.getElementById(type);
 		//重新播放
-		audio.currentTime = 0;
 		audio.play();
 		return true;
 	}

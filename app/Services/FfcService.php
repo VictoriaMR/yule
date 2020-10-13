@@ -157,6 +157,7 @@ class FfcService extends BaseService
     public function getStatus()
     {
         $data = redis(2)->get('BJL_QISHU_VALUE');
+        if (empty($data)) return [];
         return [
             'type' => 'prize',
             'status'=> redis(2)->get('BJL_STATUS'),

@@ -21,18 +21,19 @@ class Controller
                 unset($options[0]);
             }
         }
-        $data = array_merge($data, $options);
+        if (!empty($options))
+            $data = array_merge($data, $options);
         header('Content-Type:application/json; charset=utf-8');
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         exit();
     }
 
-    protected function error($msg, $data = false)
+    protected function error($msg = '', $data = false)
     {
         return $this->result(10000, $data, $msg);
     }
 
-    protected function success($msg, $data = true)
+    protected function success($msg = '', $data = true)
     {
         return $this->result(200, $data, $msg);
     }

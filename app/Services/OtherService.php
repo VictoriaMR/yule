@@ -12,13 +12,13 @@ class OtherService extends BaseService
 		$count = 0;
 		$amountArr = [10, 50, 100, 1000, 5000];
 		$typeArr = [1, 2, 3, 4, 5];
-		while ($count <= 23) {
+		while ($count <= 50) {
 			$count++;
 			if (empty($this->checkStatus())) {
 				sleep(1);
 			} else {
 				//每轮筹码
-				$number = rand(1, 5);
+				$number = 1;
 				for ($i=1; $i <= $number; $i++) { 
 					$sendData = [
 						'type' => 'bjl',

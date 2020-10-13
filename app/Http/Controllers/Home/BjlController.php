@@ -47,7 +47,10 @@ class BjlController extends Controller
 		//获取游戏状态
 		$ffcService = make('App/Services/FfcService');
 		$data = $ffcService->getStatus();
-		$this->success('success', $data);
+		if (!empty($data))
+			$this->success('success', $data);
+		else
+			$this->error();
 	}
 
 	protected function checkStatus()
