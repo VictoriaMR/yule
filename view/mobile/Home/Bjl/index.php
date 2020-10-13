@@ -195,6 +195,27 @@
 		</div>
 	</div>
 </div>
+<audio id="choma">
+    <source = src="<?php echo mediaUrl('media/choma.mp3');?>" type="audio/mp3">
+</audio>
+<audio id="he">
+    <source = src="<?php echo mediaUrl('media/he.mp3');?>" type="audio/mp3">
+</audio>
+<audio id="xian">
+    <source = src="<?php echo mediaUrl('media/xian.mp3');?>" type="audio/mp3">
+</audio>
+<audio id="zhuang">
+    <source = src="<?php echo mediaUrl('media/zhuang.mp3');?>" type="audio/mp3">
+</audio>
+<audio id="start">
+    <source = src="<?php echo mediaUrl('media/start.mp3');?>" type="audio/mp3">
+</audio>
+<audio id="stop">
+    <source = src="<?php echo mediaUrl('media/stop.mp3');?>" type="audio/mp3">
+</audio>
+<audio id="warning">
+    <source = src="<?php echo mediaUrl('media/warning.mp3');?>" type="audio/mp3">
+</audio>
 <script type="text/javascript">
 $(function(){
 	BJL.init();

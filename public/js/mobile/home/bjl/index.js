@@ -374,26 +374,10 @@ var BJL = {
 		if (!$('#bjyinyue-icon').data('type')) {
 			return false;
 		}
-		switch(type) {
-			case 'start':
-				break;
-			case 'stop':
-				break;
-			case 'choma':
-				break;
-			case 'he':
-				break;
-			case 'zhuang':
-				break;
-			case 'xian':
-				break;
-			case 'warning':
-				break;
-			default:
-				return false;
-				break;
-		}
-		$('embed').remove();
-        $('embed').append('<embed src="'+DOMAIN+'media/'+type+'.mp3" autostart="true" hidden="true" loop="false">');
+		var audio = document.getElementById(type);
+		//重新播放
+		audio.currentTime = 0;
+		audio.play();
+		return true;
 	}
 };
