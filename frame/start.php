@@ -13,6 +13,5 @@ if (is_cli()) {
 	header('Access-Control-Allow-Origin: *');
 	header('Content-Root: ' . env('APP_DOMAIN'));
 	header('Connection: close');
-	@session_start();
 	App::run()->send();
 }

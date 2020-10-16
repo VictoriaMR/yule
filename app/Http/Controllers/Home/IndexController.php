@@ -8,7 +8,7 @@ class IndexController extends Controller
 {
 	public function index()
 	{
-		dd(date('Y-m-d H:i:s', strtotime('+1 Days', strtotime('2020-10-9'))));
+		dd('北京时间: '.date('Y-m-d H:i:s'));
 		Html::addJs('index');
 
 		$key = iget('k', '');
