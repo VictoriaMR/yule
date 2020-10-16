@@ -18,7 +18,7 @@ class Redis
                 self::$_link = new \Redis();
                 self::connect();
             } catch (\Exception $e) {
-                throw new \Exception('Redis connect error', 1);
+                echo $e->getMessage().PHP_EOL;
             }
         }
         if (!is_null(self::$_link)) {
