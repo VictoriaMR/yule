@@ -7,6 +7,10 @@ var BJL = {
 		_this.y = 0;
 		_this.interval = null;
 		$('#lianxikefu').show();
+		$('.chushihua').on('click', function(){
+			$(this).removeClass('chushihua');
+			_this.start();
+		});
 		$('.progress').animate({'width': '100%'}, 800, function(){
 			$('#loading-page').hide();
 			$('#main-page').show();
@@ -176,7 +180,6 @@ var BJL = {
 				}
 			}
 		});
-		_this.start();
 	},
 	getzoushiList: function(page)
 	{
@@ -375,9 +378,10 @@ var BJL = {
 		if (!$('#bjyinyue-icon').data('type')) {
 			return false;
 		}
-		var audio = document.getElementById(type);
-		//重新播放
-		audio.play();
-		return true;
+		var player = $("#"+type)[0]; /*jquery对象转换成js对象*/
+        if (player.paused){ /*如果已经暂停*/
+            player.play(); /*播放*/
+        }
+        return true;
 	}
 };

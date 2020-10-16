@@ -9,5 +9,10 @@ if (is_file(ROOT_PATH . 'vendor/autoload.php'))
 if (is_cli()) {
 	App::init();
 } else {
+	header('Content-Type: text/html;charset=utf-8');
+	header('Access-Control-Allow-Origin: *');
+	header('Content-Root: ' . env('APP_DOMAIN'));
+	header('Connection: close');
+	@session_start();
 	App::run()->send();
 }

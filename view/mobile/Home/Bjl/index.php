@@ -26,7 +26,7 @@
 				<div class="top">
 					<div class="fontresize text-center" id="qishu-box">
 						<span>第&nbsp;</span>
-						<span id="qishu-no">202009260476</span>
+						<span id="qishu-no">202001010001</span>
 						<span>&nbsp;期</span>
 					</div>
 				</div>
@@ -174,7 +174,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<a href="javascript:;" class="confirm-btn">
+					<a href="javascript:;" class="confirm-btn chushihua">
 						<img src="<?php echo mediaUrl('image/common/confirm.png');?>">
 					</a>
 				</div>
