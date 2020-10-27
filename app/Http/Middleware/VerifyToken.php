@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+use \frame\Session;
 
 class VerifyToken
 {
@@ -23,20 +24,22 @@ class VerifyToken
         //检查登录状态
         switch ($request['class']) {
             case 'Home':
-                if (empty(\frame\Session::get('home_mem_id'))) {
-                    redirect(url('login'));
-                }
+                $keyId = 'home_mem_id';
                 break;
             case 'Proxy':
-                if (empty(\frame\Session::get('proxy_mem_id'))) {
-                    redirect(url('login'));
-                }
+                $keyId = 'proxy_mem_id';
                 break;
             case 'Admin':
-                if (empty(\frame\Session::get('admin_mem_id'))) {
-                    redirect(url('login'));
-                }
+                $keyId = 'admin_mem_id';
                 break;
+        }
+
+        if (!empty($keyId)) {
+            if (empty(Session::get('home_mem_id'))) {
+                //记录跳转地址
+                Session::set('callback_url', $_SERVER['REQUEST_URI'].(!empty($_SERVER['QUERY_STRING']) ? '?'.$_SERVER['QUERY_STRING'] : ''));
+                redirect(url('login'));
+            }
         }
         return true;
     }
