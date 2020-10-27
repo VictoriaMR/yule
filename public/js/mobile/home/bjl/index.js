@@ -314,7 +314,7 @@ var BJL = {
 		        		_this.music(data.result);
 		        		$('#cancel-btn').data('status', 1);
 		        		setTimeout(function(){
-		        			_this.startBling(data.time-2, data.qishu, data.value);
+		        			_this.startBling(data.time-3, data.qishu, data.value);
 		        		}, 2000);
 		        	} else {
 		        		_this.stopBling();
@@ -340,6 +340,9 @@ var BJL = {
 	startBling: function(time, qishu, value)
 	{
 		var _this = this;
+		if (_this.interval) {
+			clearInterval(_this.interval);
+		}
 		if (time <= 0) {
 			_this.stopBling();
 		} else {
@@ -369,6 +372,7 @@ var BJL = {
 	stopBling: function(type)
 	{
 		var _this = this;
+		clearInterval(_this.interval);
 		$('#jiangqubox').data('status', 0);
 		$('#time-count').html('<img src="'+DOMAIN+'image/common/wait.png">');
 		_this.music('stop');
@@ -379,6 +383,9 @@ var BJL = {
 			return false;
 		}
 		var player = $("#"+type)[0]; /*jquery对象转换成js对象*/
+		if (player.paused) {
+			player.load();
+		}
         player.play(); /*播放*/
         return true;
 	}
