@@ -379,9 +379,7 @@ var BJL = {
 			return false;
 		}
 		var player = $("#"+type)[0]; /*jquery对象转换成js对象*/
-        if (player.paused){ /*如果已经暂停*/
-            player.play(); /*播放*/
-        }
+        player.play(); /*播放*/
         return true;
 	}
 };
