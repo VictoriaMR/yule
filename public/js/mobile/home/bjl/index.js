@@ -279,7 +279,7 @@ var BJL = {
 	{
 		var _this = this;
 		var domain = DOMAIN.replace('http', 'ws').replace(/(^\/)|(\/$)/g,'');
-		_this.socket = new WebSocket(domain);
+		_this.socket = new WebSocket(domain + ':8282');
 		_this.socket.onopen = function(evt) {};
 		_this.socket.onmessage = function(e) {
 			var data = eval('(' +e.data + ')');
