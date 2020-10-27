@@ -12,10 +12,10 @@ class LoginController extends Controller
 		if (empty($code)) {
 			$secretService = make('App/Services/SecretService');
 			$info = $secretService->getOne();
-			$url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$info['appid'].'&redirect_uri='.url('login').'&response_type=code&scope=SCOPE&state=STATE#wechat_redirec';
+			$url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$info['appid'].'&redirect_uri='.urlencode(url('login/')).'&response_type=code&scope=snsapi_base&state=bjl#wechat_redirec';
 			redirect($url);
-			// https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirec
 		}
+
 		dd(iget());
 		Html::addCss();
 		Html::addJs();
@@ -28,7 +28,7 @@ class LoginController extends Controller
 		return view();
 	}
 
-	public function checktoken()
+	protected function getInfoByCode()
 	{
 	}
 }
