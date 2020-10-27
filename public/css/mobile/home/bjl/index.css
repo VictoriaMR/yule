@@ -312,10 +312,11 @@
     right: 10%;
 }
 #time-count {
-	position: absolute;
-	top: 25%;
-	width: 100%;
-	text-align: center;
-	font-size: 0.16rem;
-	height: 2%;
+    position: absolute;
+    top: 23%;
+    width: 100%;
+    text-align: center;
+    font-size: 0.20rem;
+    height: 11%;
+    color: #fff;
 }
