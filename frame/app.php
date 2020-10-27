@@ -96,7 +96,7 @@ class App
     {
         $now = date('Y-m-d H:i:s');
         $path = ROOT_PATH.'runtime/'.date('Ymd').'/';
-        !is_dir($path) && mkdir($path, 0775, true);
+        !is_dir($path) && mkdir($path, 0777, true);
         // 获取基本信息
         if (isset($_SERVER['HTTP_HOST'])) {
             $path .= 'runlog.log';
