@@ -50,7 +50,7 @@
 			<!-- copyright-->
 			<div class="copyright text-center">
 				<div class="wrapper">
-					<p class="copy-footer-29">Copyright &copy; 2020.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>
+					<p class="copy-footer-29">Copyright &copy; 2020.Company name All rights reserved.</p>
 				</div>
 			</div>
 			<!-- //copyright-->
