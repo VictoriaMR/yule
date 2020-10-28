@@ -7,13 +7,7 @@ use frame\Html;
 class IndexController extends Controller
 {
 	public function index()
-	{
-		dd('北京时间: '.date('Y-m-d H:i:s'));
-		Html::addJs('index');
-
-		$key = iget('k', '');
-		$this->assign('key', $key);
-		
+	{	
 		return view();
 	}
 

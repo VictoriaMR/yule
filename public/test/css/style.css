@@ -1,0 +1,362 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Karla', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.d-grid {
+    display: grid;
+}
+
+.d-flex {
+    display: flex;
+    display: -webkit-flex;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+button,
+input,
+select {
+    -webkit-appearance: none;
+    outline: none;
+    font-family: 'Karla', sans-serif;
+}
+
+button,
+.btn,
+select {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+ul {
+    margin: 0;
+    padding: 0
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+    padding: 0
+}
+
+p {
+    color: #666;
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.p-relative {
+    position: relative;
+}
+
+.p-absolute {
+    position: absolute;
+}
+
+.p-fixed {
+    position: fixed;
+}
+
+.p-sticky {
+    position: sticky;
+}
+
+.btn,
+button,
+.actionbg,
+input {
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    -ms-border-radius: 4px;
+}
+
+.btn:hover,
+button:hover {
+    transition: 0.5s ease;
+    -webkit-transition: 0.5s ease;
+    -o-transition: 0.5s ease;
+    -ms-transition: 0.5s ease;
+    -moz-transition: 0.5s ease;
+}
+
+/*-- wrapper start --*/
+.wrapper {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 576px) {
+    .wrapper {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .wrapper {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .wrapper {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .wrapper {
+        max-width: 1140px;
+    }
+}
+
+.wrapper-full {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/*-- //wrapper start --*/
+
+/*-- form styling --*/
+section.w3l-mockup-form {
+    background: url(../images/bg.jpg) no-repeat center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    align-items: center;
+    z-index: 0;
+}
+
+section.w3l-mockup-form::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    min-height: 100%;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    background-color: #020219;
+    opacity: .7;
+}
+
+.w3l-workinghny-form .logo {
+    text-align: center;
+}
+
+.w3l-mockup-form .main-mockup {
+    max-width:550px;
+    margin: 0 auto;
+    background: #03045e;
+    padding:60px 50px;
+    position: relative;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.w3l-mockup-form .alert-close {
+    background: url('../images/into.png') no-repeat 0px 0px;
+    cursor: pointer;
+    height: 22px;
+    width: 22px;
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    -webkit-transition: color 0.2s ease-in-out;
+    -moz-transition: color 0.2s ease-in-out;
+    -o-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+    z-index: 999;
+}
+
+.w3l-mockup-form h1 {
+    display: inline-block;
+    text-align: center;
+    font-size: 50px;
+    line-height: 60px;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+    font-family: 'Pacifico', cursive;
+}
+.w3l-mockup-form h2 {
+    font-size:24px;
+    line-height:36px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: capitalize;
+}
+.w3l-mockup-form form {
+    display: flex;
+    border: 4px solid #fff;
+    border-radius: 36px;
+    margin: 40px 0;
+    height: 60px;
+}
+
+.w3l-mockup-form input[type="email"] {
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    display: block;
+    padding:0em 2em;
+    background: transparent;
+    width: 80%;
+}
+
+.w3l-mockup-form button {
+    font-size: 18px;
+    color:#03045e;
+    width: 56%;
+    background: #fff;
+    border: none;
+    height: 52px;
+    font-weight: 700;
+    transition: .3s ease;
+    -webkit-transition: .3s ease;
+    -moz-transition: .3s ease;
+    -ms-transition: .3s ease;
+    -o-transition: .3s ease;
+    border-radius: 22px;
+}
+.w3l-mockup-form button:hover{
+    background:#90e0ef;
+    color:#03045e;
+}
+.w3l-mockup-form .social-icons ul li{
+    list-style:none;
+    display:inline-block;
+}
+.w3l-mockup-form .social-icons ul li a{
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    padding: 8px;
+    margin-right:10px;
+}
+.w3l-mockup-form .social-icons ul li a:hover{
+    opacity:0.8;
+    transition: 0.5s ease;
+    -webkit-transition: 0.5s ease;
+    -o-transition: 0.5s ease;
+    -ms-transition: 0.5s ease;
+    -moz-transition: 0.5s ease;
+}
+.copyright {
+    margin-top:4em;
+}
+.copyright p {
+    color: #fff;
+    font-size: 18px;
+    line-height: 25px;
+}
+p.copy-footer-29 a {
+    color:#fff;
+}
+
+p.copy-footer-29 a:hover {
+    color:#0077b6;
+    transition: 0.5s ease;
+    -webkit-transition: 0.5s ease;
+    -o-transition: 0.5s ease;
+    -ms-transition: 0.5s ease;
+    -moz-transition: 0.5s ease;
+}
+/* -- placeholder --*/
+::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: #fff;
+}
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #fff;
+}
+
+:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #fff;
+}
+
+:-moz-placeholder {
+    /* Firefox 18- */
+    color: #fff;
+}
+
+/* -- placeholder --*/
+
+
+/*-- responsive design --*/
+@media (max-width:568px) {
+    .w3l-mockup-form .main-mockup {
+        max-width:500px;
+        margin: 0 auto;
+        padding:60px 40px;
+    }
+}
+
+@media (max-width: 415px) {
+    .w3l-mockup-form .main-mockup {
+        max-width: 400px;
+        margin: 0 auto;
+        padding:60px 40px;
+    }
+}
+@media (max-width:380px) {
+    .w3l-mockup-form .main-mockup {
+        max-width: 350px;
+        margin: 0 auto;
+        padding:60px 40px;
+    }
+}
+
+/*-- //responsive design --*/
+/*-- //form styling --*/
