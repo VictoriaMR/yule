@@ -6,11 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="/favicon.ico">
+<?php if (is_array(\frame\Html::getCss())) { ?>
 <?php foreach (\frame\Html::getCss() as $value) { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo $value;?>">
 <?php }?>
+<?php }?>
+<?php if (is_array(\frame\Html::getJs())) { ?>
 <?php foreach (\frame\Html::getJs() as $value) { ?>
     <script type="text/javascript" src="<?php echo $value;?>"></script>
+<?php }?>
 <?php }?>
 </head>
 <body>
