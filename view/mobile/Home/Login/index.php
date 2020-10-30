@@ -5,5 +5,8 @@
 </head>
 <body>
 	<a href="<?php echo $url;?>">点击跳转</a>
+
+
+	<p><?php echo $url;?></p>
 </body>
 </html>
