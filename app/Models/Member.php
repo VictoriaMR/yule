@@ -20,7 +20,7 @@ class Member extends BaseModel
         	unset($data['openid']);
 
         }
-    	$data['code'] = $this->getCode();
+    	$data['code'] = $this->getCode(8);
         $data['create_at'] = $this->getTime();
     	$memberId = $this->insertGetId($data);
     	//绑定关系
@@ -36,7 +36,7 @@ class Member extends BaseModel
         return substr($memberId, 0, 1);
     }
 
-    public function getCode($len = 6)
+    public function getCode($len = 8)
     {
     	$key = '';
         $counter = 0;

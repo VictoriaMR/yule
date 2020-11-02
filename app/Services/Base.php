@@ -49,12 +49,12 @@ class Base
 
     public function getName()
     {
-        return str_replace(['-', ':', ' '], '', date('Y-m-d H:i:s', time())).strtolower($this->getCode(8));
+        return str_replace(['-', ':', ' '], '', date('Y-m-d H:i:s', time())).strtolower($this->getSalt(8));
     }
 
-    public function getCode($len)
+    public function getSalt($len = 8) 
     {
-        return $this->baseModel->getCode($len);
+        return \frame\Str::random($len);
     }
 
     public function getTime()
