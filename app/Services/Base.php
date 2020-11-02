@@ -52,6 +52,11 @@ class Base
         return str_replace(['-', ':', ' '], '', date('Y-m-d H:i:s', time())).strtolower($this->getCode(8));
     }
 
+    public function getCode($len)
+    {
+        return $this->baseModel->getCode($len);
+    }
+
     public function getTime()
     {
         return $this->baseModel->getTime();
