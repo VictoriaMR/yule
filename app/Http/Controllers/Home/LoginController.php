@@ -21,13 +21,35 @@ class LoginController extends Controller
 			$code = iget('code');
 			if (empty($code)) {
 				$url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$this->config['appid'].'&redirect_uri='.urlencode(url('login]')).'&response_type=code&scope=snsapi_base&state=bjl#wechat_redirec';
-				$this->assign('url', $url);
+				redirect($url);
 			} else {
 				$info = $this->getInfoByCode($code);
+				if ($info === false) {
+					$status = false;
+				} else {
+					$bindService = make('App/Services/BindRelationService');
+					$memId = $bindService->getIdByOpenid($info['openid'], 1);
+					if (empty($memId)) {
+						$data = [
+							'name' => $info['nickname'],
+							'nickname' => $info['nickname'],
+							'sex' => $info['sex'],
+							'language' => $info['language'],
+							'city' => $info['city'],
+							'province' => $info['province'],
+							'country' => $info['country'],
+							'openid' => $info['openid'],
+						];
+						$memberService = make('App/Services/MemberService');
+						$memId = $memberService->addMember($data);
+						$memberService->updateUserAvatar($memId, $info['headimgurl']);
+					}
+					dd($memId);
+				}
 			}
 		}
-
-
+		dd('1q23123');
+		$this->assign('status', $status ?? false);
 		return view();
 	}
 
@@ -36,7 +58,7 @@ class LoginController extends Controller
 		if (empty($code)) {
 			return false;
 		}
-		if (!empty($this->config)) {
+		if (empty($this->config)) {
 			return false;
 		}
 		$params = [
@@ -45,9 +67,33 @@ class LoginController extends Controller
 			'code' => $code,
 			'grant_type' => 'authorization_code',
 		];
-		$token = Http::get('https://api.weixin.qq.com/sns/oauth2/access_token', $params);
-		dd($token);
-		//获取access_token
-		https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appId}&secret=${secret}&code=${code}&grant_type=authorization_code
+		$data = Http::get('https://api.weixin.qq.com/sns/oauth2/access_token', $params);
+		$data = isJson($data);
+		if (empty($data['access_token']) || empty($data['openid'])) {
+			return false;
+		}
+		//获取信息
+		$data = $this->getInfoByToken($data['access_token'], $data['openid']);
+		return $data;
+	}
+
+	protected function getToken()
+	{
+
+	}
+
+	protected function getInfoByToken($access_token, $openid)
+	{
+		$params = [
+			'access_token' => $access_token,
+			'openid' => $openid,
+		];
+		$data = Http::get('https://api.weixin.qq.com/sns/userinfo', $params);
+		$data = isJson($data);
+		if (empty($data['errmsg'])) {
+			return $data;
+		} else {
+			return [];
+		}
 	}
 }

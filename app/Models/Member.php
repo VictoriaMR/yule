@@ -13,22 +13,21 @@ class Member extends BaseModel
 
     public function addMember($data)
     {
-    	$relation = make('App/Models/BindRelation');
-    	$this->begin(); //事务开启
+        $relation = make('App/Models/BindRelation');
+        $this->begin(); //事务开启
         if (!empty($data['openid'])) {
-        	$openid = $data['openid'];
-        	unset($data['openid']);
+            $openid = $data['openid'];
+            unset($data['openid']);
 
         }
-    	$data['code'] = $this->getCode(8);
-        $data['create_at'] = $this->getTime();
-    	$memberId = $this->insertGetId($data);
-    	//绑定关系
+        $data['code'] = $this->getCode();
+        $memberId = $this->insertGetId($data);
+        //绑定关系
         if (!empty($openid)) {
-    	   $relation->addNotExist($openid, $memberId, $this->getType($memberId));
+           $relation->addNotExist($openid, $memberId, $this->getType($memberId));
         }
-    	$this->commit(); //事务结束
-    	return $memberId;
+        $this->commit(); //事务结束
+        return $memberId;
     }
 
     public function getType($memberId)
@@ -36,9 +35,9 @@ class Member extends BaseModel
         return substr($memberId, 0, 1);
     }
 
-    public function getCode($len = 8)
+    public function getCode($len = 6)
     {
-    	$key = '';
+        $key = '';
         $counter = 0;
         do {
             $key = \frame\Str::random($len);

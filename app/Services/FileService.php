@@ -118,7 +118,7 @@ class FileService extends BaseService
         if (!$data) return false;
         $tempfile = ROOT_PATH.'public/upload'.DS.'temp'.DS;
         if (!is_dir($tempfile)) 
-            mkdir($tempfile, 0755, true);
+            mkdir($tempfile, 0777, true);
         $tempfile .= $this->getName().'.jpg';
         file_put_contents($tempfile, $data);
         $attach = $this->addNotExist($tempfile, $cate);
@@ -147,7 +147,7 @@ class FileService extends BaseService
             //创建目录
             $saveUrl = ROOT_PATH.'upload'.DS.$cate.DS;
             if (!is_dir($saveUrl)) {
-                mkdir($saveUrl, 0755, true);
+                mkdir($saveUrl, 0777, true);
             }
             $saveUrl .= $hash.'.'.$extension;
             $result = copy($fileName, $saveUrl);
