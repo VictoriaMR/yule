@@ -21,6 +21,7 @@ class Member extends BaseModel
 
         }
     	$data['code'] = $this->getCode();
+        $data['create_at'] = $this->getTime();
     	$memberId = $this->insertGetId($data);
     	//绑定关系
         if (!empty($openid)) {

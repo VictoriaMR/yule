@@ -49,7 +49,7 @@ class Base
 
     public function getName()
     {
-        return str_replace(['-', ':', ' '], '', date('Y-m-d H:i:s', time())).strtolower($this->getSalt(8));
+        return str_replace(['-', ':', ' '], '', date('Y-m-d H:i:s', time())).strtolower($this->getCode(8));
     }
 
     public function getTime()
