@@ -35,7 +35,7 @@ class Member extends BaseModel
         return substr($memberId, 0, 1);
     }
 
-    public function getCode($len)
+    public function getCode($len = 6)
     {
     	$key = '';
         $counter = 0;
