@@ -1,0 +1,27 @@
+.userinfo-top {
+	padding: 0.05rem 0.1rem;
+	background: #337ab7;
+	color: #fff;
+	border-top: 0.01rem solid #0058a5;
+	position: relative;
+}
+.userinfo-top .avatar {
+	height: 0.5rem;
+	width: 0.5rem;
+	border-radius: 50%;
+	border: 0.01rem solid #ccc;
+	overflow: hidden;
+	margin-right: 0.1rem;
+}
+.userinfo-top .userinfo .item{
+	line-height: 0.3rem;
+}
+.wallet {
+	padding: 0.02rem 0.1rem;
+	border: 0.01rem solid #ddd;
+}
+.wallet ul>li {
+	width: calc(100% / 3);
+	float: left;
+	text-align: center;
+}

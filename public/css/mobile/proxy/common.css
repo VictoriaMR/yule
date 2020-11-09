@@ -4,6 +4,7 @@
 	height: 0.4rem;
 	width: 100%;
 	background: #337ab7;
+	z-index: 101;
 }
 .common-header a,
 .common-footer a {

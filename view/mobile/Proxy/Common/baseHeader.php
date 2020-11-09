@@ -17,12 +17,13 @@
 <body>
 <script type="text/javascript">
 var URI = "<?php echo url();?>";
+var DOMAIN = "<?php echo env('APP_DOMAIN');?>"
 </script>
 <?php if (\frame\Router::$_route['path'] != 'Login') { ?>
 <div class="common-header">
 	<a href="javascript:;" class="font-16 color-w block w100"><?php echo $title ?? '';?></a>
 	<?php if (\frame\Router::$_route['path'] != 'Index') { ?>
-	<a href="javascript:;" onclick="javascript:history.back(-1);" class="back-btn icon icon-arrow-left font-30 color-w"></a>
+	<a href="javascript:;" onclick="window.history.go(-1);" class="back-btn icon icon-arrow-left font-30 color-w pointer"></a>
 	<?php } ?>
 </div>
 <div class="main">

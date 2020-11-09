@@ -61,12 +61,19 @@ class GamblingService extends BaseService
 
 	public function getList($where = [], $page = 0, $size = 20)
 	{
-		return $this->baseModel->getList($where, $page, $size);
+		$list = $this->baseModel->getList($where, $page, $size);
+		if (!empty($list)) {
+			foreach ($list as $key => $value) {
+				$value['type_text'] = $this->getTypeText($value['type'], $value['entity_id'], true);
+				$list[$key] = $value;
+			}
+		}
+		return $list;
 	}
 
-	public function getTypeText($type, $entityId)
+	public function getTypeText($type, $entityId, $prev = false)
 	{
-		return $this->baseModel->getTypeText($type, $entityId);
+		return $this->baseModel->getTypeText($type, $entityId, $prev);
 	}
 
 	public function getStatusText($status)

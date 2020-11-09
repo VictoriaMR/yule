@@ -1,0 +1,28 @@
+.wallet {
+	background-color: #e5e5e5;
+	border-bottom: 0.01rem solid #ddd;
+}
+.wallet ul>li {
+	padding: 0.02rem 0;
+	width: calc(100% / 3);
+	float: left;
+	text-align: center;
+	height: 0.62rem;
+}
+.wallet ul>li.active {
+	background-color: #bbb;
+}
+#wallet-content {
+	height: calc(100% - 0.63rem - 0.4rem);
+	overflow-y: scroll;
+}
+#wallet-content ul li {
+	padding: 0.03rem 0.1rem;
+	border-bottom: 0.01rem solid #e5e5e5;;
+}
+#wallet-content ul li .right {
+	line-height: 0.35rem;
+}
+#wallet-content ul .loading-li {
+	background-color: #ddd;
+}

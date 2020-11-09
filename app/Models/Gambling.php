@@ -46,7 +46,7 @@ class Gambling extends BaseModel
 		return true;
     }
 
-    public function getTypeText($type, $entityId)
+    public function getTypeText($type, $entityId, $prev = false)
     {
     	$arr = [
 			self::TYPE_BJL => [
@@ -58,7 +58,11 @@ class Gambling extends BaseModel
 			],
 		];
 		if (empty($arr[$type])) return '';
-		return $arr[$type][$entityId] ?? '';
+		$str = '';
+		if ($prev) {
+			$str .= [self::TYPE_BJL => '百家乐-'][$type] ?? '';
+		}
+		return $str .= ($arr[$type][$entityId] ?? '');
     }
 
     public function getStatusText($status)
