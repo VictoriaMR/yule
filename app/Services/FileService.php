@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Services\Base as BaseService;
+use Endroid\QrCode\QrCode;
 
 class FileService extends BaseService
 {
@@ -184,4 +185,88 @@ class FileService extends BaseService
         }
         return implode(DS, $temp);
     }
+
+    public function qr_code($url, $name, $backgroup = '')
+    {
+        if (empty($url) || empty($name)) {
+            return false;
+        }
+        $dir = dirname($name);
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        $qrCode = new QrCode($url);
+        $qrCode->writeFile($name);
+        return $this->mergeimage(ROOT_PATH.'public/image/tuiguang_bg.png', $name);
+    }
+
+    /**
+     * @method 合并图片
+     * @author LiaoMingRong
+     * @date   2020-11-12
+     * @return [type]     [description]
+     */
+    protected function mergeimage($base, $refer, $offsiez='tm', $width=100, $height=100, $save='')
+    {
+        if (!is_file($base) || !is_file($refer)) {
+            return false;
+        }
+
+        $baseImageInfo = getimagesize($base);
+        $baseImageWidth = $baseImageInfo[0];
+        $baseImageHeight = $baseImageInfo[1];
+        $baseImageMime = $baseImageInfo['mime'];
+        $imagecreatefromfunc = null;
+        switch($baseImageMime) {
+            case 'image/jpeg':
+                $imagecreatefromfunc = function_exists('imagecreatefromjpeg') ? 'imagecreatefromjpeg' : '';
+                break;
+            case 'image/gif':
+                $imagecreatefromfunc = function_exists('imagecreatefromgif') ? 'imagecreatefromgif' : '';
+                break;
+            case 'image/png':
+                $imagecreatefromfunc = function_exists('imagecreatefrompng') ? 'imagecreatefrompng' : '';
+                break;
+        }
+
+        $image_1 = $imagecreatefromfunc($base);
+
+        $referImageInfo = getimagesize($refer);
+        $referImageWidth = $referImageInfo[0];
+        $referImageHeight = $referImageInfo[1];
+        $referImageMime = $referImageInfo['mime'];
+        $imagecreatefromfunc = null;
+        switch($referImageMime) {
+            case 'image/jpeg':
+                $imagecreatefromfunc = function_exists('imagecreatefromjpeg') ? 'imagecreatefromjpeg' : '';
+                break;
+            case 'image/gif':
+                $imagecreatefromfunc = function_exists('imagecreatefromgif') ? 'imagecreatefromgif' : '';
+                break;
+            case 'image/png':
+                $imagecreatefromfunc = function_exists('imagecreatefrompng') ? 'imagecreatefrompng' : '';
+                break;
+        }
+        $image_2 = $imagecreatefromfunc($refer);
+        //水印位置
+        $referx = $refery = 0;
+        switch ($offsiez) {
+            case 'tc':
+                $referx = $baseImageWidth / 2 - ($baseImageWidth - $width) / 2;
+                break;
+            case 'tr':
+                $referx = $baseImageWidth - $width;
+                break;
+            case 'tm':
+                $referx = $baseImageWidth / 2 - ($baseImageWidth - $width) / 2;
+                $refery = $baseImageHeight / 2 - ($baseImageHeight - $height) / 2;
+                break;
+        }
+
+        //合成图片
+        imagecopyresampled($image_1, $image_2, $referx, $refery, 0, 0, $width, $height, $referImageWidth, $referImageHeight);
+        // 输出合成图片
+        return imagepng($image_1, $refer);
+    }
+
 }

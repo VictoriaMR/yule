@@ -3,8 +3,6 @@ var BLING = {
 	{
 		var data = $('#bling-content>ul').data();
 		var list = this.getList(data);
-		console.log(list);
-		return false;
 		$('#bling-content>ul').html('');
 		this.initListHtml(list);
 		var _this = this;
@@ -22,10 +20,10 @@ var BLING = {
 					_thisobj.animate({scrollTop: height}, 100);
 				} else {
 					_thisobj.find('ul').append('<li class="loading-li"><img src="' + DOMAIN + 'image/common/loading_c.png" class="loading" style="max-height:0.2rem;max-width:0.2rem;"></li>');
-					var page = _thisobj.find('ul').data('page') + 1;
-					var type = _thisobj.find('ul').data('type');
+					var data = _thisobj.find('ul').data();
+					data.page = data.page + 1;
 					_thisobj.animate({scrollTop: height}, 300, function(){
-						var list = _this.getList({type: type, page: page});
+						var list = _this.getList(data);
 						_this.initListHtml(list);
 						if (list.length === 0) {
 							_thisobj.find('ul').data('end', 'true');
@@ -58,25 +56,15 @@ var BLING = {
 			if (data.length > 0) {
 				for (var i in data) {
 					html += `<li>
-								<a href="`+URI+`customer/info?mem_id=`+data[i].mem_id+`" class="block">
-									<div class="item">
-										<div class="img-item">
-											<img src="`+data[i].avatar+`" />
-										</div>
-									</div>
-									<div class="item">
-										<span>`+data[i].nickname+`</span>
-									</div>
-									<div class="item">
-										<span>`+data[i].recommender_nickname+`</span>
-									</div>
-									<div class="item">
-										<span>`+(typeof data[i].subtotal == 'undefined' ? '--' : data[i].subtotal)+`</span>
-									</div>
-									<div class="item">
-										<span>`+(typeof data[i].subtotal == 'undefined' ? '--' : (data[i].subtotal - data[i].balance))+`</span>
-									</div>
-								</a>
+								<div class="left text-left">
+									<p>`+data[i].type_text+`</p>
+									<p class="font-12 color-g">`+data[i].create_at+`</p>
+								</div>
+								<div class="right">
+									<span class="icon icon-rmb"></span>
+									<span>`+data[i].amount+`</span>
+								</div>
+								<div class="clear"></div>
 							</li>`;
 				}
 			} else {

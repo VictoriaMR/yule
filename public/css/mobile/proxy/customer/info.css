@@ -25,3 +25,18 @@
 	float: left;
 	text-align: center;
 }
+
+#bling-content {
+	height: calc(100% - 0.63rem - 0.4rem - 0.62rem);
+	overflow-y: scroll;
+}
+#bling-content ul li {
+	padding: 0.03rem 0.1rem;
+	border-bottom: 0.01rem solid #e5e5e5;;
+}
+#bling-content ul li .right {
+	line-height: 0.35rem;
+}
+#bling-content ul .loading-li {
+	background-color: #ddd;
+}

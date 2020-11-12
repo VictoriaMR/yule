@@ -48,6 +48,7 @@
 </div>
 <div id="bling-content">
 	<ul class="font-14" <?php if(!empty($type)) { echo "data-type='$type'";}?> data-page="1" <?php if(!empty($mem_id)) { echo "data-mem_id='$mem_id'";}?>>
+		<li></li>
 	</ul>
 </div>
 <script type="text/javascript">
