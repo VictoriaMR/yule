@@ -162,6 +162,11 @@ class CustomerController extends Controller
 			$fileService->qr_code($url, $file);
 		}
 
+		//下载
+		if ($type == 'download') {
+			\frame\Http::download($file);
+		}
+
 		$this->assign('url', mediaUrl('image/tuiguang/'.$this->mem_id.'.png'));
 		$this->assign('title', '推广');
 		return view();

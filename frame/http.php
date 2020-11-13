@@ -174,4 +174,43 @@ class Http
 
         return $result;
     }
+
+    public static function download($url)
+    {
+        //低版本需要将中文文件名utf-8转换成gb2312，否则找不到文件
+        $fileName = iconv('utf-8', 'gb2312', $url);
+        //绝对路径
+        if (!file_exists($fileName)) {
+            return false;
+        }
+        //打开文件，返回句柄,r以只读的方式
+        $fp = fopen($fileName, 'r');
+        //获取文件大小，单位是byte
+        $file_size = filesize($fileName);
+        //声明返回的是文件类型
+        header("Content-type:application/octet-stream");
+        //按照字节大小返回
+        header("Accept-Ranges:bytes");
+        //返回文件大小
+        header("Accept-Length:$file_size");
+        //客户端弹出对话框，对应的名字
+        $name = explode('/', $fileName);
+        $name = end($name);
+        header("Content-Disposition:attachment;filename=" . $name);
+        //向客户端回送数据
+        //每次发送的大小
+        $buffer = 1024;
+        //为了下载的安全，我们最好做一个文件直接读取计数器
+        $file_count = 0;
+        //判断文件是否结束
+        while (!feof($fp) && ($file_size - $file_count) > 0) {
+            $file_data = fread($fp, $buffer);
+            //把部分数据回送给浏览器
+            $file_count += $buffer;
+            echo $file_data;
+        }
+        //关闭文件
+        fclose($fp);
+        exit();
+    }
 }
