@@ -65,7 +65,7 @@
 			</a>
 		</li>
 		<li class="flex">
-			<a href="javascript:;" class="block font-16 w100 text-left">
+			<a href="<?php echo url('wallet/tixian');?>" class="block font-16 w100 text-left">
 				<span class="icon icon-rmb font-20"></span>
 				<span>提现</span>
 				<span class="icon icon-arrow-right font-20 right"></span>

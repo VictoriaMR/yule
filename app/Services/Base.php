@@ -5,6 +5,7 @@ namespace App\Services;
 class Base
 {
     protected $baseModel = null;
+    protected $cache_key = null;
 
     protected static $constantMap = [];
 
@@ -20,7 +21,11 @@ class Base
 
     public function updateDataById($id, $data)
     {
-        return $this->baseModel->updateDataById($id, $data);
+        $res = $this->baseModel->updateDataById($id, $data);
+        if ($res && !is_null($this->cache_key)) {
+            redis()->delete($this->cache_key.$id);
+        }
+        return $res;
     }
 
     public function deleteById($id)

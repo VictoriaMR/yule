@@ -12,7 +12,7 @@
 		<div class="icon icon-wallet font-60"></div>
 		<div class="font-14 font-600">钱包</div>
 	</a>
-	<a class="w50 inline-block margin-top-20" href="<?php echo url('wallet', ['type' => 2]);?>">
+	<a class="w50 inline-block margin-top-20" href="<?php echo url('wallet/tixian');?>">
 		<div class="icon icon-rmb font-60"></div>
 		<div class="font-14 font-600">提现</div>
 	</a>

@@ -75,7 +75,7 @@ class Error
 
     private function error_echo()
 	{
-		if (is_cli()) {
+		if (isCli()) {
 			$msg = '';
 			foreach (self::$_error as $value) {
 				$str = sprintf('[ %s ] 文件: %s, 行: %s  %s', $this->getErrorText($value['errno'] ?? 0), $value['errfile'] ?? '', $value['errline'] ?? '', !empty($value['errstr']) ? '错误: '.$value['errstr'] : '').PHP_EOL;

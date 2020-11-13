@@ -14,7 +14,6 @@ class Kernal
         if (empty(self::COMMON_LIST)) return false;
         \App::log();
         if (!empty($_SERVER['argv'][1])) {
-            // dd($_SERVER['argv'][2]);
             $func = $_SERVER['argv'][2];
             make($_SERVER['argv'][1])->$func();
             exit();
@@ -30,11 +29,13 @@ class Kernal
 
     private function execCommand($cmd)
     {
-        if (strpos(php_uname(), 'Windows') === false) {
-            exec($cmd . ' >> /tmp/out.log 2>&1');
+        if (isWindows()) {
+            $cmd = 'start /B '.$cmd;
         } else {
-            pclose(popen('start /B '.$cmd, 'r')); 
+            $cmd .= ' &';
         }
+        pclose(popen($cmd, 'r'));
+        return true;
     }
 
     private function matchTime($nowTime, $setTime)

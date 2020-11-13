@@ -59,6 +59,11 @@ function isJson($string)
     $string = json_decode($string, true); 
     return json_last_error() == JSON_ERROR_NONE ? $string : false;
 }
+function isPost()
+{
+    $method = isCli() ? 'GET' : $_SERVER['REQUEST_METHOD'];
+    return $method == 'POST';
+}
 function redis($db = 0) 
 {
     return \frame\Redis::getInstance($db);
@@ -109,9 +114,13 @@ function redirect($url)
     header('Location:'.$url);
     exit();
 }
-function is_cli()
+function isCli()
 {
-    return preg_match('/cli/i', php_sapi_name()) ? true : false;
+    return stripos(php_sapi_name(), 'cli') !== false;
+}
+function isWindows()
+{
+    return stripos(php_uname(), 'windows') !== false;
 }
 function paginator()
 {

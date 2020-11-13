@@ -84,4 +84,40 @@ class WalletController extends Controller
 		$list = $walletService->getLogList($where, $page, $size, ['log_id', 'type', 'subtotal', 'remark', 'create_at']);
 		$this->success('success', $list);
 	}
+
+	public function tixian()
+	{
+		Html::addCss();
+		Html::addJs();
+		$proxyService = make('App/Services/Proxy/MemberService');
+
+		if (isPost()) {
+			$alipay = trim(ipost('alipay', ''));
+			$weixin = trim(ipost('weixin', ''));
+			$mobile = trim(ipost('mobile', ''));
+			$data = [];
+			if (!empty($alipay)) {
+				$data['alipay'] = $alipay;
+			}
+			if (!empty($weixin)) {
+				$data['weixin'] = $weixin;
+			}
+			if (!empty($mobile)) {
+				$data['mobile'] = $mobile;
+			}
+			if (!empty($data)) {
+				$proxyService->updateDataById($this->mem_id, $data);
+			}
+
+		}
+
+		$info = $proxyService->getInfoCache($this->mem_id);
+
+		$walletService = make('App/Services/Proxy/WalletService');
+		$info = $walletService->getInfo($this->mem_id);
+
+		$this->assign('tixian', $info['balance'] ?? 0);
+
+		return view();
+	}
 }

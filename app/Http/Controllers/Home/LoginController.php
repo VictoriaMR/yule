@@ -29,6 +29,7 @@ class LoginController extends Controller
 				} else {
 					$bindService = make('App/Services/BindRelationService');
 					$memId = $bindService->getIdByOpenid($info['openid'], 1);
+					$memberService = make('App/Services/MemberService');
 					if (empty($memId)) {
 						$data = [
 							'name' => $info['nickname'],
@@ -39,16 +40,18 @@ class LoginController extends Controller
 							'province' => $info['province'],
 							'country' => $info['country'],
 							'openid' => $info['openid'],
+							'recommender' => (int) iget('recommender', 0),
 						];
-						$memberService = make('App/Services/MemberService');
 						$memId = $memberService->addMember($data);
 						$memberService->updateUserAvatar($memId, $info['headimgurl']);
 					}
-					dd($memId);
+					if (!empty($memId)) {
+						$memberService->login($memId, 1);
+						redirect(url(iget('state')));
+					}
 				}
 			}
 		}
-		dd('1q23123');
 		$this->assign('status', $status ?? false);
 		return view();
 	}

@@ -6,7 +6,7 @@ use App\Models\Member;
 
 class MemberService extends BaseService
 {	
-    const INFO_CACHE_KEY = 'MEMBER_INFO_CACHE_';
+    protected $cache_key = 'MEMBER_INFO_CACHE_';
     const INFO_CACHE_EXPIRETIME = 60*60*24;
     const TOKEN_EXPIRED = 60*60*8;
     const REFRESH_TOKEN_EXPIRED = 60*60*24*15;
@@ -44,7 +44,7 @@ class MemberService extends BaseService
     public function getInfoCache($memberId)
     {
         if (empty($memberId)) return [];
-        $cacheKey = self::INFO_CACHE_KEY.$memberId;
+        $cacheKey = $this->cache_key.$memberId;
         $info = redis()->get($cacheKey);
         if (empty($info)) {
             $info = $this->getInfo($memberId);
@@ -107,7 +107,7 @@ class MemberService extends BaseService
 
     public function deleteCache($memberId)
     {
-        $cacheKey = self::INFO_CACHE_KEY.$memberId;
+        $cacheKey = $this->cache_key.$memberId;
         return redis()->del($cacheKey);
     }
 

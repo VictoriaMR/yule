@@ -158,7 +158,7 @@ class CustomerController extends Controller
 		$file = ROOT_PATH.'public/image/tuiguang/'.$this->mem_id.'.png';
 		if (!is_file($file) || $type == 'reset') {
 			$fileService = make('App/Services/FileService');
-			$url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e3ee71ac2d9f0b8&redirect_uri='.url('login', ['recommender' => $this->mem_id]).'&response_type=code&scope=snsapi_base&state='.$this->mem_id.'#wechat_redirec';
+			$url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e3ee71ac2d9f0b8&redirect_uri='.url('login', ['recommender' => $this->mem_id]).'&response_type=code&scope=snsapi_base&state=bjl#wechat_redirec';
 			$fileService->qr_code($url, $file);
 		}
 
