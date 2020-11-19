@@ -34,7 +34,7 @@ class App
         if (!isAjax()) {
             \frame\Html::addJs(['jquery.min', 'common', 'button'], true);
             \frame\Html::addCss(['common', 'font', 'space', 'icon'], true);
-            if ($info['class'] == 'Admin') {
+            if ($info['class'] == 'Admin' && !isMobile()) {
                 \frame\Html::addCss(['acommon', 'bootstrap', 'plugin'], true);
                 \frame\Html::addJs(['acommon', 'bootstrap', 'modal', 'plugin'], true);
             }
