@@ -341,7 +341,9 @@ Class Query
 					$stmt->free();
 				}
 			} else {
-				if ($this->_transaction) $this->rollback();
+				if ($this->_transaction) {
+					$this->rollback();
+				}
 				throw new \Exception($this->_connect->error, 1);
 			}
 		}

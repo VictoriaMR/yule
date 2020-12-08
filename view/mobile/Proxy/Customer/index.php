@@ -9,7 +9,11 @@
 	</ul>
 </div>
 <div id="customer-content">
-	<ul class="font-14" data-page="1">
+	<ul class="font-14"
+	<?php foreach ($param as $key => $value) { ?>
+	data-<?php echo $key;?>="<?php echo $value;?>"
+	<?php } ?>
+	>
 	</ul>
 </div>
 <script type="text/javascript">

@@ -50,8 +50,9 @@ class ControllerService extends BaseService
         $list = redis()->get(self::CACHE_LIST_KEY);
         if (empty($list)) {
 	        $list = $this->listFormat($this->getList(['status'=>1]));
-            if (!empty($list))
-                redis()->set(self::CACHE_LIST_KEY, $list);
+            if (!empty($list)) {
+                // redis()->set(self::CACHE_LIST_KEY, $list);
+            }
         }
     	return $list;
     }

@@ -13,37 +13,41 @@ class ProxyController extends Controller
     
 	public function index()
 	{
-		Html::addCss(['index']);
-		Html::addJs(['index']);
-
-		$list = $this->getList();
-
-		$this->assign('list', $list);
+		Html::addCss();
+		Html::addJs();
 		$this->assign('title', '我的代理');
 		return view();
 	}
 
-	protected function getList($page = 1, $size = 20)
+	public function getList()
 	{
+		$page = iget('page', 1);
+		$size = iget('size', 20);
+
 		$memberService = make('App/Services/Proxy/MemberService');
 		$idArr = $memberService->getProxyId($this->mem_id);
 		if (!is_array($idArr)) {
 			$idArr = explode(',', $idArr);
 		}
 		$idArr = array_unique(array_filter($idArr));
-		$list = $memberService->getList(['mem_id' => ['in', $idArr]], $page, $size);
-		if (!empty($list)) {
+		if (!empty($idArr)) {
+			$list = $memberService->getList(['mem_id' => ['in', $idArr]], $page, $size);
 			$memIdArr = array_column($list, 'mem_id');
 			$walletService = make('App/Services/Proxy/WalletService');
 			$walletList = $walletService->getList(['mem_id'=>['in', $memIdArr]]);
 			$walletList = array_column($walletList, null, 'mem_id');
 			foreach ($list as $key => $value) {
-				$value['subtotal'] = $walletList[$value['mem_id']]['subtotal'];
-				$value['balance'] = $walletList[$value['mem_id']]['balance'];
+				if (empty($walletList[$value['mem_id']])) {
+					$value['subtotal'] = '--';
+					$value['balance'] = '--';
+				} else {
+					$value['subtotal'] = $walletList[$value['mem_id']]['subtotal'];
+					$value['balance'] = $walletList[$value['mem_id']]['balance'];
+				}
 				$list[$key] = $value;
 			}
 		}
-		return $list;
+		$this->success('success', $list ?? []);
 	}
 
 	public function addProxy()
@@ -60,7 +64,7 @@ class ProxyController extends Controller
 		if (empty($password)) {
 			$this->error('密码不能为空');
 		}
-		$memberService = make('App/Services/Customer/MemberService');
+		$memberService = make('App/Services/Proxy/MemberService');
 		if ($memberService->isExistMobile($mobile)) {
 			$this->error('账号已存在');
 		}

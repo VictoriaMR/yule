@@ -20,7 +20,7 @@ class Member extends BaseModel
             unset($data['openid']);
 
         }
-        $data['code'] = $this->getCode();
+        $data['code'] = $this->getCode(32);
         $memberId = $this->insertGetId($data);
         //绑定关系
         if (!empty($openid)) {

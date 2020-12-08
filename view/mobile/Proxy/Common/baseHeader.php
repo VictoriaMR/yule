@@ -25,6 +25,9 @@ var DOMAIN = "<?php echo env('APP_DOMAIN');?>"
 	<?php if (\frame\Router::$_route['path'] != 'Index') { ?>
 	<a href="javascript:;" onclick="window.history.go(-1);" class="back-btn icon icon-arrow-left font-30 color-w pointer"></a>
 	<?php } ?>
+    <?php if (in_array(\frame\Router::$_route['path'], ['Proxy'])) { ?>
+    <a href="javascript:;" id="add-btn" class="btn add-btn">增加</a>
+    <?php } ?>
 </div>
 <div class="main">
 <?php } ?>

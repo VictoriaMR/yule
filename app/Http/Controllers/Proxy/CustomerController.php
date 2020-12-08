@@ -18,18 +18,34 @@ class CustomerController extends Controller
 	{
 		Html::addCss();
 		Html::addJs();
+
+		$param['page'] = iget('page', 1);
+		$param['size'] = iget('size', 20);
+		$mem_id = iget('mem_id');
+		if (!empty($mem_id)) {
+			$param['mem_id'] = $mem_id;
+		}
 		
 		$proxyService = make('App/Services/Proxy/MemberService');
 		$idArr = $proxyService->getProxyId($this->mem_id);
 		if (!is_array($idArr)) {
 			$idArr = explode(',', $idArr);
 		}
-		$idArr[] = $this->mem_id;
+		if (!empty($mem_id)) {
+			if (in_array($mem_id, $idArr)) {
+				$idArr = [$mem_id];
+			} else {
+				$idArr = [];
+			}
+		} else {
+			$idArr[] = $this->mem_id;
+		}
 		$idArr = array_unique(array_filter($idArr));
 		$memberService = make('App/Services/MemberService');
 		$total = $memberService->getTotal(['recommender'=>['in', $idArr]]);
 
 		$this->assign('title', '我的客户 ('.$total.')');
+		$this->assign('param', $param);
 
 		return view();
 	}
@@ -38,35 +54,46 @@ class CustomerController extends Controller
 	{
 		$page = iget('page', 1);
 		$size = iget('size', 20);
+		$mem_id = iget('mem_id');
 
 		$proxyService = make('App/Services/Proxy/MemberService');
 		$idArr = $proxyService->getProxyId($this->mem_id);
 		if (!is_array($idArr)) {
 			$idArr = explode(',', $idArr);
 		}
-		$idArr[] = $this->mem_id;
-		$idArr = array_unique(array_filter($idArr));
-		$memberService = make('App/Services/MemberService');
-		$list = $memberService->getList(['recommender'=>['in', $idArr]], $page, $size, ['mem_id'=>'desc']);
-		if (!empty($list)) {
-			$memIdArr = array_column($list, 'mem_id');
-			$walletService = make('App/Services/WalletService');
-			$walletList = $walletService->getList(['mem_id'=>['in', $memIdArr]]);
-			$walletList = array_column($walletList, null, 'mem_id');
-			foreach ($list as $key => $value) {
-				if (!empty($walletList[$value['mem_id']])) {
-					$value['subtotal'] = $walletList[$value['mem_id']]['subtotal'];
-					$value['balance'] = $walletList[$value['mem_id']]['balance'];
+		if (!empty($mem_id)) {
+			if (in_array($mem_id, $idArr)) {
+				$idArr = [$mem_id];
+			} else {
+				$idArr = [];
+			}
+		} else {
+			$idArr[] = $this->mem_id;
+		}
+		if (!empty($idArr)) {
+			$idArr = array_unique(array_filter($idArr));
+			$memberService = make('App/Services/MemberService');
+			$list = $memberService->getList(['recommender'=>['in', $idArr]], $page, $size, ['mem_id'=>'desc']);
+			if (!empty($list)) {
+				$memIdArr = array_column($list, 'mem_id');
+				$walletService = make('App/Services/WalletService');
+				$walletList = $walletService->getList(['mem_id'=>['in', $memIdArr]]);
+				$walletList = array_column($walletList, null, 'mem_id');
+				foreach ($list as $key => $value) {
+					if (!empty($walletList[$value['mem_id']])) {
+						$value['subtotal'] = $walletList[$value['mem_id']]['subtotal'];
+						$value['balance'] = $walletList[$value['mem_id']]['balance'];
+					}
+					//推荐人
+					$recommenderInfo = $proxyService->getInfoCache($value['recommender']);
+					$value['recommender_name'] = $recommenderInfo['name'] ?? '';
+					$value['recommender_nickname'] = $recommenderInfo['nickname'] ?? '';
+					$value['recommender_avatar'] = $recommenderInfo['avatar'] ?? '';
+					$list[$key] = $value;
 				}
-				//推荐人
-				$recommenderInfo = $proxyService->getInfoCache($value['recommender']);
-				$value['recommender_name'] = $recommenderInfo['name'] ?? '';
-				$value['recommender_nickname'] = $recommenderInfo['nickname'] ?? '';
-				$value['recommender_avatar'] = $recommenderInfo['avatar'] ?? '';
-				$list[$key] = $value;
 			}
 		}
-		$this->success('success', $list);
+		$this->success('success', $list ?? []);
 	}
 
 	public function info()

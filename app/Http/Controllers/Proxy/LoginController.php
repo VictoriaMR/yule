@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Proxy;
 use App\Http\Controllers\Controller;
 use frame\Html;
 use frame\Session;
@@ -28,10 +28,10 @@ class LoginController extends Controller
 		if (empty($password))
 			$this->result(10000, false, '密码不能为空');
 
-		if ($loginCode != Session::set('customer_login_code'))
+		if ($loginCode != Session::set('proxy_login_code'))
 			$this->result(10000, false, '验证不通过');
 
-		$memberService = make('App/Services/Customer/MemberService');
+		$memberService = make('App/Services/Proxy/MemberService');
 		$result = $memberService->loginByPassword($phone, $password);
 		if ($result)
 			$this->result(200, $result, '登录成功');
@@ -41,7 +41,7 @@ class LoginController extends Controller
 
 	public function logout()
 	{
-		Session::set('customer');
+		Session::set('proxy');
 		redirect(url('login'));
 	}
 }

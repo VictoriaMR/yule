@@ -19,6 +19,7 @@ input {-webkit-appearance: none; -moz-appearance: none; outline: 0; border: none
 .color-w {color: #fff;}
 .color-g {color: #bbb;}
 .color-o {color: orange;}
+.color-r {color: red;}
 .flex {display: flex;}
 .flex1{flex: 1;}
 .right{float: right;}

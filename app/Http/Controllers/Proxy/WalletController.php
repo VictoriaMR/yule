@@ -30,14 +30,12 @@ class WalletController extends Controller
 				$error = '无权限查看';
 			}
 			$this->assign('mem_id', $mem_id);
-		} else {
-			$mem_id = $this->mem_id;
 		}
-
 		if (empty($error)) {
 			if (!empty($mem_id)) {
 				$walletService = make('App/Services/WalletService');
 			} else {
+				$mem_id = $this->mem_id;
 				$walletService = make('App/Services/Proxy/WalletService');
 			}
 			$info = $walletService->getInfo($mem_id);
@@ -88,35 +86,30 @@ class WalletController extends Controller
 	public function tixian()
 	{
 		Html::addCss();
-		Html::addJs();
 		$proxyService = make('App/Services/Proxy/MemberService');
-
-		if (isPost()) {
-			$alipay = trim(ipost('alipay', ''));
-			$weixin = trim(ipost('weixin', ''));
-			$mobile = trim(ipost('mobile', ''));
-			$data = [];
-			if (!empty($alipay)) {
-				$data['alipay'] = $alipay;
-			}
-			if (!empty($weixin)) {
-				$data['weixin'] = $weixin;
-			}
-			if (!empty($mobile)) {
-				$data['mobile'] = $mobile;
-			}
-			if (!empty($data)) {
-				$proxyService->updateDataById($this->mem_id, $data);
-			}
-
-		}
-
-		$info = $proxyService->getInfoCache($this->mem_id);
-
 		$walletService = make('App/Services/Proxy/WalletService');
 		$info = $walletService->getInfo($this->mem_id);
+		$balance = $info['balance'] ?? 0;
+		if (isPost()) {
+			$account = (int) ipost('account');
+			if ($account > 0 && $account <= $balance) {
+				$result = $walletService->decrementByMemId($this->mem_id, $account, ['remark'=>'申请提现', 'entity_type' => 0, 'creater' => $this->mem_id]);
+				if ($result) {
+					$proxyService->deleteCache($this->mem_id);
+					$info = $walletService->getInfo($this->mem_id);
+					$balance = $info['balance'] ?? 0;
+					$error = '提现成功';
+				} else {
+					$error = '提现失败';
+				}
+			} else {
+				$error = '提现金额不正确';
+			}
+		}
 
-		$this->assign('tixian', $info['balance'] ?? 0);
+		$this->assign('balance', $balance);
+		$this->assign('title', '余额提现');
+		$this->assign('error', $error ?? '');
 
 		return view();
 	}

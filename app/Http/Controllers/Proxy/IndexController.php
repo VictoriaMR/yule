@@ -35,6 +35,7 @@ class IndexController extends Controller
 		$this->assign('proxy_total', $total);
 
 		$this->assign('info', $info);
+		$this->assign('title', '代理管理后台');
 
 		return view();
 	}
