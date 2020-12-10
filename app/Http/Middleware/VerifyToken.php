@@ -16,7 +16,6 @@ class VerifyToken
 
     public function handle($request)
     {
-        return false;
         if (in_array(implode('/', $request), self::$except)) {
             return true;
         }
@@ -35,7 +34,7 @@ class VerifyToken
         }
 
         if (!empty($keyId)) {
-            if (empty(Session::get('home_mem_id'))) {
+            if (empty(Session::get($keyId))) {
                 //记录跳转地址
                 Session::set('callback_url', $_SERVER['REQUEST_URI'].(!empty($_SERVER['QUERY_STRING']) ? '?'.$_SERVER['QUERY_STRING'] : ''));
                 redirect(url('login'));
