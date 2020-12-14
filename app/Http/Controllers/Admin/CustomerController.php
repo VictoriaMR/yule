@@ -21,17 +21,30 @@ class CustomerController extends Controller
 
 		$param['page'] = iget('page', 1);
 		$param['size'] = iget('size', 20);
+		$param['mem_id'] = iget('mem_id');
+		$param['keyword'] = iget('keyword');
+		$param['recommender'] = iget('recommender');
 		$mem_id = iget('mem_id');
 		$where = [];
+		if (!empty($param['keyword'])) {
+			$where['mobile,name,nickname'] = ['like', '%'.$param['keyword'].'%'];
+		}
 		if (!empty($mem_id)) {
 			$where['recommender'] = $mem_id;
+		} else if (!empty($param['recommender'])) {
+			$proxyService = make('App/Services/Proxy/MemberService');
+			$list = $proxyService->getList(['mobile,name,nickname' => ['like', '%'.$param['recommender'].'%']]);
+			if (!empty($list)) {
+				$where['recommender'] = ['in', array_column($list, 'mem_id')];
+			} else {
+				$where = ['mem_id' => 0];
+			}
 		}
 		$memberService = make('App/Services/MemberService');
 		$total = $memberService->getTotal($where);
 
 		$this->assign('title', '客户 ('.$total.')');
 		$this->assign('param', $param);
-
 		return view();
 	}
 
@@ -40,11 +53,23 @@ class CustomerController extends Controller
 		$page = iget('page', 1);
 		$size = iget('size', 20);
 		$mem_id = iget('mem_id');
+		$recommender = iget('recommender');
+		$keyword = iget('keyword');
 
 		$proxyService = make('App/Services/Proxy/MemberService');
 		$where = [];
+		if (!empty($keyword)) {
+			$where['mobile,name,nickname'] = [ 'like', '%'.$keyword.'%'];
+		}
 		if (!empty($mem_id)) {
 			$where['recommender'] = $mem_id;
+		} else if (!empty($recommender)) {
+			$list = $proxyService->getList(['mobile,name,nickname' => ['like', '%'.$recommender.'%']]);
+			if (!empty($list)) {
+				$where['recommender'] = ['in', array_column($list, 'mem_id')];
+			} else {
+				$where = ['mem_id' => 0];
+			}
 		}
 		$memberService = make('App/Services/MemberService');
 		$list = $memberService->getList($where, $page, $size, ['mem_id'=>'desc']);
@@ -170,5 +195,24 @@ class CustomerController extends Controller
 		$this->assign('url', mediaUrl('image/tuiguang/'.$this->mem_id.'.png'));
 		$this->assign('title', '推广');
 		return view();
+	}
+
+	public function recharge()
+	{
+		$mem_id = (int)ipost('mem_id');
+		$total = (int)ipost('total');
+		if (empty($mem_id)) {
+			$this->error('用户ID不正确');
+		}
+		if (empty($total)) {
+			$this->error('充值金额不正确');
+		}
+		$walletService = make('App/Services/WalletService');
+		$result = $walletService->incrementByMemId($mem_id, $total, ['creater'=>$this->mem_id, 'remark' => '充值']);
+		if ($result) {
+			$this->success('充值成功');
+		} else {
+			$this->error('充值失败');
+		}
 	}
 }

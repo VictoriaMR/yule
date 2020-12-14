@@ -187,7 +187,7 @@ class MemberService extends BaseService
         $data = [
             '0' => 'guest',
             '1' => 'home',
-            '3' => 'customer',
+            '3' => 'proxy',
             '5' => 'admin',
         ];
         return $data[$type] ?? '';

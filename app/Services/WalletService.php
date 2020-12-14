@@ -24,7 +24,8 @@ class WalletService extends BaseService
         $money = (int) $money;
         if (empty($memId) || empty($money)) return false;
         $this->baseModel->begin();
-        $this->baseModel->where('mem_id', $memId)->increment($isBalance ? 'balance' : 'subtotal,balance', $money);
+        $this->addIfNotExist($memId);
+        $this->baseModel->where('mem_id', $memId)->increment('subtotal,balance', $money);
         $data['mem_id'] = $memId;
         $data['subtotal'] = $money;
         $data['type'] = $this->logModel::TYPE_INCREMENT;
@@ -73,5 +74,16 @@ class WalletService extends BaseService
     public function getLogList($where = [], $page = 0, $size = 20, $fields = ['*'])
     {
         return $this->logModel->getList($where, $page, $size, $fields);
+    }
+
+    public function addIfNotExist($memId)
+    {
+        if (empty($memId)) {
+            return false;
+        }
+        if ($this->exist($memId)) {
+            return false;
+        }
+        return $this->baseModel->insert(['mem_id'=>$memId]);
     }
 }

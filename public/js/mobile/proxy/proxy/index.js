@@ -49,13 +49,18 @@ var PROXY = {
 		});
 		//保存
 		$('#add-form-btn').on('click', function(){
+			var check = true;
 			$(this).parent().find('[required="required"]').each(function(){
 				var val = $(this).val();
 				if (val === '') {
 					$(this).focus();
+					check = false;
 					return false;
 				}
 			});
+			if (!check) {
+				return false;
+			}
 			$.post(URI+'proxy/addProxy', $(this).parent().serializeArray(), function(res) {
 				POP.tips(res.message);
 				if (res.code == 200) {

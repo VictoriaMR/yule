@@ -12,7 +12,7 @@
 	line-height: 0.24rem;
 }
 #customer-content {
-	height: calc(100% - 0.4rem - 0.25rem);
+	height: calc(100% - 0.4rem - 0.25rem - 0.41rem);
 	overflow-y: scroll;
 }
 #customer-content ul li {

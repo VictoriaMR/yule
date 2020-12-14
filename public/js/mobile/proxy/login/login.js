@@ -55,6 +55,7 @@ var LOGIN = {
 					tempobj.button('reset');
 				}
 			});
+			return false;
 		});
 	},
 	_touchstart:function(){

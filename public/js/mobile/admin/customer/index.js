@@ -34,6 +34,38 @@ var CUSTOMER = {
 				}
 			}
 		});
+		//充值按钮点击
+		$('#customer-content').on('click', '.increate-btn', function(event){
+			event.stopPropagation();
+			var mem_id = $(this).data('mem_id');
+			$('#proxy-modal [name="mem_id"]').val(mem_id);
+			$('#proxy-modal').show();
+			return false;
+		});
+		$('#proxy-modal .mask').on('click', function(){
+			$('#proxy-modal').hide();
+		});
+		$('#add-form-btn').on('click', function(){
+			var check = true;
+			$(this).parent().find('[required="required"]').each(function(){
+				var val = $(this).val();
+				console.log(val)
+				if (val == '' || val == 0) {
+					$(this).focus();
+					check = false;
+					return false;
+				}
+			});
+			if (!check) {
+				return false;
+			}
+			$.post(URI+'customer/recharge', $(this).parent().serializeArray(), function(res) {
+				POP.tips(res.message);
+				if (res.code == 200) {
+					window.location.reload();
+				}
+			});
+		});
 	},
 	getList: function(param)
 	{
@@ -75,7 +107,7 @@ var CUSTOMER = {
 										<span>`+(typeof data[i].subtotal == 'undefined' ? '--' : (data[i].subtotal - data[i].balance))+`</span>
 									</div>
 									<div class="item">
-										<button type="button" class="btn-small btn-blue">充值</button>
+										<button type="button" class="btn-small btn-blue increate-btn" data-mem_id="`+data[i].mem_id+`">充值</button>
 									</div>
 								</a>
 							</li>`;
