@@ -1,6 +1,13 @@
 <?php $this->load('Common.baseHeader');?>
+<div class="customer-search container-10" style="border-bottom: 1px solid #ccc; padding: 5px 10px">
+	<form class="flex" method="get" action="<?php echo url('proxy/index');?>">
+		<input type="text" name="keyword" class="input" placeholder="输入关键字搜索" value="<?php echo $param['keyword'] ?? '';?>" style="height: 30px;">
+		<button type="submit" class="btn-small btn-blue flex-1" style="height: 30px;">搜索</button>
+	</form>
+</div>
 <div class="customer-title">
-	<ul>
+	<ul
+	>
 		<li>头像</li>
 		<li>名称</li>
 		<li>客户人数</li>

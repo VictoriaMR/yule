@@ -20,16 +20,16 @@ var CUSTOMER = {
 					_thisobj.animate({scrollTop: height}, 100);
 				} else {
 					_thisobj.find('ul').append('<li class="loading-li"><img src="' + DOMAIN + 'image/common/loading_c.png" class="loading" style="max-height:0.2rem;max-width:0.2rem;"></li>');
-					var page = _thisobj.find('ul').data('page') + 1;
-					var type = _thisobj.find('ul').data('type');
+					var param = _thisobj.find('ul').data();
+					param.page = param.page + 1;
 					_thisobj.animate({scrollTop: height}, 300, function(){
-						var list = _this.getList({type: type, page: page});
+						var list = _this.getList(param);
 						_this.initListHtml(list);
 						if (list.length === 0) {
 							_thisobj.find('ul').data('end', 'true');
 						}
 						_thisobj.find('ul .loading-li').remove();
-						_thisobj.find('ul').data('page', page);
+						_thisobj.find('ul').data('page', param.page);
 					});
 				}
 			}

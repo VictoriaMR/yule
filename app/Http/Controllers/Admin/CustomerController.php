@@ -24,13 +24,12 @@ class CustomerController extends Controller
 		$param['mem_id'] = iget('mem_id');
 		$param['keyword'] = iget('keyword');
 		$param['recommender'] = iget('recommender');
-		$mem_id = iget('mem_id');
 		$where = [];
 		if (!empty($param['keyword'])) {
 			$where['mobile,name,nickname'] = ['like', '%'.$param['keyword'].'%'];
 		}
-		if (!empty($mem_id)) {
-			$where['recommender'] = $mem_id;
+		if (!empty($param['mem_id'])) {
+			$where['recommender'] = $param['mem_id'];
 		} else if (!empty($param['recommender'])) {
 			$proxyService = make('App/Services/Proxy/MemberService');
 			$list = $proxyService->getList(['mobile,name,nickname' => ['like', '%'.$param['recommender'].'%']]);
