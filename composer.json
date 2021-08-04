@@ -2,6 +2,7 @@
     "require": {
         "workerman/gatewayclient": "^3.0",
         "workerman/gateway-worker" : ">=3.0.0",
-        "endroid/qr-code": "^3.5"
+        "endroid/qr-code": "^3.5",
+        "workerman/workerman": "^4.0"
     }
 }
